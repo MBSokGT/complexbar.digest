@@ -1480,6 +1480,12 @@ header.hero + .section::before,
 	justify-content: space-between;
 }
 
+.vote-section.vertical {
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 8px;
+}
+
 .vote-btn {
 	background: transparent;
 	border: none;

@@ -342,9 +342,7 @@ async function initNewYearReactions() {
     const cardId = `newyear-${index}`;
     
     const voteSection = document.createElement('div');
-    voteSection.className = 'vote-section';
-    voteSection.style.display = 'flex';
-    voteSection.style.gap = '12px';
+    voteSection.className = 'vote-section vertical';
     voteSection.style.marginTop = '16px';
     
     const reactions = ['👍', '😘', '🎄', '🎁'];
