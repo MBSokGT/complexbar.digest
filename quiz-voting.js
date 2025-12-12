@@ -157,96 +157,74 @@ if (document.getElementById('quiz-content')) {
   initQuiz();
 }
 
-// ============ ЛАЙКИ С FIREBASE ============
-function initVoting() {
+// ============ ЛАЙКИ С SUPABASE ============
+async function initVoting() {
   const achievementCards = document.querySelectorAll('#sales-moscow .card, #procurement .card, #logistics .card');
-  
-  // Проверяем, доступен ли Firebase
-  const useFirebase = typeof window.firebaseDB !== 'undefined';
-  
-  if (!useFirebase) {
-    console.warn('⚠️ Firebase не настроен. Используется localStorage.');
-  }
   
   achievementCards.forEach((card, index) => {
     const cardId = `card-${index}`;
     
     const voteSection = document.createElement('div');
     voteSection.className = 'vote-section';
+    voteSection.style.display = 'flex';
+    voteSection.style.gap = '12px';
     
-    const voteBtn = document.createElement('button');
-    voteBtn.className = 'vote-btn';
-    voteBtn.innerHTML = '👍';
+    // Реакции: 👍 ❤️ 🔥 👏
+    const reactions = ['👍', '❤️', '🔥', '👏'];
     
-    const voteCountEl = document.createElement('span');
-    voteCountEl.className = 'vote-count';
-    voteCountEl.textContent = '0';
-    
-    if (useFirebase) {
-      // Firebase режим
-      window.firebaseDB.getLikes(cardId, (count) => {
-        voteCountEl.textContent = count;
-      });
+    reactions.forEach((emoji, emojiIndex) => {
+      const reactionId = `${cardId}-${emoji}`;
       
-      window.firebaseDB.hasUserVoted(cardId, (hasVoted) => {
-        voteBtn.style.opacity = hasVoted ? '1' : '0.4';
-        if (hasVoted) voteBtn.classList.add('voted');
-      });
+      const voteBtn = document.createElement('button');
+      voteBtn.className = 'vote-btn';
+      voteBtn.innerHTML = emoji;
+    
+      const voteCountEl = document.createElement('span');
+      voteCountEl.className = 'vote-count';
+      voteCountEl.textContent = '0';
       
-      voteBtn.onclick = (e) => {
-        e.stopPropagation();
+      const wrapper = document.createElement('div');
+      wrapper.style.display = 'flex';
+      wrapper.style.alignItems = 'center';
+      wrapper.style.gap = '4px';
+      
+      (async () => {
+        const { data } = await supabase.from('reactions').select('count').eq('card_id', reactionId).eq('reaction', emoji).single();
+        voteCountEl.textContent = data?.count || 0;
         
-        window.firebaseDB.hasUserVoted(cardId, (hasVoted) => {
-          if (hasVoted) {
-            window.firebaseDB.removeLike(cardId);
-            window.firebaseDB.setUserVote(cardId, false);
-            voteBtn.style.opacity = '0.4';
-            voteBtn.classList.remove('voted');
-          } else {
-            window.firebaseDB.addLike(cardId);
-            window.firebaseDB.setUserVote(cardId, true);
-            voteBtn.style.opacity = '1';
-            voteBtn.classList.add('voted');
-          }
-          
-          voteBtn.style.transform = 'scale(1.3)';
-          setTimeout(() => { voteBtn.style.transform = 'scale(1)'; }, 200);
-        });
-      };
-    } else {
-      // localStorage fallback
-      const votes = JSON.parse(localStorage.getItem('digestVotes') || '{}');
-      const userVotes = JSON.parse(localStorage.getItem('digestUserVotes') || '[]');
+        const userVotes = JSON.parse(localStorage.getItem('digestUserVotes') || '[]');
+        voteBtn.style.opacity = userVotes.includes(reactionId) ? '1' : '0.4';
+      })();
       
-      voteCountEl.textContent = votes[cardId] || 0;
-      voteBtn.style.opacity = userVotes.includes(cardId) ? '1' : '0.4';
-      
-      voteBtn.onclick = (e) => {
+      voteBtn.onclick = async (e) => {
         e.stopPropagation();
-        const votes = JSON.parse(localStorage.getItem('digestVotes') || '{}');
         const userVotes = JSON.parse(localStorage.getItem('digestUserVotes') || '[]');
         
-        if (userVotes.includes(cardId)) {
-          votes[cardId] = Math.max(0, (votes[cardId] || 0) - 1);
-          userVotes.splice(userVotes.indexOf(cardId), 1);
+        if (userVotes.includes(reactionId)) {
+          const { data } = await supabase.from('reactions').select('count').eq('card_id', reactionId).eq('reaction', emoji).single();
+          const newCount = Math.max(0, (data?.count || 0) - 1);
+          await supabase.from('reactions').upsert({ card_id: reactionId, reaction: emoji, count: newCount });
+          voteCountEl.textContent = newCount;
+          userVotes.splice(userVotes.indexOf(reactionId), 1);
           voteBtn.style.opacity = '0.4';
         } else {
-          votes[cardId] = (votes[cardId] || 0) + 1;
-          userVotes.push(cardId);
+          const { data } = await supabase.from('reactions').select('count').eq('card_id', reactionId).eq('reaction', emoji).single();
+          const newCount = (data?.count || 0) + 1;
+          await supabase.from('reactions').upsert({ card_id: reactionId, reaction: emoji, count: newCount });
+          voteCountEl.textContent = newCount;
+          userVotes.push(reactionId);
           voteBtn.style.opacity = '1';
         }
         
-        localStorage.setItem('digestVotes', JSON.stringify(votes));
         localStorage.setItem('digestUserVotes', JSON.stringify(userVotes));
-        voteCountEl.textContent = votes[cardId];
-        
         voteBtn.style.transform = 'scale(1.3)';
         setTimeout(() => { voteBtn.style.transform = 'scale(1)'; }, 200);
-      };
-    }
-    
-    voteSection.appendChild(voteBtn);
-    voteSection.appendChild(voteCountEl);
+      }
+      
+      wrapper.appendChild(voteBtn);
+      wrapper.appendChild(voteCountEl);
+      voteSection.appendChild(wrapper);
+    });
     
     const article = card.querySelector('article');
     if (article) {
@@ -255,13 +233,17 @@ function initVoting() {
   });
 }
 
-// ============ ПОЗДРАВЛЕНИЯ С FIREBASE ============
-function initClapReactions() {
+// ============ ПОЗДРАВЛЕНИЯ С SUPABASE ============
+async function initClapReactions() {
   const trainingCards = document.querySelectorAll('#training .card');
-  const useFirebase = typeof window.firebaseDB !== 'undefined';
   
   trainingCards.forEach((card, index) => {
     const cardId = `training-${index}`;
+    
+    const voteSection = document.createElement('div');
+    voteSection.className = 'vote-section';
+    voteSection.style.display = 'flex';
+    voteSection.style.gap = '12px';
     
     const clapBtn = document.createElement('button');
     clapBtn.className = 'vote-btn';
@@ -273,95 +255,49 @@ function initClapReactions() {
     clapCountEl.className = 'vote-count';
     clapCountEl.textContent = '0';
     
-    if (useFirebase) {
-      window.firebaseDB.getLikes(cardId, (count) => {
-        clapCountEl.textContent = count;
-      });
+    (async () => {
+      const { data } = await supabase.from('reactions').select('count').eq('card_id', cardId).eq('reaction', '🎉').single();
+      clapCountEl.textContent = data?.count || 0;
       
-      window.firebaseDB.hasUserVoted(cardId, (hasVoted) => {
-        clapBtn.style.opacity = hasVoted ? '0.4' : '1';
-      });
-      
-      clapBtn.onclick = (e) => {
-        e.stopPropagation();
-        
-        window.firebaseDB.hasUserVoted(cardId, (hasVoted) => {
-          if (hasVoted) {
-            window.firebaseDB.removeLike(cardId);
-            window.firebaseDB.setUserVote(cardId, false);
-            clapBtn.style.opacity = '1';
-          } else {
-            window.firebaseDB.addLike(cardId);
-            window.firebaseDB.setUserVote(cardId, true);
-            clapBtn.style.opacity = '0.4';
-            
-            for (let i = 0; i < 5; i++) {
-              setTimeout(() => {
-                const confetti = document.createElement('div');
-                confetti.textContent = '🎉';
-                confetti.style.cssText = `
-                  position: absolute;
-                  font-size: 2rem;
-                  pointer-events: none;
-                  animation: clap-fly 1s ease-out forwards;
-                  left: ${e.clientX}px;
-                  top: ${e.clientY}px;
-                  z-index: 9999;
-                `;
-                document.body.appendChild(confetti);
-                setTimeout(() => confetti.remove(), 1000);
-              }, i * 100);
-            }
-          }
-          
-          clapBtn.style.transform = 'scale(1.3)';
-          setTimeout(() => { clapBtn.style.transform = 'scale(1)'; }, 200);
-        });
-      };
-    } else {
-      // localStorage fallback
-      const clapVotes = JSON.parse(localStorage.getItem('digestClapVotes') || '{}');
+      const userClaps = JSON.parse(localStorage.getItem('digestUserClaps') || '[]');
+      clapBtn.style.opacity = userClaps.includes(cardId) ? '0.4' : '1';
+    })();
+    
+    clapBtn.onclick = async (e) => {
+      e.stopPropagation();
       const userClaps = JSON.parse(localStorage.getItem('digestUserClaps') || '[]');
       
-      clapCountEl.textContent = clapVotes[cardId] || 0;
-      clapBtn.style.opacity = userClaps.includes(cardId) ? '0.4' : '1';
-      
-      clapBtn.onclick = (e) => {
-        e.stopPropagation();
-        const clapVotes = JSON.parse(localStorage.getItem('digestClapVotes') || '{}');
-        const userClaps = JSON.parse(localStorage.getItem('digestUserClaps') || '[]');
+      if (userClaps.includes(cardId)) {
+        const { data } = await supabase.from('reactions').select('count').eq('card_id', cardId).eq('reaction', '🎉').single();
+        const newCount = Math.max(0, (data?.count || 0) - 1);
+        await supabase.from('reactions').upsert({ card_id: cardId, reaction: '🎉', count: newCount });
+        clapCountEl.textContent = newCount;
+        userClaps.splice(userClaps.indexOf(cardId), 1);
+        clapBtn.style.opacity = '1';
+      } else {
+        const { data } = await supabase.from('reactions').select('count').eq('card_id', cardId).eq('reaction', '🎉').single();
+        const newCount = (data?.count || 0) + 1;
+        await supabase.from('reactions').upsert({ card_id: cardId, reaction: '🎉', count: newCount });
+        clapCountEl.textContent = newCount;
+        userClaps.push(cardId);
+        clapBtn.style.opacity = '0.4';
         
-        if (userClaps.includes(cardId)) {
-          clapVotes[cardId] = Math.max(0, (clapVotes[cardId] || 0) - 1);
-          userClaps.splice(userClaps.indexOf(cardId), 1);
-          clapBtn.style.opacity = '1';
-        } else {
-          clapVotes[cardId] = (clapVotes[cardId] || 0) + 1;
-          userClaps.push(cardId);
-          clapBtn.style.opacity = '0.4';
-          
-          for (let i = 0; i < 5; i++) {
-            setTimeout(() => {
-              const confetti = document.createElement('div');
-              confetti.textContent = '🎉';
-              confetti.style.cssText = `position: absolute; font-size: 2rem; pointer-events: none; animation: clap-fly 1s ease-out forwards; left: ${e.clientX}px; top: ${e.clientY}px; z-index: 9999;`;
-              document.body.appendChild(confetti);
-              setTimeout(() => confetti.remove(), 1000);
-            }, i * 100);
-          }
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            const confetti = document.createElement('div');
+            confetti.textContent = '🎉';
+            confetti.style.cssText = `position: absolute; font-size: 2rem; pointer-events: none; animation: clap-fly 1s ease-out forwards; left: ${e.clientX}px; top: ${e.clientY}px; z-index: 9999;`;
+            document.body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 1000);
+          }, i * 100);
         }
-        
-        localStorage.setItem('digestClapVotes', JSON.stringify(clapVotes));
-        localStorage.setItem('digestUserClaps', JSON.stringify(userClaps));
-        clapCountEl.textContent = clapVotes[cardId];
-        
-        clapBtn.style.transform = 'scale(1.3)';
-        setTimeout(() => { clapBtn.style.transform = 'scale(1)'; }, 200);
-      };
+      }
+      
+      localStorage.setItem('digestUserClaps', JSON.stringify(userClaps));
+      clapBtn.style.transform = 'scale(1.3)';
+      setTimeout(() => { clapBtn.style.transform = 'scale(1)'; }, 200);
     }
     
-    const voteSection = document.createElement('div');
-    voteSection.className = 'vote-section';
     voteSection.appendChild(clapBtn);
     voteSection.appendChild(clapCountEl);
     
@@ -388,8 +324,86 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
+// ============ НОВЫЙ ГОД РЕАКЦИИ С SUPABASE ============
+async function initNewYearReactions() {
+  const newyearCards = document.querySelectorAll('#newyear .card');
+  
+  newyearCards.forEach((card, index) => {
+    const cardId = `newyear-${index}`;
+    
+    const voteSection = document.createElement('div');
+    voteSection.className = 'vote-section';
+    voteSection.style.display = 'flex';
+    voteSection.style.gap = '12px';
+    voteSection.style.marginTop = '16px';
+    
+    const reactions = ['👍', '😘', '🎄', '🎁'];
+    
+    reactions.forEach((emoji) => {
+      const reactionId = `${cardId}-${emoji}`;
+      
+      const btn = document.createElement('button');
+      btn.className = 'vote-btn';
+      btn.innerHTML = emoji;
+      btn.style.fontSize = '1.8rem';
+      
+      const countEl = document.createElement('span');
+      countEl.className = 'vote-count';
+      countEl.textContent = '0';
+      
+      const wrapper = document.createElement('div');
+      wrapper.style.display = 'flex';
+      wrapper.style.alignItems = 'center';
+      wrapper.style.gap = '4px';
+      
+      (async () => {
+        const { data } = await supabase.from('reactions').select('count').eq('card_id', reactionId).eq('reaction', emoji).single();
+        countEl.textContent = data?.count || 0;
+        
+        const userVotes = JSON.parse(localStorage.getItem('digestNYUserVotes') || '[]');
+        btn.style.opacity = userVotes.includes(reactionId) ? '1' : '0.4';
+      })();
+      
+      btn.onclick = async (e) => {
+        e.stopPropagation();
+        const userVotes = JSON.parse(localStorage.getItem('digestNYUserVotes') || '[]');
+        
+        if (userVotes.includes(reactionId)) {
+          const { data } = await supabase.from('reactions').select('count').eq('card_id', reactionId).eq('reaction', emoji).single();
+          const newCount = Math.max(0, (data?.count || 0) - 1);
+          await supabase.from('reactions').upsert({ card_id: reactionId, reaction: emoji, count: newCount });
+          countEl.textContent = newCount;
+          userVotes.splice(userVotes.indexOf(reactionId), 1);
+          btn.style.opacity = '0.4';
+        } else {
+          const { data } = await supabase.from('reactions').select('count').eq('card_id', reactionId).eq('reaction', emoji).single();
+          const newCount = (data?.count || 0) + 1;
+          await supabase.from('reactions').upsert({ card_id: reactionId, reaction: emoji, count: newCount });
+          countEl.textContent = newCount;
+          userVotes.push(reactionId);
+          btn.style.opacity = '1';
+        }
+        
+        localStorage.setItem('digestNYUserVotes', JSON.stringify(userVotes));
+        btn.style.transform = 'scale(1.3)';
+        setTimeout(() => { btn.style.transform = 'scale(1)'; }, 200);
+      }
+      
+      wrapper.appendChild(btn);
+      wrapper.appendChild(countEl);
+      voteSection.appendChild(wrapper);
+    });
+    
+    const article = card.querySelector('article');
+    if (article) {
+      article.appendChild(voteSection);
+    }
+  });
+}
+
 // Инициализация при загрузке
 setTimeout(() => {
   initVoting();
   initClapReactions();
+  initNewYearReactions();
 }, 500);

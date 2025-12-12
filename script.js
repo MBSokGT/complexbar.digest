@@ -19,6 +19,7 @@ const throttle = (fn, limit = 300) => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  
   const sections = Array.from(document.querySelectorAll('header.hero, .section'));
   let indicator = document.getElementById('section-indicator');
   let forwardBtn = document.querySelector('.cta-btn.floating');
@@ -525,6 +526,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (navigator.vibrate) navigator.vibrate(10);
   });
+  
+  // Mobile: tap on top 100px of screen to scroll to top
+  let tapStartY = 0;
+  document.addEventListener('touchstart', (e) => {
+    tapStartY = e.touches[0].clientY;
+  }, { passive: true });
+  
+  document.addEventListener('touchend', (e) => {
+    const tapEndY = e.changedTouches[0].clientY;
+    const tapY = (tapStartY + tapEndY) / 2;
+    
+    if (tapY < 100 && window.scrollY > 300) {
+      if (sections[0]) {
+        sections[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      if (navigator.vibrate) navigator.vibrate(10);
+    }
+  }, { passive: true });
 
 
 
@@ -543,9 +564,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dots[idx]) dots[idx].classList.add('active');
       }
       
-      // Update forward button visibility
-      const isNewYearSection = entry.target.id === 'newyear';
-      if (isNewYearSection || idx >= sections.length - 1) {
+      // Update forward button visibility - hide only on last section
+      if (idx >= sections.length - 1) {
         btnForward.style.display = 'none';
         btnForward.setAttribute('aria-hidden', 'true');
       } else {
@@ -605,13 +625,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     console.log('Current section index:', currentIndex, 'Total sections:', sections.length);
     
-    // Update forward button - hide on last section (New Year greeting)
+    // Update forward button - hide only on last section
     const isLastSection = currentIndex >= sections.length - 1;
-    const isNewYearSection = sections[currentIndex]?.id === 'newyear';
     
-    if (isLastSection || isNewYearSection) {
+    if (isLastSection) {
       btnForward.style.display = 'none';
-      console.log('Hiding forward button - last/NY section');
+      console.log('Hiding forward button - last section');
     } else {
       btnForward.style.display = 'block';
       console.log('Showing forward button');

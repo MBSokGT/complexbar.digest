@@ -10,8 +10,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="format-detection" content="telephone=no">
     <title>Корпоративный дайджест - ComplexBar</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="premium-enhancements.css">
+    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="stylesheet" href="premium-enhancements.css?v=2">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
     <!-- Preload для улучшения производительности -->
     <link rel="preload" as="image" href="assets/logo.png">
@@ -34,7 +34,7 @@
     <div class="hero-top">
         <h1 class="fade-in">Корпоративный дайджест</h1>
     </div>
-    <div class="hero-desc">В этом выпуске мы делимся амбициозными планами на 2026-й, кейсами ключевых отделов компании.</div>
+    <div class="hero-desc">В этом выпуске мы делимся амбициозными планами на 2026-й,<br>кейсами ключевых отделов компании.</div>
     <div class="hero-desc">Вдохновляемся вместе на новые свершения!</div>
     <div class="hero-issue">Выпуск №3 Декабрь 2025</div>
     <button class="cta-btn primary slide-up floating" aria-label="Перейти к следующему блоку">Вперёд</button>
@@ -241,16 +241,16 @@
                         <div class="card-carousel">
                             <div class="carousel-container">
                                 <div class="carousel-slide active">
-                                    <img src="assets/Yaroslavl1.jpg" alt="Мастер-класс Ярославль 1">
+                                    <img src="assets/yaroslavl1.jpg" alt="Мастер-класс Ярославль 1">
                                 </div>
                                 <div class="carousel-slide">
-                                    <img src="assets/Yaroslavl2.jpg" alt="Мастер-класс Ярославль 2">
+                                    <img src="assets/yaroslavl2.jpg" alt="Мастер-класс Ярославль 2">
                                 </div>
                                 <div class="carousel-slide">
-                                    <img src="assets/Yaroslavl3.jpg" alt="Мастер-класс Ярославль 3">
+                                    <img src="assets/yaroslavl3.jpg" alt="Мастер-класс Ярославль 3">
                                 </div>
                                 <div class="carousel-slide">
-                                    <img src="assets/Yaroslavl4.jpg" alt="Мастер-класс Ярославль 4">
+                                    <img src="assets/yaroslavl4.jpg" alt="Мастер-класс Ярославль 4">
                                 </div>
                                 <button class="carousel-arrow prev" aria-label="Предыдущее фото">‹</button>
                                 <button class="carousel-arrow next" aria-label="Следующее фото">›</button>
@@ -473,7 +473,7 @@
     <section id="sales-assistant" class="section">
         <div class="container">
             <h2 class="fade-in">🤖 Ассистент продаж</h2>
-            <div class="cards">
+            <div class="cards single-card">
                 <div class="card slide-up" tabindex="0" role="button" aria-label="Ассистент продаж">
                     <article>
                         <p>Информация об ассистенте продаж</p>
@@ -607,7 +607,7 @@
     <section id="winter" class="section">
         <div class="container">
             <h2 class="fade-in">❄️ Зимняя сказка: лучшие заведения…</h2>
-            <div class="cards">
+            <div class="cards single-card">
                 <div class="card slide-up" tabindex="0" role="button" aria-label="Лучшие зимние заведения" data-modal="winter-favorites">
                     <article>
                         <p>Рекомендации и обзоры лучших заведений для зимних вечеров.</p>
@@ -620,9 +620,9 @@
     <section id="newyear" class="section alt">
         <div class="container">
             <h2 class="fade-in">
-              <a href="https://youtu.be/P2yu6gF8Zjo?si=9laMGwwwPKAc3X6U" target="_blank" rel="noopener noreferrer">🎄</a> С Новым Годом!
+              <a href="https://youtu.be/P2yu6gF8Zjo?si=9laMGwwwPKAc3X6U" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">🎄</a> С Новым Годом!
             </h2>
-            <div class="cards">
+            <div class="cards single-card">
                 <div class="card">
                     <article style="display: flex; align-items: center; gap: 20px;">
                         <img src="assets/hrd.png" alt="С Новым Годом" style="border-radius: 50%; width: 150px; height: 150px; object-fit: cover; flex-shrink: 0;">
@@ -642,21 +642,16 @@
             </div>
         </div>
     </section>
-</div>
 
-    <section id="quiz" class="section">
+    <section id="fortune" class="section">
         <div class="container">
-            <h2 class="fade-in">🎮 Проверь свою внимательность!</h2>
-            <div class="quiz-container" style="background: rgba(255,255,255,0.95); padding: 30px; border-radius: 16px; max-width: 600px; margin: 0 auto;">
-                <div id="quiz-content">
-                    <div class="quiz-question" id="question" style="font-size: 1.2rem; font-weight: 700; color: #2a0808; margin-bottom: 20px;"></div>
-                    <div class="quiz-options" id="options" style="display: flex; flex-direction: column; gap: 12px;"></div>
-                    <div class="quiz-result" id="result" style="display: none; margin-top: 20px; padding: 20px; background: rgba(190,3,24,0.1); border-radius: 12px; text-align: center; font-size: 1.1rem; font-weight: 700; color: #2a0808;"></div>
-                    <button class="quiz-next-btn" id="next-btn" style="display: none; margin-top: 20px; background: #be0318; color: #fff; border: none; padding: 12px 30px; border-radius: 25px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease;">Следующий вопрос</button>
-                </div>
+            <h2 class="fade-in">🥠 Печенье с предсказаниями</h2>
+            <div class="remix-app" data-hash="8026314cda5a9cac">
+                <script src="https://p.interacty.me/l.js" async></script>
             </div>
         </div>
     </section>
+</div>
 
 <div style="text-align: center; padding: 60px 20px 40px 20px; background: #be0318;">
     <h2 style="color: #fff; font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 800; margin: 0;">🙏 Спасибо за внимание</h2>
@@ -670,13 +665,11 @@
 
 <nav id="section-indicator" class="section-indicator" aria-hidden="true"></nav>
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-<script src="firebase-config.js"></script>
-
-<script src="script.js"></script>
-<script src="quiz-voting.js"></script>
+<!-- Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js?v=3"></script>
+<script src="script.js?v=3"></script>
+<script src="quiz-voting.js?v=3"></script>
 </main>
 
 </body>
