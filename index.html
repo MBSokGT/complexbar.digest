@@ -630,6 +630,29 @@
             <h2 class="fade-in">
               <a href="https://youtu.be/WeT10Nic1_A?si=Hp1CK_40IwF7iCYI" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">🎄</a> С Новым Годом!
             </h2>
+            
+            <div id="countdown" style="background: rgba(255,255,255,0.95); border-radius: 16px; padding: 24px; margin: 0 auto 24px; max-width: 600px; box-shadow: 0 8px 32px rgba(0,0,0,0.15);">
+                <div style="text-align: center; color: #2a0808; margin-bottom: 16px; font-size: 1.1rem; font-weight: 600;">До Нового Года осталось:</div>
+                <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+                    <div style="text-align: center;">
+                        <div id="days" style="font-size: 2.5rem; font-weight: 900; color: #be0318; line-height: 1;">0</div>
+                        <div style="font-size: 0.85rem; color: #4c0010; margin-top: 4px;">дней</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div id="hours" style="font-size: 2.5rem; font-weight: 900; color: #be0318; line-height: 1;">0</div>
+                        <div style="font-size: 0.85rem; color: #4c0010; margin-top: 4px;">часов</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div id="minutes" style="font-size: 2.5rem; font-weight: 900; color: #be0318; line-height: 1;">0</div>
+                        <div style="font-size: 0.85rem; color: #4c0010; margin-top: 4px;">минут</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div id="seconds" style="font-size: 2.5rem; font-weight: 900; color: #be0318; line-height: 1;">0</div>
+                        <div style="font-size: 0.85rem; color: #4c0010; margin-top: 4px;">секунд</div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="cards single-card">
                 <div class="card">
                     <article style="display: flex; align-items: center; gap: 20px;">
@@ -684,6 +707,33 @@
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
+
+<!-- Countdown Timer -->
+<script>
+function updateCountdown() {
+  const newYear = new Date('2026-01-01T00:00:00+03:00');
+  const now = new Date();
+  const diff = newYear - now;
+  
+  if (diff <= 0) {
+    document.getElementById('countdown').innerHTML = '<div style="text-align: center; color: #be0318; font-size: 2rem; font-weight: 900;">🎉 С Новым Годом! 🎉</div>';
+    return;
+  }
+  
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+  
+  document.getElementById('days').textContent = days;
+  document.getElementById('hours').textContent = hours;
+  document.getElementById('minutes').textContent = minutes;
+  document.getElementById('seconds').textContent = seconds;
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
 </main>
 
 </body>
