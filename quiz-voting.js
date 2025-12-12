@@ -200,17 +200,18 @@ async function initVoting() {
         e.stopPropagation();
         const userVotes = JSON.parse(localStorage.getItem('digestUserVotes') || '[]');
         
+        const { data: current } = await supabase.from('reactions').select('count').eq('card_id', reactionId).eq('reaction', emoji).maybeSingle();
+        const currentCount = current?.count || 0;
+        
         if (userVotes.includes(reactionId)) {
-          const { data } = await supabase.from('reactions').select('count').eq('card_id', reactionId).eq('reaction', emoji).single();
-          const newCount = Math.max(0, (data?.count || 0) - 1);
-          await supabase.from('reactions').upsert({ card_id: reactionId, reaction: emoji, count: newCount });
+          const newCount = Math.max(0, currentCount - 1);
+          await supabase.from('reactions').upsert({ card_id: reactionId, reaction: emoji, count: newCount }, { onConflict: 'card_id,reaction' });
           voteCountEl.textContent = newCount;
           userVotes.splice(userVotes.indexOf(reactionId), 1);
           voteBtn.style.opacity = '0.4';
         } else {
-          const { data } = await supabase.from('reactions').select('count').eq('card_id', reactionId).eq('reaction', emoji).single();
-          const newCount = (data?.count || 0) + 1;
-          await supabase.from('reactions').upsert({ card_id: reactionId, reaction: emoji, count: newCount });
+          const newCount = currentCount + 1;
+          await supabase.from('reactions').upsert({ card_id: reactionId, reaction: emoji, count: newCount }, { onConflict: 'card_id,reaction' });
           voteCountEl.textContent = newCount;
           userVotes.push(reactionId);
           voteBtn.style.opacity = '1';
@@ -267,17 +268,18 @@ async function initClapReactions() {
       e.stopPropagation();
       const userClaps = JSON.parse(localStorage.getItem('digestUserClaps') || '[]');
       
+      const { data: current } = await supabase.from('reactions').select('count').eq('card_id', cardId).eq('reaction', '🎉').maybeSingle();
+      const currentCount = current?.count || 0;
+      
       if (userClaps.includes(cardId)) {
-        const { data } = await supabase.from('reactions').select('count').eq('card_id', cardId).eq('reaction', '🎉').single();
-        const newCount = Math.max(0, (data?.count || 0) - 1);
-        await supabase.from('reactions').upsert({ card_id: cardId, reaction: '🎉', count: newCount });
+        const newCount = Math.max(0, currentCount - 1);
+        await supabase.from('reactions').upsert({ card_id: cardId, reaction: '🎉', count: newCount }, { onConflict: 'card_id,reaction' });
         clapCountEl.textContent = newCount;
         userClaps.splice(userClaps.indexOf(cardId), 1);
         clapBtn.style.opacity = '1';
       } else {
-        const { data } = await supabase.from('reactions').select('count').eq('card_id', cardId).eq('reaction', '🎉').single();
-        const newCount = (data?.count || 0) + 1;
-        await supabase.from('reactions').upsert({ card_id: cardId, reaction: '🎉', count: newCount });
+        const newCount = currentCount + 1;
+        await supabase.from('reactions').upsert({ card_id: cardId, reaction: '🎉', count: newCount }, { onConflict: 'card_id,reaction' });
         clapCountEl.textContent = newCount;
         userClaps.push(cardId);
         clapBtn.style.opacity = '0.4';
@@ -368,17 +370,18 @@ async function initNewYearReactions() {
         e.stopPropagation();
         const userVotes = JSON.parse(localStorage.getItem('digestNYUserVotes') || '[]');
         
+        const { data: current } = await supabase.from('reactions').select('count').eq('card_id', reactionId).eq('reaction', emoji).maybeSingle();
+        const currentCount = current?.count || 0;
+        
         if (userVotes.includes(reactionId)) {
-          const { data } = await supabase.from('reactions').select('count').eq('card_id', reactionId).eq('reaction', emoji).single();
-          const newCount = Math.max(0, (data?.count || 0) - 1);
-          await supabase.from('reactions').upsert({ card_id: reactionId, reaction: emoji, count: newCount });
+          const newCount = Math.max(0, currentCount - 1);
+          await supabase.from('reactions').upsert({ card_id: reactionId, reaction: emoji, count: newCount }, { onConflict: 'card_id,reaction' });
           countEl.textContent = newCount;
           userVotes.splice(userVotes.indexOf(reactionId), 1);
           btn.style.opacity = '0.4';
         } else {
-          const { data } = await supabase.from('reactions').select('count').eq('card_id', reactionId).eq('reaction', emoji).single();
-          const newCount = (data?.count || 0) + 1;
-          await supabase.from('reactions').upsert({ card_id: reactionId, reaction: emoji, count: newCount });
+          const newCount = currentCount + 1;
+          await supabase.from('reactions').upsert({ card_id: reactionId, reaction: emoji, count: newCount }, { onConflict: 'card_id,reaction' });
           countEl.textContent = newCount;
           userVotes.push(reactionId);
           btn.style.opacity = '1';
