@@ -196,10 +196,13 @@ async function initVoting() {
         voteBtn.style.opacity = userVotes.includes(reactionId) ? '1' : '0.4';
       })();
       
+      let isProcessing = false;
       voteBtn.onclick = async (e) => {
         e.stopPropagation();
-        const userVotes = JSON.parse(localStorage.getItem('digestUserVotes') || '[]');
+        if (isProcessing) return;
+        isProcessing = true;
         
+        const userVotes = JSON.parse(localStorage.getItem('digestUserVotes') || '[]');
         const { data: current } = await supabase.from('reactions').select('count').eq('card_id', reactionId).eq('reaction', emoji).maybeSingle();
         const currentCount = current?.count || 0;
         
@@ -220,6 +223,7 @@ async function initVoting() {
         localStorage.setItem('digestUserVotes', JSON.stringify(userVotes));
         voteBtn.style.transform = 'scale(1.3)';
         setTimeout(() => { voteBtn.style.transform = 'scale(1)'; }, 200);
+        isProcessing = false;
       }
       
       wrapper.appendChild(voteBtn);
@@ -264,10 +268,13 @@ async function initClapReactions() {
       clapBtn.style.opacity = userClaps.includes(cardId) ? '0.4' : '1';
     })();
     
+    let isProcessing = false;
     clapBtn.onclick = async (e) => {
       e.stopPropagation();
-      const userClaps = JSON.parse(localStorage.getItem('digestUserClaps') || '[]');
+      if (isProcessing) return;
+      isProcessing = true;
       
+      const userClaps = JSON.parse(localStorage.getItem('digestUserClaps') || '[]');
       const { data: current } = await supabase.from('reactions').select('count').eq('card_id', cardId).eq('reaction', '🎉').maybeSingle();
       const currentCount = current?.count || 0;
       
@@ -298,6 +305,7 @@ async function initClapReactions() {
       localStorage.setItem('digestUserClaps', JSON.stringify(userClaps));
       clapBtn.style.transform = 'scale(1.3)';
       setTimeout(() => { clapBtn.style.transform = 'scale(1)'; }, 200);
+      isProcessing = false;
     }
     
     voteSection.appendChild(clapBtn);
@@ -366,10 +374,13 @@ async function initNewYearReactions() {
         btn.style.opacity = userVotes.includes(reactionId) ? '1' : '0.4';
       })();
       
+      let isProcessing = false;
       btn.onclick = async (e) => {
         e.stopPropagation();
-        const userVotes = JSON.parse(localStorage.getItem('digestNYUserVotes') || '[]');
+        if (isProcessing) return;
+        isProcessing = true;
         
+        const userVotes = JSON.parse(localStorage.getItem('digestNYUserVotes') || '[]');
         const { data: current } = await supabase.from('reactions').select('count').eq('card_id', reactionId).eq('reaction', emoji).maybeSingle();
         const currentCount = current?.count || 0;
         
@@ -390,6 +401,7 @@ async function initNewYearReactions() {
         localStorage.setItem('digestNYUserVotes', JSON.stringify(userVotes));
         btn.style.transform = 'scale(1.3)';
         setTimeout(() => { btn.style.transform = 'scale(1)'; }, 200);
+        isProcessing = false;
       }
       
       wrapper.appendChild(btn);
