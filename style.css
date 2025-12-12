@@ -560,6 +560,14 @@ header.hero::before {
 	font-weight: 700;
 }
 
+.card .accent {
+	color: #be0318;
+	font-weight: 600;
+	background: rgba(190,3,24,0.08);
+	padding: 2px 6px;
+	border-radius: 4px;
+}
+
 .card .highlight-box {
 	background: rgba(190,3,24,0.12);
 	border-left: 4px solid #be0318;
