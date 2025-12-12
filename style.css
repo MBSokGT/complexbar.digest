@@ -75,6 +75,9 @@ body::-webkit-scrollbar {
 	--card-radius: 16px;
 	--max-width: 1400px;
 	--gap: 28px;
+	--card-padding: 20px;
+	--card-padding-mobile: 14px;
+	--card-row-gap: 32px;
 	--transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -348,8 +351,8 @@ header.hero::before {
 .section .cards {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	gap: 32px;
-	row-gap: 36px;
+	gap: var(--gap);
+	row-gap: var(--card-row-gap);
 	margin-top: 8px;
 	width: 100%;
 	max-width: 100%;
@@ -368,6 +371,34 @@ header.hero::before {
 	}
 }
 
+/* Ensure consistent padding/box-sizing for cards inside sections */
+.section .cards > .card {
+	box-sizing: border-box;
+	padding: var(--card-padding);
+}
+
+/* Mobile: slightly smaller padding */
+@media (max-width: 768px) {
+	.section .cards > .card {
+		padding: var(--card-padding-mobile);
+	}
+}
+
+/* Constrain large images inside cards to avoid pushing layout */
+.section .cards > .card img {
+	max-height: 380px;
+	width: 100%;
+	height: auto;
+	object-fit: cover;
+	display: block;
+}
+
+/* Ensure paragraph text wraps and has comfortable line-height */
+.section .cards > .card p {
+	line-height: 1.6;
+	word-break: break-word;
+}
+
 .section .cards.single-card {
 	grid-template-columns: 1fr;
 }
@@ -375,7 +406,7 @@ header.hero::before {
 @media (max-width: 1024px) {
 	.section .cards {
 		grid-template-columns: repeat(2, 1fr);
-		row-gap: 28px;
+		row-gap: calc(var(--card-row-gap) - 4px);
 	}
 }
 
@@ -383,7 +414,7 @@ header.hero::before {
 	.section .cards {
 		grid-template-columns: 1fr;
 		gap: 14px;
-		row-gap: 18px;
+		row-gap: calc(var(--card-row-gap) - 14px);
 	}
 }
 
@@ -420,7 +451,7 @@ header.hero::before {
 .card {
 	background: rgba(255,255,255,0.95);
 	color: #2a0808;
-	padding: 24px;
+	padding: var(--card-padding);
 	border-radius: var(--card-radius);
 	box-shadow: 0 8px 32px rgba(0,0,0,0.15);
 	cursor: default;
