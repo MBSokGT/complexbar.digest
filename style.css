@@ -728,14 +728,15 @@ html {
 .lightrope {
 	text-align: center;
 	white-space: nowrap;
-	overflow: hidden;
-	position: absolute;
-	z-index: 150;
+	overflow: visible;
+	position: fixed;
+	z-index: 9999;
 	margin: 0;
 	padding: 0;
 	pointer-events: none;
 	width: 100%;
 	top: 0;
+	left: 0;
 }
 
 .lightrope li {
@@ -807,6 +808,12 @@ html {
 
 .lightrope li:first-child {
 	margin-left: -40px;
+}
+
+@media (max-width: 768px) {
+	.lightrope li {
+		margin: 15px;
+	}
 }
 
 @keyframes flash-1 {
