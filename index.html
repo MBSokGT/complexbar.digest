@@ -16,7 +16,7 @@
     <meta property="og:type" content="website">
     <title>Корпоративный дайджест - ComplexBar</title>
     <link rel="stylesheet" href="style.css?v=7">
-    <link rel="stylesheet" href="premium-enhancements.css?v=7">
+
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
     <!-- Preload для улучшения производительности -->
     <link rel="preload" as="image" href="assets/logo.png">
@@ -262,7 +262,7 @@
                                 </div>
                                 <button class="carousel-arrow prev" aria-label="Предыдущее фото">‹</button>
                                 <button class="carousel-arrow next" aria-label="Следующее фото">›</button>
-                                <div class="carousel-counter"><span class="current">1</span> / <span class="total">4</span></div>
+                                <div class="carousel-counter"><span class="carousel-current">1</span> / <span class="carousel-total">4</span></div>
                             </div>
                         </div>
                         
@@ -658,7 +658,7 @@
                 <script src="https://p.interacty.me/l.js" async></script>
             </div>
             
-            <div id="countdown" style="background: rgba(255,255,255,0.95); border-radius: 16px; padding: 24px; margin: 32px auto 0; max-width: 600px; box-shadow: 0 8px 32px rgba(0,0,0,0.15);">
+            <div id="countdown" role="timer" aria-live="polite" aria-label="Обратный отсчет до Нового Года" style="background: rgba(255,255,255,0.95); border-radius: 16px; padding: 24px; margin: 32px auto 0; max-width: 600px; box-shadow: 0 8px 32px rgba(0,0,0,0.15);">
                 <div style="text-align: center; color: #2a0808; margin-bottom: 16px; font-size: 1.1rem; font-weight: 600;">До Нового Года осталось:</div>
                 <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
                     <div style="text-align: center;">
