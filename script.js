@@ -832,6 +832,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Christmas lights
   const lightsContainer = document.querySelector('.lights-container');
   if (lightsContainer) {
+    const wire = document.createElement('div');
+    wire.className = 'lights-wire';
+    lightsContainer.appendChild(wire);
+    
     const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
     const numLights = 20;
     for (let i = 0; i < numLights; i++) {
