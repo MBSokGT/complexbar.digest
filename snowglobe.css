@@ -1,4 +1,4 @@
-.ground{position:absolute;left:150px;top:50%;transform:translateY(-50%);z-index:100}
+.ground{position:absolute;left:220px;top:50%;transform:translateY(-50%);z-index:100}
 .snowglobe{width:400px;height:400px;margin:auto;position:relative}
 .sg-bg{width:400px;height:400px;border-radius:100%;position:absolute;top:0;background:rgba(255,255,255,0.5)}
 .sg-fg{width:400px;height:400px;border-radius:100%;position:absolute;top:0;background:linear-gradient(135deg,rgba(255,255,255,0.8) 0%,rgba(246,246,246,0.2) 47%,rgba(237,237,237,0) 100%)}
@@ -28,5 +28,5 @@
 .coal{width:5px;height:5px;border-radius:50%;position:absolute;box-shadow:120px -10px 0 0 black,137px -12px 0 0 black,119px 0 0 0 black,125px 2px 0 0 black,132px 2px 0 0 black,138px -2px 0 0 black,130px 15px 0 0 black,132px 27px 0 0 black,132px 39px 0 0 black}
 .carrot{width:0;height:0;border-left:20px solid #f98e13;border-top:3px solid transparent;border-bottom:3px solid transparent;position:absolute;left:130px;top:198px}
 .stand-curved{height:180px;width:500px;border-radius:50%;border:100px solid maroon;position:absolute;bottom:0;left:-70px}
-.stand-curved-wrap{width:560px;height:133.33px;position:absolute;bottom:-136px;margin-left:-80px;clip-path:polygon(30% 10%,70% 10%,80% 100%,20% 100%)}
+.stand-curved-wrap{width:560px;height:133.33px;position:absolute;bottom:-100px;margin-left:-80px;clip-path:polygon(30% 10%,70% 10%,80% 100%,20% 100%)}
 @media(max-width:768px){.ground{display:none}}
