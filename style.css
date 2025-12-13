@@ -889,6 +889,45 @@ header.hero + .section::before,
 	outline-offset: 3px;
 }
 
+/* Кнопка переключения снега */
+#btn-snow-toggle {
+	position: fixed;
+	bottom: 20px;
+	left: 20px;
+	width: 56px;
+	height: 56px;
+	background: #fff;
+	color: #be0318;
+	border: 2px solid #be0318;
+	border-radius: 50%;
+	font-size: 24px;
+	cursor: pointer;
+	z-index: 10000;
+	box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	user-select: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+#btn-snow-toggle:hover {
+	background: #fff;
+	color: #be0318;
+	transform: translateY(-3px);
+	box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+}
+#btn-snow-toggle:active {
+	transform: translateY(-1px);
+	box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+#btn-snow-toggle:focus-visible {
+	outline: 3px solid rgba(255,255,255,0.8);
+	outline-offset: 3px;
+}
+#btn-snow-toggle.paused {
+	opacity: 0.5;
+}
+
 /* Screen reader only */
 .sr-only {
 	position: absolute;
@@ -1104,6 +1143,14 @@ header.hero + .section::before,
 		display: flex !important;
 		bottom: 80px;
 		right: 16px;
+		width: 48px;
+		height: 48px;
+		font-size: 20px;
+	}
+	#btn-snow-toggle {
+		display: flex !important;
+		bottom: 80px;
+		left: 16px;
 		width: 48px;
 		height: 48px;
 		font-size: 20px;

@@ -766,6 +766,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const emojis = ['❄','❅','❆','❉'];
     const maxFlakes = 30;
+    let interval;
+    let isPaused = localStorage.getItem('snowPaused') === 'true';
 
     function spawn() {
       if (container.children.length >= maxFlakes) return;
@@ -779,8 +781,37 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => el.remove(), 20000);
     }
 
-    const interval = setInterval(spawn, 500);
-    window.__digestSnow = { stop: () => clearInterval(interval) };
+    function start() {
+      if (!interval) interval = setInterval(spawn, 500);
+      container.style.display = 'block';
+    }
+
+    function pause() {
+      if (interval) {
+        clearInterval(interval);
+        interval = null;
+      }
+      container.style.display = 'none';
+    }
+
+    if (!isPaused) start();
+    else pause();
+
+    const btnSnow = document.getElementById('btn-snow-toggle');
+    if (btnSnow) {
+      if (isPaused) btnSnow.classList.add('paused');
+      btnSnow.addEventListener('click', () => {
+        isPaused = !isPaused;
+        localStorage.setItem('snowPaused', isPaused);
+        if (isPaused) {
+          pause();
+          btnSnow.classList.add('paused');
+        } else {
+          start();
+          btnSnow.classList.remove('paused');
+        }
+      });
+    }
   })();
 
 
@@ -791,6 +822,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (resizeTimer) clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => initialActivate(), 150);
   });
+
+  // Snow toggle button always visible
+  const btnSnow = document.getElementById('btn-snow-toggle');
+  if (btnSnow) {
+    btnSnow.style.display = 'flex';
+  }
 
   // ============ АНИМАЦИЯ СЧЕТЧИКОВ ============
   function animateCounters() {
