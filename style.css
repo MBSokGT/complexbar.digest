@@ -1440,7 +1440,9 @@ header.hero + .section::before,
 .fs-carousel-container .carousel-slide img {
 	max-width: 100%;
 	max-height: 100%;
-	object-fit: contain;
+	width: auto;
+	height: auto;
+	object-fit: scale-down;
 	border-radius: 8px;
 }
 
