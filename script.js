@@ -1119,7 +1119,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <h3>🎊 Бинго Новогодних Праздников</h3>
       <div class="advent-days"></div>
       <div class="bingo-actions">
-        <button class="bingo-btn" onclick="window.print()">🖨️ Распечатать</button>
+        <button class="bingo-btn" id="btn-print-bingo">🖨️ Распечатать</button>
         <button class="bingo-btn" id="btn-save-pdf">💾 Сохранить PDF</button>
       </div>
     `;
@@ -1146,6 +1146,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     bingoSection.querySelector('.container').insertBefore(bingoMenu, bingoSection.querySelector('#countdown'));
     
+    // Print bingo
+    document.getElementById('btn-print-bingo').addEventListener('click', () => {
+      const printWindow = window.open('', '', 'width=800,height=600');
+      const bingoHTML = document.getElementById('bingo-card').cloneNode(true);
+      bingoHTML.querySelector('.bingo-actions').remove();
+      
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Бинго Новогодних Праздников</title>
+          <style>
+            @page { margin: 20mm; }
+            body { font-family: 'Montserrat', sans-serif; margin: 0; padding: 20px; background: white; }
+            .advent-menu { background: white; border: 3px solid #be0318; border-radius: 20px; padding: 24px; max-width: 500px; margin: 0 auto; box-shadow: none; }
+            .advent-menu h3 { color: #be0318; font-size: 1.4rem; margin: 0 0 16px 0; text-align: center; }
+            .advent-days { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+            .advent-day { background: white; border: 2px solid #be0318; border-radius: 10px; padding: 10px 6px; text-align: center; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; }
+            .advent-day.opened { background: #be0318; color: white; }
+            .advent-day-task { font-size: 0.75rem; color: #2a0808; font-weight: 600; line-height: 1.2; }
+            .advent-day.opened .advent-day-task { color: white; }
+          </style>
+        </head>
+        <body>${bingoHTML.outerHTML}</body>
+        </html>
+      `);
+      printWindow.document.close();
+      printWindow.print();
+    });
+    
     // PDF save
     document.getElementById('btn-save-pdf').addEventListener('click', () => {
       const printWindow = window.open('', '', 'width=800,height=600');
@@ -1158,13 +1188,14 @@ document.addEventListener('DOMContentLoaded', () => {
         <head>
           <title>Бинго Новогодних Праздников</title>
           <style>
-            body { font-family: 'Montserrat', sans-serif; margin: 20px; }
-            .advent-menu { background: linear-gradient(135deg, #faf8f3 0%, #ffffff 100%); border: 3px solid #be0318; border-radius: 20px; padding: 24px; max-width: 600px; margin: 0 auto; }
-            .advent-menu h3 { color: #be0318; font-size: 1.5rem; margin: 0 0 20px 0; text-align: center; }
-            .advent-days { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-            .advent-day { background: rgba(190,3,24,0.1); border: 2px solid #be0318; border-radius: 10px; padding: 12px 8px; text-align: center; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; }
+            @page { margin: 20mm; }
+            body { font-family: 'Montserrat', sans-serif; margin: 0; padding: 20px; background: white; }
+            .advent-menu { background: white; border: 3px solid #be0318; border-radius: 20px; padding: 24px; max-width: 500px; margin: 0 auto; box-shadow: none; }
+            .advent-menu h3 { color: #be0318; font-size: 1.4rem; margin: 0 0 16px 0; text-align: center; }
+            .advent-days { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+            .advent-day { background: white; border: 2px solid #be0318; border-radius: 10px; padding: 10px 6px; text-align: center; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; }
             .advent-day.opened { background: #be0318; color: white; }
-            .advent-day-task { font-size: 0.8rem; color: #2a0808; font-weight: 600; line-height: 1.2; }
+            .advent-day-task { font-size: 0.75rem; color: #2a0808; font-weight: 600; line-height: 1.2; }
             .advent-day.opened .advent-day-task { color: white; }
           </style>
         </head>

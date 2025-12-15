@@ -2435,3 +2435,15 @@ body.font-large h4 {
 		grid-template-columns: 1fr;
 	}
 }
+
+
+@media print {
+	body { background: white !important; }
+	.site { background: white !important; }
+	.section { background: white !important; }
+	.advent-menu { background: white !important; box-shadow: none !important; }
+	.advent-day { background: white !important; }
+	.advent-day.opened { background: #be0318 !important; }
+	.bingo-actions { display: none !important; }
+	header, footer, nav, .control-btn, #btn-snow-toggle, #btn-forward, #btn-back, #btn-top, #countdown, .remix-app, .search-panel, .settings-panel { display: none !important; }
+}
