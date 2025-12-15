@@ -1097,3 +1097,28 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+
+  // Бинго
+  const bingoTasks = ['Нарезать салаты','Запустить салюты','Подвести итоги года','Загадать желание','Поздравить коллег','Спеть караоке','Посмотреть фильм','Сделать селфи','Съесть мандарин','Выпить шампанское','Станцевать','Отдохнуть 🎉'];
+  const bingoSection = document.querySelector('#fortune .container');
+  if (bingoSection) {
+    const bingoCard = document.createElement('div');
+    bingoCard.className = 'bingo-card';
+    bingoCard.innerHTML = '<h3>🎊 Бинго Новогодних Праздников</h3><div class="bingo-grid"></div>';
+    const grid = bingoCard.querySelector('.bingo-grid');
+    const saved = JSON.parse(localStorage.getItem('bingo') || '{}');
+    bingoTasks.forEach((task, i) => {
+      const cell = document.createElement('div');
+      cell.className = 'bingo-cell' + (saved[i] ? ' checked' : '');
+      cell.textContent = task;
+      cell.onclick = () => {
+        cell.classList.toggle('checked');
+        saved[i] = cell.classList.contains('checked');
+        localStorage.setItem('bingo', JSON.stringify(saved));
+        if (navigator.vibrate) navigator.vibrate(20);
+      };
+      grid.appendChild(cell);
+    });
+    const remixApp = bingoSection.querySelector('.remix-app');
+    bingoSection.insertBefore(bingoCard, remixApp.nextSibling);
+  }
