@@ -2148,10 +2148,9 @@ img {
 	border-radius: 20px;
 	padding: 20px;
 	margin: 32px auto;
-	max-width: 600px;
-	width: fit-content;
 	box-shadow: 0 12px 40px rgba(0,0,0,0.2);
 	position: relative;
+	width: fit-content;
 }
 .advent-menu h3 {
 	color: #be0318;
@@ -2185,9 +2184,11 @@ img {
 }
 .advent-days {
 	display: grid;
-	grid-template-columns: repeat(4, 100px);
-	grid-template-rows: repeat(3, 100px);
+	grid-template-columns: repeat(4, 1fr);
+	grid-template-rows: repeat(3, 1fr);
 	gap: 10px;
+	width: 440px;
+	height: 330px;
 }
 .advent-day {
 	background: rgba(190,3,24,0.1);
