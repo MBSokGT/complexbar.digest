@@ -918,8 +918,7 @@ header.hero + .section::before,
 #btn-back {
 	position: fixed;
 	bottom: 20px;
-	left: 50%;
-	transform: translateX(calc(-50% - 90px));
+	left: calc(50% - 180px);
 	background: #fff;
 	color: #be0318;
 	border: 2px solid #be0318;
@@ -931,18 +930,19 @@ header.hero + .section::before,
 	cursor: pointer;
 	z-index: 10000;
 	box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	transition: opacity 0.3s ease, box-shadow 0.3s ease;
 	user-select: none;
-	display: none;
+	opacity: 0;
+	pointer-events: none;
+}
+#btn-back.visible {
+	opacity: 1;
+	pointer-events: auto;
 }
 #btn-back:hover {
-	background: #fff;
-	color: #be0318;
-	transform: translateX(calc(-50% - 90px)) translateY(-3px);
 	box-shadow: 0 12px 32px rgba(0,0,0,0.3);
 }
 #btn-back:active {
-	transform: translateX(calc(-50% - 90px)) translateY(-1px);
 	box-shadow: 0 6px 16px rgba(0,0,0,0.2);
 }
 #btn-back:focus-visible {
@@ -954,8 +954,7 @@ header.hero + .section::before,
 #btn-forward {
 	position: fixed;
 	bottom: 20px;
-	left: 50%;
-	transform: translateX(calc(-50% + 90px));
+	left: calc(50% + 20px);
 	background: #fff;
 	color: #be0318;
 	border: 2px solid #be0318;
@@ -967,17 +966,19 @@ header.hero + .section::before,
 	cursor: pointer;
 	z-index: 10000;
 	box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	transition: opacity 0.3s ease, box-shadow 0.3s ease;
 	user-select: none;
+	opacity: 1;
+	pointer-events: auto;
+}
+#btn-forward.hidden {
+	opacity: 0;
+	pointer-events: none;
 }
 #btn-forward:hover {
-	background: #fff;
-	color: #be0318;
-	transform: translateX(calc(-50% + 90px)) translateY(-3px);
 	box-shadow: 0 12px 32px rgba(0,0,0,0.3);
 }
 #btn-forward:active {
-	transform: translateX(calc(-50% + 90px)) translateY(-1px);
 	box-shadow: 0 6px 16px rgba(0,0,0,0.2);
 }
 #btn-forward:focus-visible {
@@ -1259,22 +1260,10 @@ header.hero + .section::before,
 		bottom: 16px;
 	}
 	#btn-forward {
-		transform: translateX(calc(-50% + 70px));
+		left: calc(50% + 10px);
 	}
 	#btn-back {
-		transform: translateX(calc(-50% - 70px));
-	}
-	#btn-forward:hover {
-		transform: translateX(calc(-50% + 70px)) translateY(-3px);
-	}
-	#btn-back:hover {
-		transform: translateX(calc(-50% - 70px)) translateY(-3px);
-	}
-	#btn-forward:active {
-		transform: translateX(calc(-50% + 70px)) translateY(-1px);
-	}
-	#btn-back:active {
-		transform: translateX(calc(-50% - 70px)) translateY(-1px);
+		left: calc(50% - 140px);
 	}
 	#btn-top {
 		display: flex !important;

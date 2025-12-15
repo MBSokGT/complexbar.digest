@@ -589,19 +589,19 @@ document.addEventListener('DOMContentLoaded', () => {
       
       // Update forward button visibility - hide only on last section
       if (idx >= sections.length - 1) {
-        btnForward.style.display = 'none';
+        btnForward.classList.add('hidden');
         btnForward.setAttribute('aria-hidden', 'true');
       } else {
-        btnForward.style.display = 'block';
+        btnForward.classList.remove('hidden');
         btnForward.setAttribute('aria-hidden', 'false');
       }
       
       // Update back button visibility - hide on first section
       if (idx <= 0) {
-        btnBack.style.display = 'none';
+        btnBack.classList.remove('visible');
         btnBack.setAttribute('aria-hidden', 'true');
       } else {
-        btnBack.style.display = 'block';
+        btnBack.classList.add('visible');
         btnBack.setAttribute('aria-hidden', 'false');
       }
       
@@ -652,11 +652,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const isLastSection = currentIndex >= sections.length - 1;
     
     if (isLastSection) {
-      btnForward.style.display = 'none';
+      btnForward.classList.add('hidden');
       console.log('Hiding forward button - last section');
     } else {
-      btnForward.style.display = 'block';
+      btnForward.classList.remove('hidden');
       console.log('Showing forward button');
+    }
+    
+    // Update back button - show from second section
+    if (currentIndex <= 0) {
+      btnBack.classList.remove('visible');
+    } else {
+      btnBack.classList.add('visible');
     }
     
     // Update top button - show when scrolled down
