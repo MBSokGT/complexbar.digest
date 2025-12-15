@@ -123,16 +123,15 @@ document.addEventListener('DOMContentLoaded', () => {
   function openFullscreenCarousel(slides, startIndex, sourceCarousel) {
     const modal = document.createElement('div');
     modal.className = 'fullscreen-carousel-modal';
-    const showNav = slides.length > 1;
     modal.innerHTML = `
       <div class="fs-carousel-content">
         <button class="fs-carousel-close" aria-label="Закрыть">✕</button>
-        ${showNav ? '<button class="fs-carousel-nav fs-carousel-prev" aria-label="Предыдущее фото">‹</button>' : ''}
-        ${showNav ? '<button class="fs-carousel-nav fs-carousel-next" aria-label="Следующее фото">›</button>' : ''}
+        <button class="fs-carousel-nav fs-carousel-prev" aria-label="Предыдущее фото">‹</button>
+        <button class="fs-carousel-nav fs-carousel-next" aria-label="Следующее фото">›</button>
         <div class="fs-carousel-container"></div>
-        ${showNav ? `<div class="fs-carousel-counter">
+        <div class="fs-carousel-counter">
           <span class="fs-carousel-current">1</span> / <span class="fs-carousel-total">${slides.length}</span>
-        </div>` : ''}
+        </div>
       </div>
     `;
 
@@ -142,6 +141,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const slideClone = slide.cloneNode(true);
       slideClone.classList.remove('active');
       if (idx === startIndex) slideClone.classList.add('active');
+
+      const img = slideClone.querySelector('img');
+      if (img) {
+        img.style.maxWidth = '100vw';
+        img.style.maxHeight = '100vh';
+        img.style.width = 'auto';
+        img.style.height = 'auto';
+        img.style.objectFit = 'contain';
+      }
+
       fsContainer.appendChild(slideClone);
     });
 
@@ -158,22 +167,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateFsSlide = () => {
       fsSlides.forEach(s => s.classList.remove('active'));
       fsSlides[currentIdx].classList.add('active');
-      if (currentSpan) currentSpan.textContent = currentIdx + 1;
+      currentSpan.textContent = currentIdx + 1;
     };
 
-    if (prevBtn) {
-      prevBtn.addEventListener('click', () => {
-        currentIdx = (currentIdx - 1 + slides.length) % slides.length;
-        updateFsSlide();
-      });
-    }
+    prevBtn.addEventListener('click', () => {
+      currentIdx = (currentIdx - 1 + slides.length) % slides.length;
+      updateFsSlide();
+    });
 
-    if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        currentIdx = (currentIdx + 1) % slides.length;
-        updateFsSlide();
-      });
-    }
+    nextBtn.addEventListener('click', () => {
+      currentIdx = (currentIdx + 1) % slides.length;
+      updateFsSlide();
+    });
 
     closeBtn.addEventListener('click', () => {
       modal.remove();
@@ -182,8 +187,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Keyboard navigation
     const handleKeyboard = (e) => {
-      if (prevBtn && e.key === 'ArrowLeft') prevBtn.click();
-      if (nextBtn && e.key === 'ArrowRight') nextBtn.click();
+      if (e.key === 'ArrowLeft') prevBtn.click();
+      if (e.key === 'ArrowRight') nextBtn.click();
       if (e.key === 'Escape') {
         closeBtn.click();
         document.removeEventListener('keydown', handleKeyboard);
@@ -319,15 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target.tagName === 'IMG' && (e.target.closest('.card') || e.target.classList.contains('clickable-image'))) {
       e.preventDefault();
       e.stopPropagation();
-      // Создаём временный слайд для одиночного изображения
-      const tempSlide = document.createElement('div');
-      tempSlide.className = 'carousel-slide';
-      const imgClone = e.target.cloneNode(true);
-      imgClone.style.maxWidth = '';
-      imgClone.style.width = '';
-      imgClone.style.height = '';
-      tempSlide.appendChild(imgClone);
-      openFullscreenCarousel([tempSlide], 0, null);
+      openLightboxFromImage(e.target);
     }
   });
 
