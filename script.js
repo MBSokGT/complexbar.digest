@@ -310,8 +310,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target.closest && e.target.closest('.carousel-container')) return;
     if (e.target.closest && e.target.closest('.fullscreen-carousel-modal')) return;
     
-    // Проверяем клик на изображение внутри карточки
-    if (e.target.tagName === 'IMG' && e.target.closest('.card')) {
+    // Проверяем клик на изображение внутри карточки или с классом clickable-image
+    if (e.target.tagName === 'IMG' && (e.target.closest('.card') || e.target.classList.contains('clickable-image'))) {
       e.preventDefault();
       e.stopPropagation();
       openLightboxFromImage(e.target);
