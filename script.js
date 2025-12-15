@@ -1094,10 +1094,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-});
-
-
-
   // Бинго
   const bingoTasks = ['Нарезать салаты','Запустить салюты','Подвести итоги года','Загадать желание','Поздравить коллег','Спеть караоке','Посмотреть фильм','Сделать селфи','Съесть мандарин','Выпить шампанское','Станцевать','Отдохнуть 🎉'];
   const bingoSection = document.querySelector('#fortune .container');
@@ -1122,3 +1118,5 @@ document.addEventListener('DOMContentLoaded', () => {
     const remixApp = bingoSection.querySelector('.remix-app');
     bingoSection.insertBefore(bingoCard, remixApp.nextSibling);
   }
+
+});
