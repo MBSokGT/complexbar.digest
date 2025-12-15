@@ -2170,7 +2170,7 @@ img {
 	cursor: pointer;
 	transition: all 0.3s ease;
 	position: relative;
-	min-height: 80px;
+	aspect-ratio: 1;
 	display: flex;
 	align-items: center;
 	justify-content: center;

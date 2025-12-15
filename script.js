@@ -1136,7 +1136,7 @@ document.addEventListener('DOMContentLoaded', () => {
       bingoGrid.appendChild(cell);
     });
 
-    bingoSection.querySelector('.container').insertBefore(bingoMenu, bingoSection.querySelector('.remix-app'));
+    bingoSection.querySelector('.container').insertBefore(bingoMenu, bingoSection.querySelector('#countdown'));
   }
 
   initBingo();
