@@ -12,6 +12,7 @@ body {
     z-index: 1;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-y;
+    overscroll-behavior: none;
 }
 html {
     height: 100%;
@@ -51,7 +52,7 @@ body::-webkit-scrollbar {
 	-ms-overflow-style: none;
 	opacity: 0;
 	transform: translateY(30px);
-	transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+	transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	scroll-snap-align: start;
 	min-height: 60vh;
 	height: auto;
@@ -78,7 +79,7 @@ body::-webkit-scrollbar {
 	--card-padding: 20px;
 	--card-padding-mobile: 14px;
 	--card-row-gap: 32px;
-	--transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	--transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* page container */
@@ -464,15 +465,15 @@ header.hero::before {
 	display: flex;
 	flex-direction: column;
 	visibility: visible;
-	transition: all 0.3s ease;
+	transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	will-change: transform;
 	-webkit-transform: translateY(0) translateZ(0);
 	height: 100%;
 }
 .card:hover {
 	box-shadow: 0 12px 40px rgba(0,0,0,0.2);
-	transform: translateY(-2px) translateZ(0);
-	-webkit-transform: translateY(-2px) translateZ(0);
+	transform: translateY(-4px) translateZ(0);
+	-webkit-transform: translateY(-4px) translateZ(0);
 	border-color: rgba(255,255,255,0.7);
 }
 
@@ -535,11 +536,11 @@ header.hero::before {
 	object-fit: cover;
 	border-radius: 8px;
 	margin: 10px 0;
-	transition: transform 0.3s ease, box-shadow 0.3s ease;
+	transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 .card img:hover {
-	transform: scale(1.02);
-	box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+	transform: scale(1.05);
+	box-shadow: 0 12px 32px rgba(0,0,0,0.3);
 }
 
 .card ul,
@@ -1114,6 +1115,7 @@ header.hero + .section::before,
 		-webkit-text-size-adjust: 100%;
 		text-size-adjust: 100%;
 		font-size: 16px;
+		overflow-x: hidden;
 	}
 	.section-indicator {
 		display: none !important;
@@ -1830,6 +1832,8 @@ header.hero + .section::before,
 	backface-visibility: hidden;
 	-webkit-perspective: 1000;
 	perspective: 1000;
+	transform: translate3d(0,0,0);
+	-webkit-transform: translate3d(0,0,0);
 }
 
 /* Улучшение touch на мобильных */
@@ -1837,10 +1841,18 @@ header.hero + .section::before,
 	.card:active {
 		transform: scale(0.98) translateZ(0);
 		-webkit-transform: scale(0.98) translateZ(0);
+		transition: transform 0.2s ease;
 	}
 	button:active {
 		transform: scale(0.95) translateZ(0);
 		-webkit-transform: scale(0.95) translateZ(0);
+		transition: transform 0.2s ease;
+	}
+	.card {
+		-webkit-tap-highlight-color: transparent;
+	}
+	button {
+		-webkit-tap-highlight-color: transparent;
 	}
 }
 
@@ -1863,4 +1875,83 @@ header.hero + .section::before,
   width: auto;
   height: auto;
   object-fit: contain;
+}
+
+/* Кроссбраузерная совместимость */
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+img {
+	-webkit-user-drag: none;
+	-khtml-user-drag: none;
+	-moz-user-drag: none;
+	-o-user-drag: none;
+	user-drag: none;
+}
+
+/* Оптимизация для Safari iOS */
+@supports (-webkit-touch-callout: none) {
+	body {
+		min-height: -webkit-fill-available;
+	}
+	.section {
+		min-height: -webkit-fill-available;
+	}
+}
+
+/* Плавная прокрутка для всех браузеров */
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
+	}
+}
+
+/* Оптимизация для Firefox */
+@-moz-document url-prefix() {
+	.card {
+		backdrop-filter: none;
+	}
+}
+
+/* Оптимизация для Edge */
+@supports (-ms-ime-align: auto) {
+	.card {
+		background: rgba(255,255,255,0.98);
+	}
+}
+
+/* Улучшение производительности анимаций */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}
+
+/* Оптимизация для Windows High Contrast Mode */
+@media (prefers-contrast: high) {
+	.card {
+		border: 2px solid currentColor;
+	}
+}
+
+/* Дополнительная оптимизация для мобильных */
+@media (max-width: 768px) {
+	* {
+		-webkit-tap-highlight-color: transparent;
+	}
+	
+	.section {
+		will-change: auto;
+	}
+	
+	.card {
+		will-change: auto;
+	}
 }

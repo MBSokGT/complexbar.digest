@@ -692,12 +692,15 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Throttle scroll for performance
   let scrollTicking = false;
+  let lastScrollTime = 0;
   window.addEventListener('scroll', () => {
-    if (!scrollTicking) {
+    const now = Date.now();
+    if (!scrollTicking && now - lastScrollTime > 16) {
       window.requestAnimationFrame(() => {
         updateScrollProgress();
         updateButtonVisibility();
         scrollTicking = false;
+        lastScrollTime = Date.now();
       });
       scrollTicking = true;
     }
@@ -900,15 +903,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ============ УЛУЧШЕННЫЕ ИНТЕРАКТИВНЫЕ ЭФФЕКТЫ ============
   // Эффект при наведении на карточки
-  document.querySelectorAll('.card').forEach(card => {
-    card.addEventListener('mouseenter', function() {
-      this.style.willChange = 'transform, box-shadow';
+  if (window.matchMedia('(hover: hover)').matches) {
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.willChange = 'transform, box-shadow';
+      }, { passive: true });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.willChange = 'auto';
+      }, { passive: true });
     });
-    
-    card.addEventListener('mouseleave', function() {
-      this.style.willChange = 'auto';
-    });
-  });
+  }
 
   // Освещение при клике на достижение
   document.querySelectorAll('.achievement').forEach(badge => {
@@ -937,20 +942,27 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 
   // Interactive card hover - track mouse position for radial gradient effect
-  document.querySelectorAll('.card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      card.style.setProperty('--mouse-x', `${x}%`);
-      card.style.setProperty('--mouse-y', `${y}%`);
-    });
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    let mouseMoveTimer;
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        if (mouseMoveTimer) return;
+        mouseMoveTimer = setTimeout(() => {
+          const rect = card.getBoundingClientRect();
+          const x = ((e.clientX - rect.left) / rect.width) * 100;
+          const y = ((e.clientY - rect.top) / rect.height) * 100;
+          card.style.setProperty('--mouse-x', `${x}%`);
+          card.style.setProperty('--mouse-y', `${y}%`);
+          mouseMoveTimer = null;
+        }, 16);
+      }, { passive: true });
 
-    card.addEventListener('mouseleave', () => {
-      card.style.setProperty('--mouse-x', '50%');
-      card.style.setProperty('--mouse-y', '50%');
+      card.addEventListener('mouseleave', () => {
+        card.style.setProperty('--mouse-x', '50%');
+        card.style.setProperty('--mouse-y', '50%');
+      }, { passive: true });
     });
-  });
+  }
 
 });
 
