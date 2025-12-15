@@ -1410,11 +1410,13 @@ header.hero + .section::before,
 
 .fs-carousel-content {
 	position: relative;
-	width: 90%;
-	height: 90%;
+	width: 100%;
+	height: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	padding: 60px;
+	box-sizing: border-box;
 }
 
 .fs-carousel-container {
@@ -1442,8 +1444,8 @@ header.hero + .section::before,
 	max-height: 100%;
 	width: auto;
 	height: auto;
-	object-fit: scale-down;
-	border-radius: 8px;
+	object-fit: contain;
+	border-radius: 0;
 }
 
 .fs-carousel-close {
