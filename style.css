@@ -524,8 +524,6 @@ header.hero::before {
 	width: 100%;
 	height: auto;
 	max-width: 100%;
-	aspect-ratio: 1 / 1;
-	object-fit: cover;
 	border-radius: 8px;
 	margin: 10px 0;
 }
