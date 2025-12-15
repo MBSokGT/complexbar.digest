@@ -948,6 +948,127 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, { passive: true });
 
+  // ============ ПОИСК ПО ДАЙДЖЕСТУ ============
+  const btnSearch = document.createElement('button');
+  btnSearch.id = 'btn-search';
+  btnSearch.className = 'control-btn';
+  btnSearch.innerHTML = '🔍';
+  btnSearch.setAttribute('aria-label', 'Поиск по дайджесту');
+  document.body.appendChild(btnSearch);
+
+  const searchPanel = document.createElement('div');
+  searchPanel.className = 'search-panel';
+  searchPanel.innerHTML = `
+    <input type="text" class="search-input" placeholder="Поиск по дайджесту..." aria-label="Поле поиска">
+    <div class="search-results" role="region" aria-live="polite"></div>
+  `;
+  document.body.appendChild(searchPanel);
+
+  const searchInput = searchPanel.querySelector('.search-input');
+  const searchResults = searchPanel.querySelector('.search-results');
+
+  btnSearch.addEventListener('click', () => {
+    searchPanel.classList.toggle('active');
+    if (searchPanel.classList.contains('active')) {
+      searchInput.focus();
+      if (navigator.vibrate) navigator.vibrate(10);
+    }
+  });
+
+  searchInput.addEventListener('input', debounce((e) => {
+    const query = e.target.value.toLowerCase().trim();
+    searchResults.innerHTML = '';
+    
+    if (query.length < 2) return;
+
+    const results = [];
+    document.querySelectorAll('.card article').forEach(article => {
+      const text = article.textContent.toLowerCase();
+      const title = article.querySelector('h3, h4')?.textContent || '';
+      
+      if (text.includes(query)) {
+        const section = article.closest('.section');
+        const sectionTitle = section?.querySelector('h2')?.textContent || 'Раздел';
+        results.push({ title, text: article.textContent.substring(0, 150), element: article, sectionTitle });
+      }
+    });
+
+    if (results.length === 0) {
+      searchResults.innerHTML = '<div style="padding: 10px; color: #2a0808;">Ничего не найдено</div>';
+      return;
+    }
+
+    results.slice(0, 10).forEach(result => {
+      const item = document.createElement('div');
+      item.className = 'search-result-item';
+      item.innerHTML = `
+        <div class="search-result-title">${result.title || result.sectionTitle}</div>
+        <div class="search-result-text">${result.text.substring(0, 100)}...</div>
+      `;
+      item.addEventListener('click', () => {
+        result.element.closest('.section').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        searchPanel.classList.remove('active');
+        if (navigator.vibrate) navigator.vibrate(10);
+      });
+      searchResults.appendChild(item);
+    });
+  }, 300));
+
+  // ============ НАСТРОЙКИ РАЗМЕРА ШРИФТА ============
+  const btnSettings = document.createElement('button');
+  btnSettings.id = 'btn-settings';
+  btnSettings.className = 'control-btn';
+  btnSettings.innerHTML = '⚙️';
+  btnSettings.setAttribute('aria-label', 'Настройки');
+  document.body.appendChild(btnSettings);
+
+  const settingsPanel = document.createElement('div');
+  settingsPanel.className = 'settings-panel';
+  settingsPanel.innerHTML = `
+    <div class="settings-item">
+      <label class="settings-label">Размер шрифта</label>
+      <div class="font-size-btns">
+        <button class="font-size-btn" data-size="small">A</button>
+        <button class="font-size-btn active" data-size="medium">A</button>
+        <button class="font-size-btn" data-size="large">A</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(settingsPanel);
+
+  const savedFontSize = localStorage.getItem('fontSize') || 'medium';
+  document.body.classList.add(`font-${savedFontSize}`);
+  settingsPanel.querySelector(`[data-size="${savedFontSize}"]`)?.classList.add('active');
+
+  btnSettings.addEventListener('click', () => {
+    settingsPanel.classList.toggle('active');
+    if (navigator.vibrate) navigator.vibrate(10);
+  });
+
+  settingsPanel.querySelectorAll('.font-size-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const size = btn.dataset.size;
+      document.body.className = document.body.className.replace(/font-(small|medium|large)/g, '');
+      document.body.classList.add(`font-${size}`);
+      localStorage.setItem('fontSize', size);
+      
+      settingsPanel.querySelectorAll('.font-size-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      if (navigator.vibrate) navigator.vibrate(10);
+    });
+  });
+
+  // Закрытие панелей при клике вне их
+  document.addEventListener('click', (e) => {
+    if (!searchPanel.contains(e.target) && e.target !== btnSearch) {
+      searchPanel.classList.remove('active');
+    }
+    if (!settingsPanel.contains(e.target) && e.target !== btnSettings) {
+      settingsPanel.classList.remove('active');
+    }
+  });
+
   // Interactive card hover - track mouse position for radial gradient effect
   if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     let mouseMoveTimer;
@@ -970,6 +1091,77 @@ document.addEventListener('DOMContentLoaded', () => {
       }, { passive: true });
     });
   }
+
+  // ============ АДВЕНТ-КАЛЕНДАРЬ ============
+  const adventTasks = [
+    'Подготовить новогодние подарки коллегам',
+    'Украсить рабочее место',
+    'Составить список достижений года',
+    'Поздравить партнёров',
+    'Провести новогоднюю встречу команды',
+    'Подвести итоги года',
+    'Запланировать цели на 2026',
+    'Отправить благодарности клиентам',
+    'Организовать корпоратив',
+    'Подготовить новогоднее меню',
+    'Закрыть все задачи года',
+    'Сделать фото команды',
+    'Написать новогодние пожелания',
+    'Провести финальную планёрку',
+    'Подготовить отчёты',
+    'Убрать рабочее место',
+    'Проверить инвентарь',
+    'Обновить контакты',
+    'Архивировать документы',
+    'Подготовить презентацию итогов',
+    'Провести обучение новичков',
+    'Обновить базу клиентов',
+    'Проверить оборудование',
+    'Подготовить новогодний контент',
+    'Провести инвентаризацию',
+    'Отправить новогодние открытки',
+    'Подготовить план на январь',
+    'Провести финальную встречу',
+    'Подготовить новогодний стол',
+    'Поздравить всех с Новым Годом!',
+    'Отпраздновать Новый Год! 🎉'
+  ];
+
+  function initAdventCalendar() {
+    const adventSection = document.querySelector('#fortune');
+    if (!adventSection) return;
+
+    const adventMenu = document.createElement('div');
+    adventMenu.className = 'advent-menu';
+    adventMenu.innerHTML = '<h3>🎄 Адвент-календарь "Меню новогодних праздников"</h3><div class="advent-days"></div>';
+    
+    const adventDays = adventMenu.querySelector('.advent-days');
+    const savedState = JSON.parse(localStorage.getItem('adventCalendar') || '{}');
+
+    adventTasks.forEach((task, index) => {
+      const day = document.createElement('div');
+      day.className = 'advent-day';
+      if (savedState[index]) day.classList.add('opened');
+      
+      day.innerHTML = `
+        <div class="advent-day-number">${index + 1}</div>
+        <div class="advent-day-task">${task}</div>
+      `;
+      
+      day.addEventListener('click', () => {
+        day.classList.toggle('opened');
+        savedState[index] = day.classList.contains('opened');
+        localStorage.setItem('adventCalendar', JSON.stringify(savedState));
+        if (navigator.vibrate) navigator.vibrate(20);
+      });
+      
+      adventDays.appendChild(day);
+    });
+
+    adventSection.querySelector('.container').insertBefore(adventMenu, adventSection.querySelector('.remix-app'));
+  }
+
+  initAdventCalendar();
 
 });
 

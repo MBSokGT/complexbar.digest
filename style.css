@@ -1951,3 +1951,459 @@ img {
 		will-change: auto;
 	}
 }
+
+/* Поиск по дайджесту */
+.search-panel {
+	position: fixed;
+	top: 80px;
+	right: 20px;
+	z-index: 9999;
+	background: rgba(255,255,255,0.98);
+	border-radius: 12px;
+	box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+	padding: 16px;
+	width: 320px;
+	opacity: 0;
+	pointer-events: none;
+	transform: translateY(-10px);
+	transition: all 0.3s ease;
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+}
+.search-panel.active {
+	opacity: 1;
+	pointer-events: auto;
+	transform: translateY(0);
+}
+.search-input {
+	width: 100%;
+	padding: 12px 16px;
+	border: 2px solid #be0318;
+	border-radius: 8px;
+	font-size: 0.95rem;
+	font-family: 'Montserrat', sans-serif;
+	outline: none;
+	transition: border-color 0.2s ease;
+}
+.search-input:focus {
+	border-color: #a70014;
+}
+.search-results {
+	max-height: 300px;
+	overflow-y: auto;
+	margin-top: 12px;
+}
+.search-results::-webkit-scrollbar {
+	width: 6px;
+}
+.search-results::-webkit-scrollbar-thumb {
+	background: #be0318;
+	border-radius: 3px;
+}
+.search-result-item {
+	padding: 10px;
+	border-radius: 6px;
+	cursor: pointer;
+	margin-bottom: 6px;
+	background: rgba(190,3,24,0.05);
+	transition: all 0.2s ease;
+}
+.search-result-item:hover {
+	background: rgba(190,3,24,0.15);
+	transform: translateX(4px);
+}
+.search-result-title {
+	font-weight: 600;
+	color: #be0318;
+	font-size: 0.9rem;
+}
+.search-result-text {
+	font-size: 0.85rem;
+	color: #2a0808;
+	margin-top: 4px;
+	line-height: 1.4;
+}
+
+/* Панель настроек */
+.settings-panel {
+	position: fixed;
+	top: 80px;
+	right: 20px;
+	z-index: 9999;
+	background: rgba(255,255,255,0.98);
+	border-radius: 12px;
+	box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+	padding: 20px;
+	width: 280px;
+	opacity: 0;
+	pointer-events: none;
+	transform: translateY(-10px);
+	transition: all 0.3s ease;
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+}
+.settings-panel.active {
+	opacity: 1;
+	pointer-events: auto;
+	transform: translateY(0);
+}
+.settings-item {
+	margin-bottom: 16px;
+}
+.settings-item:last-child {
+	margin-bottom: 0;
+}
+.settings-label {
+	font-weight: 600;
+	color: #be0318;
+	font-size: 0.9rem;
+	margin-bottom: 8px;
+	display: block;
+}
+.font-size-btns {
+	display: flex;
+	gap: 8px;
+}
+.font-size-btn {
+	flex: 1;
+	padding: 8px;
+	border: 2px solid #be0318;
+	background: white;
+	color: #be0318;
+	border-radius: 6px;
+	cursor: pointer;
+	font-weight: 600;
+	transition: all 0.2s ease;
+}
+.font-size-btn:hover {
+	background: rgba(190,3,24,0.1);
+	transform: scale(1.05);
+}
+.font-size-btn:active {
+	transform: scale(0.95);
+}
+.font-size-btn.active {
+	background: #be0318;
+	color: white;
+}
+
+/* Кнопки управления */
+.control-btn {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	width: 50px;
+	height: 50px;
+	background: rgba(255,255,255,0.95);
+	color: #be0318;
+	border: 2px solid #be0318;
+	border-radius: 50%;
+	font-size: 20px;
+	cursor: pointer;
+	z-index: 10000;
+	box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+	transition: all 0.3s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.control-btn:hover {
+	box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+	transform: scale(1.05);
+}
+.control-btn:active {
+	transform: scale(0.95);
+}
+#btn-search {
+	right: 90px;
+}
+#btn-settings {
+	right: 160px;
+}
+
+@media (max-width: 768px) {
+	.control-btn {
+		width: 44px;
+		height: 44px;
+		font-size: 18px;
+	}
+	#btn-search {
+		right: 80px;
+	}
+	#btn-settings {
+		right: 140px;
+	}
+	.search-panel,
+	.settings-panel {
+		width: calc(100vw - 40px);
+		right: 20px;
+		left: 20px;
+	}
+}
+
+/* Адвент-календарь */
+.advent-menu {
+	background: linear-gradient(135deg, #faf8f3 0%, #ffffff 100%);
+	border: 3px solid #be0318;
+	border-radius: 20px;
+	padding: 32px;
+	margin: 32px 0;
+	box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+}
+.advent-menu h3 {
+	color: #be0318;
+	font-size: 1.8rem;
+	margin: 0 0 24px 0;
+	text-align: center;
+}
+.advent-days {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+	gap: 12px;
+}
+.advent-day {
+	background: rgba(190,3,24,0.1);
+	border: 2px solid #be0318;
+	border-radius: 12px;
+	padding: 16px;
+	text-align: center;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	position: relative;
+}
+.advent-day:hover {
+	background: rgba(190,3,24,0.2);
+	transform: scale(1.05);
+}
+.advent-day.opened {
+	background: #be0318;
+	color: white;
+}
+.advent-day-number {
+	font-size: 1.5rem;
+	font-weight: 900;
+	color: #be0318;
+}
+.advent-day.opened .advent-day-number {
+	color: white;
+}
+.advent-day-task {
+	font-size: 0.75rem;
+	margin-top: 8px;
+	color: #2a0808;
+	opacity: 0;
+	max-height: 0;
+	overflow: hidden;
+	transition: all 0.3s ease;
+}
+.advent-day.opened .advent-day-task {
+	opacity: 1;
+	max-height: 200px;
+	color: white;
+}
+.advent-day:active {
+	transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+	.advent-days {
+		grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+	}
+	.advent-day {
+		padding: 12px;
+	}
+	.advent-day-number {
+		font-size: 1.2rem;
+	}
+}
+
+/* Размеры шрифта */
+body.font-small {
+	font-size: 14px;
+}
+body.font-small .card p,
+body.font-small .card li {
+	font-size: 0.9rem;
+}
+body.font-small h2 {
+	font-size: 1.8rem;
+}
+body.font-small h3 {
+	font-size: 1.3rem;
+}
+body.font-small h4 {
+	font-size: 1.1rem;
+}
+
+body.font-medium {
+	font-size: 16px;
+}
+
+body.font-large {
+	font-size: 18px;
+}
+body.font-large .card p,
+body.font-large .card li {
+	font-size: 1.15rem;
+	line-height: 1.9;
+}
+body.font-large h2 {
+	font-size: 2.6rem;
+}
+body.font-large h3 {
+	font-size: 1.8rem;
+}
+body.font-large h4 {
+	font-size: 1.4rem;
+}
+
+/* Стили для кнопок размера шрифта */
+.font-size-btn[data-size="small"] {
+	font-size: 0.85rem;
+}
+.font-size-btn[data-size="medium"] {
+	font-size: 1rem;
+}
+.font-size-btn[data-size="large"] {
+	font-size: 1.2rem;
+}8;
+	border-radius: 12px;
+	padding: 32px;
+	box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+	margin: 32px auto;
+	max-width: 900px;
+}
+.advent-header {
+	text-align: center;
+	margin-bottom: 32px;
+	border-bottom: 2px solid #be0318;
+	padding-bottom: 20px;
+}
+.advent-title {
+	font-size: 2rem;
+	font-weight: 700;
+	color: #be0318;
+	margin: 0 0 8px 0;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+.advent-subtitle {
+	font-size: 1.1rem;
+	color: #2a0808;
+	margin: 0;
+	font-style: italic;
+}
+.advent-days {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	gap: 20px;
+}
+.advent-day {
+	background: white;
+	border: 2px solid #be0318;
+	border-radius: 8px;
+	padding: 20px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	position: relative;
+	overflow: hidden;
+}
+.advent-day::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 4px;
+	background: linear-gradient(90deg, #be0318, #d4af37);
+}
+.advent-day:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 8px 24px rgba(190,3,24,0.2);
+}
+.advent-day.completed {
+	background: rgba(190,3,24,0.05);
+	opacity: 0.7;
+}
+.advent-day-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 12px;
+}
+.advent-day-number {
+	font-size: 1.5rem;
+	font-weight: 900;
+	color: #be0318;
+}
+.advent-day-icon {
+	font-size: 1.5rem;
+}
+.advent-day-title {
+	font-size: 1.1rem;
+	font-weight: 700;
+	color: #be0318;
+	margin: 0 0 8px 0;
+}
+.advent-day-desc {
+	font-size: 0.9rem;
+	color: #2a0808;
+	line-height: 1.6;
+	margin: 0;
+}
+.advent-day-check {
+	margin-top: 12px;
+	padding-top: 12px;
+	border-top: 1px dashed #be0318;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 0.85rem;
+	color: #2a0808;
+}
+.advent-day-checkbox {
+	width: 20px;
+	height: 20px;
+	border: 2px solid #be0318;
+	border-radius: 4px;
+	cursor: pointer;
+	position: relative;
+}
+.advent-day-checkbox.checked::after {
+	content: '✓';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: #be0318;
+	font-weight: 900;
+	font-size: 16px;
+}
+
+@media (max-width: 768px) {
+	.search-panel, .settings-panel {
+		width: calc(100vw - 40px);
+		right: 20px;
+		left: 20px;
+	}
+	.control-btn {
+		width: 44px;
+		height: 44px;
+		font-size: 18px;
+	}
+	#btn-search {
+		right: 70px;
+	}
+	#btn-settings {
+		right: 120px;
+	}
+	.advent-menu {
+		padding: 20px;
+	}
+	.advent-title {
+		font-size: 1.5rem;
+	}
+	.advent-days {
+		grid-template-columns: 1fr;
+	}
+}
