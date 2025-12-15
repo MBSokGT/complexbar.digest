@@ -424,7 +424,6 @@ header.hero::before {
 	color: #fff;
 	font-weight: 800;
 	letter-spacing: -0.02em;
-	text-shadow: 0 2px 6px rgba(0,0,0,0.2);
 	position: relative;
 	z-index: 100;
 }
@@ -435,7 +434,6 @@ header.hero::before {
 	color: #fff;
 	font-weight: 700;
 	letter-spacing: -0.01em;
-	text-shadow: 0 2px 8px rgba(0,0,0,0.4);
 	position: relative;
 	z-index: 100;
 }
@@ -500,7 +498,7 @@ header.hero::before {
 	font-weight: 800;
 	position: relative;
 	z-index: 1;
-	color: #2a0808;
+	color: #be0318;
 	line-height: 1.3;
 }
 .card h4 {
@@ -510,7 +508,7 @@ header.hero::before {
 	font-weight: 800;
 	position: relative;
 	z-index: 1;
-	color: #2a0808;
+	color: #be0318;
 	line-height: 1.3;
 }
 .card h5 {
@@ -520,12 +518,12 @@ header.hero::before {
 	font-weight: 700;
 	position: relative;
 	z-index: 1;
-	color: #4c0010;
+	color: #be0318;
 }
 .card p {
 	font-family: 'Montserrat', sans-serif;
 	margin: 0 0 10px 0;
-	color: #5a0012;
+	color: #2a0808;
 	opacity: 1;
 	line-height: 1.6;
 	position: relative;
@@ -566,7 +564,7 @@ header.hero::before {
 }
 
 .card strong {
-	color: #4c0010;
+	color: #2a0808;
 	font-weight: 700;
 }
 
@@ -601,7 +599,7 @@ header.hero::before {
 
 .card .metric-label {
 	font-size: 0.95rem;
-	color: #4c0010;
+	color: #2a0808;
 	margin-top: 8px;
 	font-weight: 600;
 }
@@ -634,7 +632,7 @@ header.hero::before {
 
 .card .stat-item-label {
 	font-size: 0.85rem;
-	color: #4c0010;
+	color: #2a0808;
 	margin-top: 6px;
 	font-weight: 600;
 }
@@ -646,7 +644,7 @@ header.hero::before {
 
 .card .card-subheading {
 	font-weight: 700;
-	color: #a70014;
+	color: #be0318;
 	margin-top: 12px;
 	margin-bottom: 8px;
 	font-size: 0.9rem;
@@ -1699,7 +1697,7 @@ header.hero + .section::before,
 
 .vote-count {
 	font-size: 0.85rem;
-	color: #4c0010;
+	color: #2a0808;
 	font-weight: 600;
 }
 
