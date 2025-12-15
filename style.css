@@ -422,19 +422,15 @@ header.hero::before {
 	font-family: 'Montserrat', sans-serif;
 	font-size: clamp(1.2rem, 3vw, 1.6rem);
 	margin: 16px 0 12px 0;
-	color: #2a0808;
+	color: #fff;
 	font-weight: 700;
 	letter-spacing: -0.01em;
+	text-shadow: 0 2px 8px rgba(0,0,0,0.4);
 	position: relative;
 	z-index: 100;
-	background: rgba(255,255,255,0.95);
-	padding: 12px 16px;
-	border-radius: 10px;
-	border-left: 4px solid #be0318;
-	box-shadow: 0 4px 16px rgba(0,0,0,0.15);
 }
 .section > .container > p {
-	color: #2a0808;
+	color: #000;
 	font-size: 1.05rem;
 	line-height: 1.8;
 	margin-bottom: 20px;
