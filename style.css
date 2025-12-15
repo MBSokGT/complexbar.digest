@@ -2186,6 +2186,7 @@ img {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	gap: 10px;
+	width: 100%;
 }
 .advent-day {
 	background: rgba(190,3,24,0.1);
