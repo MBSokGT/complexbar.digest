@@ -377,7 +377,6 @@ header.hero::before {
 	max-height: 380px;
 	width: 100%;
 	height: auto;
-	object-fit: cover;
 	display: block;
 }
 
