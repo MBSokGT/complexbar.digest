@@ -2444,7 +2444,7 @@ body.font-large h4 {
 	align-items: center;
 	justify-content: center;
 	text-align: center;
-	font-size: 0.9rem;
+	font-size: 0.85rem;
 	font-weight: 600;
 	color: #2a0808;
 	cursor: pointer;
@@ -2452,6 +2452,7 @@ body.font-large h4 {
 	position: relative;
 	box-shadow: 0 2px 8px rgba(190,3,24,0.1);
 	min-height: 120px;
+	line-height: 1.4;
 }
 .bingo-cell:hover {
 	background: linear-gradient(135deg, rgba(190,3,24,0.15), rgba(190,3,24,0.25));
