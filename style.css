@@ -71,7 +71,7 @@ body::-webkit-scrollbar-thumb:hover {
 	height: auto;
 	position: relative;
 	overflow: visible;
-	background: #f5f5f5;
+	background: white;
 }
 .section.visible {
 	opacity: 1;
