@@ -1363,7 +1363,8 @@ header.hero + .section::before,
 	display: block;
 }
 
-.carousel-slide img {
+.carousel-slide img,
+.carousel-slide video {
 	width: 100%;
 	height: auto;
 	aspect-ratio: 1 / 1;
@@ -1372,15 +1373,6 @@ header.hero + .section::before,
 	object-fit: cover;
 	max-width: 400px;
 	max-height: 400px;
-	margin: 0 auto;
-}
-
-.carousel-slide video {
-	width: 100%;
-	height: auto;
-	display: block;
-	border-radius: 12px;
-	max-width: 400px;
 	margin: 0 auto;
 }
 
