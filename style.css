@@ -73,7 +73,7 @@ body::-webkit-scrollbar-thumb:hover {
 	height: auto;
 	position: relative;
 	overflow: visible;
-	background: white;
+	background: #be0318;
 }
 .section.visible {
 	opacity: 1;
@@ -321,7 +321,7 @@ header.hero::before {
     flex-direction: column;
     justify-content: center;
     position: relative;
-    background: transparent;
+    background: #be0318;
     overflow: visible;
     opacity: 0;
     transform: translateY(30px);
@@ -433,7 +433,7 @@ header.hero::before {
 	font-family: 'Montserrat', sans-serif;
 	font-size: clamp(1.8rem, 4vw, 2.4rem);
 	margin: 0 0 12px 0;
-	color: #2a0808;
+	color: #fff;
 	font-weight: 800;
 	letter-spacing: -0.02em;
 	position: relative;
@@ -443,7 +443,7 @@ header.hero::before {
 	font-family: 'Montserrat', sans-serif;
 	font-size: clamp(1.2rem, 3vw, 1.6rem);
 	margin: 16px 0 12px 0;
-	color: #2a0808;
+	color: #fff;
 	font-weight: 700;
 	letter-spacing: -0.01em;
 	position: relative;
@@ -883,25 +883,19 @@ html {
 	overflow: visible;
 	background: transparent;
 }
-header.hero .snowflake{
-	color: #fff;
-	opacity: 0.6;
-	filter: drop-shadow(0 0 3px rgba(255,255,255,0.4));
-	text-shadow: 0 0 2px rgba(255,255,255,0.5);
-}
 .snowflake{
 	position: fixed;
 	top: -10vh;
-	color: #9b0316;
+	color: #fff;
 	user-select: none;
 	pointer-events: none;
 	will-change: transform, opacity;
 	font-size: 16px;
-	opacity: 0.3;
-	z-index: 0;
-	filter: drop-shadow(0 0 2px rgba(155,3,22,0.3));
+	opacity: 0.7;
+	z-index: 9998;
+	filter: drop-shadow(0 0 3px rgba(255,255,255,0.5));
 	animation: snowFall linear infinite;
-	text-shadow: 0 0 1px rgba(155,3,22,0.2);
+	text-shadow: 0 0 2px rgba(255,255,255,0.6);
 }
 @keyframes snowFall{
 	0% {
@@ -926,7 +920,7 @@ header.hero + .section::before,
 	right: 10%;
 	height: 1px;
 	top: 0;
-	background: linear-gradient(90deg, transparent 0%, rgba(155,3,22,0.3) 50%, transparent 100%);
+	background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
 	border-radius: 2px;
 	z-index: 10;
 }
