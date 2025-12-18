@@ -447,9 +447,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const btn = document.createElement('button');
       btn.className = 'dot';
       const label = sec.querySelector('h2')?.textContent?.trim() || (i === 0 ? 'Главная' : `Раздел ${i}`);
-      btn.title = label;
       btn.setAttribute('aria-label', label);
-      btn.setAttribute('data-label', label);
       
       const tooltip = document.createElement('span');
       tooltip.className = 'nav-tooltip';
