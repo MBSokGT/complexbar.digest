@@ -1194,9 +1194,10 @@ header.hero + .section::before,
 		max-width: 100%;
 		width: 100%;
 		box-sizing: border-box;
+		overflow-x: hidden;
 	}
 	.card {
-		margin: 0 auto;
+		margin: 0;
 		width: 100%;
 		max-width: 100%;
 		box-sizing: border-box;
@@ -2805,5 +2806,16 @@ body.font-large h4 {
 	}
 	.newyear-article img {
 		order: -1;
+	}
+}
+
+/* Горизонтальное расположение реакций */
+@media (max-width: 768px) {
+	.remix-app {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 12px;
 	}
 }
