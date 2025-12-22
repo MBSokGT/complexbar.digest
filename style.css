@@ -2576,12 +2576,12 @@ body.font-large h4 {
 }
 
 /* Широкие карточки */
-.card-wide {
-	grid-column: span 2;
+#horeca .cards {
+	grid-template-columns: repeat(2, 1fr);
 }
 
 @media (max-width: 1024px) {
-	.card-wide {
-		grid-column: span 1;
+	#horeca .cards {
+		grid-template-columns: 1fr;
 	}
 }
