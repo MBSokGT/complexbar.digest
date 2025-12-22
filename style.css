@@ -1270,7 +1270,7 @@ header.hero + .section::before,
 	}
 	#btn-top {
 		display: flex !important;
-		bottom: 80px;
+		bottom: 20px;
 		right: 16px;
 		width: 48px;
 		height: 48px;
