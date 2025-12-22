@@ -564,7 +564,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (navigator.vibrate) navigator.vibrate(10);
   });
   
-  // Mobile: tap on top 100px of screen to scroll to top
+  // Mobile: tap on top 50px of screen to scroll to top
   let tapStartY = 0;
   let tapStartTime = 0;
   document.addEventListener('touchstart', (e) => {
@@ -578,8 +578,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const tapDuration = Date.now() - tapStartTime;
     const tapMovement = Math.abs(tapEndY - tapStartY);
     
-    // Tap on top 100px, quick tap (< 300ms), minimal movement (< 10px)
-    if (tapY < 100 && tapDuration < 300 && tapMovement < 10) {
+    // Tap on top 50px (status bar area), quick tap (< 300ms), minimal movement (< 10px)
+    if (tapY < 50 && tapDuration < 300 && tapMovement < 10) {
       if (sections[0]) {
         sections[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
       } else {
