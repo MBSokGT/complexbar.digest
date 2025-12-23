@@ -2525,23 +2525,26 @@ body.font-large h4 {
 		page-break-inside: avoid;
 	}
 	.bingo-grid { 
-		grid-template-columns: repeat(6, 1fr) !important;
+		display: grid !important;
+		grid-template-columns: repeat(4, 1fr) !important;
+		grid-template-rows: repeat(3, 1fr) !important;
 		gap: 10px !important;
-		grid-auto-rows: 1fr !important;
+		height: calc(100vh - 100px) !important;
 	}
 	.bingo-cell {
+		aspect-ratio: unset !important;
 		width: 100% !important;
 		height: 100% !important;
-		aspect-ratio: 1 / 1 !important;
 		min-height: 0 !important;
 		max-height: none !important;
 		padding: 8px !important;
-		font-size: 0.65rem !important;
+		font-size: 0.7rem !important;
 		line-height: 1.2 !important;
 		display: flex !important;
 		align-items: center !important;
 		justify-content: center !important;
 		box-sizing: border-box !important;
+		overflow: hidden !important;
 	}
 }
 
@@ -2621,7 +2624,7 @@ body.font-large h4 {
 }
 .bingo-grid {
 	display: grid;
-	grid-template-columns: repeat(6, 1fr);
+	grid-template-columns: repeat(4, 1fr);
 	gap: 16px;
 	margin: 0 auto;
 	width: 100%;
@@ -2630,8 +2633,10 @@ body.font-large h4 {
 	background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,245,245,0.9));
 	border: 2px solid #be0318;
 	border-radius: 12px;
-	padding: 20px 12px;
-	display: block;
+	padding: 16px 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	text-align: center;
 	font-size: 0.85rem;
 	font-weight: 600;
@@ -2646,6 +2651,7 @@ body.font-large h4 {
 	hyphens: none;
 	overflow-wrap: normal;
 	overflow: hidden;
+	min-height: 120px;
 }
 .bingo-cell strong,
 .bingo-cell a {
@@ -2666,7 +2672,10 @@ body.font-large h4 {
 	position: absolute;
 	top: 4px;
 	right: 6px;
-	font-size: 1.2rem;
+	font-size: 16px;
+	font-weight: 900;
+	color: white;
+}: 1.2rem;
 	font-weight: 900;
 	opacity: 0.9;
 }
