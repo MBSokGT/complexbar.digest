@@ -2595,9 +2595,7 @@ body.font-large h4 {
 	border: 2px solid #be0318;
 	border-radius: 12px;
 	padding: 20px 12px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	display: block;
 	text-align: center;
 	font-size: 0.85rem;
 	font-weight: 600;
@@ -2611,6 +2609,7 @@ body.font-large h4 {
 	word-break: keep-all;
 	hyphens: none;
 	overflow-wrap: normal;
+	overflow: hidden;
 }
 .bingo-cell strong,
 .bingo-cell a {
