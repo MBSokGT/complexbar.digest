@@ -2507,6 +2507,38 @@ body.font-large h4 {
 	.advent-day.opened { background: #be0318 !important; }
 	.bingo-actions { display: none !important; }
 	header, footer, nav, .control-btn, #btn-snow-toggle, #btn-forward, #btn-back, #btn-top, #countdown, .remix-app, .search-panel, .settings-panel { display: none !important; }
+	
+	/* Скрыть всё кроме бинго */
+	body > *:not(.site) { display: none !important; }
+	.site > *:not(.sections-container) { display: none !important; }
+	.sections-container > *:not(#fortune) { display: none !important; }
+	#fortune > *:not(.container) { display: none !important; }
+	#fortune .container > *:not(.bingo-card) { display: none !important; }
+	
+	/* Стили для печати бинго */
+	@page { margin: 0; size: landscape; }
+	body { margin: 0; padding: 20px; }
+	.bingo-card { 
+		margin: 0 !important; 
+		padding: 20px !important;
+		max-width: 100% !important;
+		page-break-inside: avoid;
+	}
+	.bingo-grid { 
+		grid-template-columns: repeat(6, 1fr) !important;
+		gap: 10px !important;
+	}
+	.bingo-cell {
+		aspect-ratio: 1 / 1 !important;
+		height: auto !important;
+		min-height: 0 !important;
+		padding: 10px 8px !important;
+		font-size: 0.7rem !important;
+		line-height: 1.3 !important;
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+	}
 }
 
 /* Бинго */
@@ -2689,7 +2721,27 @@ body.font-large h4 {
 }
 @media print {
 	.bingo-actions { display: none !important; }
-	.bingo-card { background: white !important; box-shadow: none !important; }
+	.bingo-card { 
+		background: white !important; 
+		box-shadow: none !important;
+		margin: 0 !important;
+		padding: 20px !important;
+	}
+	.bingo-grid {
+		grid-template-columns: repeat(6, 1fr) !important;
+		gap: 10px !important;
+	}
+	.bingo-cell {
+		aspect-ratio: 1 / 1 !important;
+		height: auto !important;
+		min-height: 0 !important;
+		padding: 10px 8px !important;
+		font-size: 0.7rem !important;
+		line-height: 1.3 !important;
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+	}
 }
 
 /* Мобильная версия блока НГ */
