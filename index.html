@@ -15,15 +15,17 @@
     <meta property="og:url" content="https://digest-cb.vercel.app">
     <meta property="og:type" content="website">
     <title>Корпоративный дайджест - ComplexBar</title>
-    <link rel="stylesheet" href="style.css?v=7">
+    <link rel="stylesheet" href="style.css?v=8">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;900&display=swap" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
     <!-- Preload для улучшения производительности -->
-    <link rel="preload" as="image" href="assets/logo.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="preconnect" href="https://voamxlrutauaicdjtxaq.supabase.co">
-    <link rel="preconnect" href="https://p.interacty.me">
+    <link rel="preload" as="image" href="assets/logo.png" fetchpriority="high">
+    <link rel="preload" as="script" href="script.js?v=8">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://voamxlrutauaicdjtxaq.supabase.co">
+    <link rel="dns-prefetch" href="https://p.interacty.me">
     <style>
         /* Critical CSS для мгновенной загрузки */
         * { -webkit-tap-highlight-color: transparent; }
@@ -44,7 +46,7 @@
     </ul>
 
     <a href="https://complexbar.ru" target="_blank" rel="noopener noreferrer">
-        <img src="assets/logo.png" class="logo" alt="Логотип ComplexBar">
+        <img src="assets/logo.png" class="logo" alt="Логотип ComplexBar" fetchpriority="high">
     </a>
     <div class="hero-top">
         <h1 class="fade-in">Корпоративный дайджест</h1>
@@ -821,10 +823,10 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <!-- Supabase SDK -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-config.js?v=6"></script>
-<script src="script.js?v=7"></script>
-<script src="quiz-voting.js?v=6"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+<script src="supabase-config.js?v=6" defer></script>
+<script src="script.js?v=8"></script>
+<script src="quiz-voting.js?v=6" defer></script>
 
 <!-- Vercel Analytics -->
 <script>
