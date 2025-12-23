@@ -2997,3 +2997,39 @@ video {
 	height: auto;
 	display: block;
 }
+
+/* Video wrapper с placeholder */
+.video-wrapper {
+	position: relative;
+	width: 100%;
+	background: #000;
+	border-radius: 12px;
+	overflow: hidden;
+}
+.video-wrapper video {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+.video-wrapper::before {
+	content: '▶';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 4rem;
+	color: rgba(255,255,255,0.8);
+	pointer-events: none;
+	z-index: 1;
+	opacity: 1;
+	transition: opacity 0.3s ease;
+}
+.video-wrapper video:not([poster]):not([src*="blob"]) {
+	min-height: 300px;
+	background: linear-gradient(135deg, #2a0808 0%, #4a0808 100%);
+}
+@media (max-width: 768px) {
+	.video-wrapper video:not([poster]):not([src*="blob"]) {
+		min-height: 200px;
+	}
+}
