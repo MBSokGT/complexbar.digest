@@ -2608,9 +2608,13 @@ body.font-large h4 {
 	box-shadow: 0 2px 8px rgba(190,3,24,0.1);
 	aspect-ratio: 1 / 1;
 	line-height: 1.4;
-	word-break: break-word;
-	hyphens: auto;
-	overflow-wrap: break-word;
+	word-break: keep-all;
+	hyphens: none;
+	overflow-wrap: normal;
+}
+.bingo-cell strong,
+.bingo-cell a {
+	display: block;
 }
 .bingo-cell:hover {
 	background: linear-gradient(135deg, rgba(190,3,24,0.15), rgba(190,3,24,0.25));
