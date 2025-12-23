@@ -189,7 +189,7 @@ async function initVoting() {
       wrapper.style.gap = '4px';
       
       (async () => {
-        const { data } = await supabase.from('reactions').select('count').eq('card_id', reactionId).eq('reaction', emoji).single();
+        const { data } = await window.supabaseClient.from('reactions').select('count').eq('card_id', reactionId).eq('reaction', emoji).single();
         voteCountEl.textContent = data?.count || 0;
         
         const userVotes = JSON.parse(localStorage.getItem('digestUserVotes') || '[]');
@@ -203,18 +203,18 @@ async function initVoting() {
         isProcessing = true;
         
         const userVotes = JSON.parse(localStorage.getItem('digestUserVotes') || '[]');
-        const { data: current } = await supabase.from('reactions').select('count').eq('card_id', reactionId).eq('reaction', emoji).maybeSingle();
+        const { data: current } = await window.supabaseClient.from('reactions').select('count').eq('card_id', reactionId).eq('reaction', emoji).maybeSingle();
         const currentCount = current?.count || 0;
         
         if (userVotes.includes(reactionId)) {
           const newCount = Math.max(0, currentCount - 1);
-          await supabase.from('reactions').upsert({ card_id: reactionId, reaction: emoji, count: newCount }, { onConflict: 'card_id,reaction' });
+          await window.supabaseClient.from('reactions').upsert({ card_id: reactionId, reaction: emoji, count: newCount }, { onConflict: 'card_id,reaction' });
           voteCountEl.textContent = newCount;
           userVotes.splice(userVotes.indexOf(reactionId), 1);
           voteBtn.style.opacity = '0.4';
         } else {
           const newCount = currentCount + 1;
-          await supabase.from('reactions').upsert({ card_id: reactionId, reaction: emoji, count: newCount }, { onConflict: 'card_id,reaction' });
+          await window.supabaseClient.from('reactions').upsert({ card_id: reactionId, reaction: emoji, count: newCount }, { onConflict: 'card_id,reaction' });
           voteCountEl.textContent = newCount;
           userVotes.push(reactionId);
           voteBtn.style.opacity = '1';
@@ -261,7 +261,7 @@ async function initClapReactions() {
     clapCountEl.textContent = '0';
     
     (async () => {
-      const { data } = await supabase.from('reactions').select('count').eq('card_id', cardId).eq('reaction', '🎉').single();
+      const { data } = await window.supabaseClient.from('reactions').select('count').eq('card_id', cardId).eq('reaction', '🎉').single();
       clapCountEl.textContent = data?.count || 0;
       
       const userClaps = JSON.parse(localStorage.getItem('digestUserClaps') || '[]');
@@ -275,18 +275,18 @@ async function initClapReactions() {
       isProcessing = true;
       
       const userClaps = JSON.parse(localStorage.getItem('digestUserClaps') || '[]');
-      const { data: current } = await supabase.from('reactions').select('count').eq('card_id', cardId).eq('reaction', '🎉').maybeSingle();
+      const { data: current } = await window.supabaseClient.from('reactions').select('count').eq('card_id', cardId).eq('reaction', '🎉').maybeSingle();
       const currentCount = current?.count || 0;
       
       if (userClaps.includes(cardId)) {
         const newCount = Math.max(0, currentCount - 1);
-        await supabase.from('reactions').upsert({ card_id: cardId, reaction: '🎉', count: newCount }, { onConflict: 'card_id,reaction' });
+        await window.supabaseClient.from('reactions').upsert({ card_id: cardId, reaction: '🎉', count: newCount }, { onConflict: 'card_id,reaction' });
         clapCountEl.textContent = newCount;
         userClaps.splice(userClaps.indexOf(cardId), 1);
         clapBtn.style.opacity = '1';
       } else {
         const newCount = currentCount + 1;
-        await supabase.from('reactions').upsert({ card_id: cardId, reaction: '🎉', count: newCount }, { onConflict: 'card_id,reaction' });
+        await window.supabaseClient.from('reactions').upsert({ card_id: cardId, reaction: '🎉', count: newCount }, { onConflict: 'card_id,reaction' });
         clapCountEl.textContent = newCount;
         userClaps.push(cardId);
         clapBtn.style.opacity = '0.4';
@@ -365,7 +365,7 @@ async function initNewYearReactions() {
       wrapper.style.gap = '4px';
       
       (async () => {
-        const { data } = await supabase.from('reactions').select('count').eq('card_id', reactionId).eq('reaction', emoji).single();
+        const { data } = await window.supabaseClient.from('reactions').select('count').eq('card_id', reactionId).eq('reaction', emoji).single();
         countEl.textContent = data?.count || 0;
         
         const userVotes = JSON.parse(localStorage.getItem('digestNYUserVotes') || '[]');
@@ -379,18 +379,18 @@ async function initNewYearReactions() {
         isProcessing = true;
         
         const userVotes = JSON.parse(localStorage.getItem('digestNYUserVotes') || '[]');
-        const { data: current } = await supabase.from('reactions').select('count').eq('card_id', reactionId).eq('reaction', emoji).maybeSingle();
+        const { data: current } = await window.supabaseClient.from('reactions').select('count').eq('card_id', reactionId).eq('reaction', emoji).maybeSingle();
         const currentCount = current?.count || 0;
         
         if (userVotes.includes(reactionId)) {
           const newCount = Math.max(0, currentCount - 1);
-          await supabase.from('reactions').upsert({ card_id: reactionId, reaction: emoji, count: newCount }, { onConflict: 'card_id,reaction' });
+          await window.supabaseClient.from('reactions').upsert({ card_id: reactionId, reaction: emoji, count: newCount }, { onConflict: 'card_id,reaction' });
           countEl.textContent = newCount;
           userVotes.splice(userVotes.indexOf(reactionId), 1);
           btn.style.opacity = '0.4';
         } else {
           const newCount = currentCount + 1;
-          await supabase.from('reactions').upsert({ card_id: reactionId, reaction: emoji, count: newCount }, { onConflict: 'card_id,reaction' });
+          await window.supabaseClient.from('reactions').upsert({ card_id: reactionId, reaction: emoji, count: newCount }, { onConflict: 'card_id,reaction' });
           countEl.textContent = newCount;
           userVotes.push(reactionId);
           btn.style.opacity = '1';
