@@ -1156,7 +1156,70 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Interactive card hover - track mouse position for radial gradient effect
+  // Interactive card hover - track mouse position f
+
+  // ============ ПЕЧЕНЬКА С ПРЕДСКАЗАНИЯМИ ============
+  const fortuneSection = document.querySelector('#fortune .container');
+  if (fortuneSection) {
+    const fortunePhrases = [
+      'Счастье находится внутри вас.',
+      'Вы единственный человек, который может ограничить свой потенциал.',
+      'Будьте тем изменением, которое хотите видеть в мире.',
+      'Жизнь — это приключение, наслаждайтесь путешествием.',
+      'Верьте в себя и свои способности.',
+      'Не бойтесь пробовать что-то новое.',
+      'Жизнь непредсказуема, но важно двигаться вперёд с уверенностью.',
+      'Помните, что вы способны на великие дела.',
+      'Неудача — это отправная точка, а не конечная.',
+      'Помните, что вы уникальны и особенны.',
+      'Иногда нужно отойти от хаоса мира, чтобы обрести внутренний покой.',
+      'Жизнь — это марафон, а не спринт.',
+      'Иногда ключ к счастью — найти красоту в простых вещах.',
+      'Верьте в себя и в свою способность преодолевать трудности.'
+    ];
+
+    let currentPhrase = Math.floor(Math.random() * fortunePhrases.length);
+
+    const fortuneHTML = `
+      <div class="fortune-cookie-container" style="background: #fff; border-radius: 20px; padding: 40px; margin-bottom: 32px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); text-align: center;">
+        <div class="fortune-screen1">
+          <h3 style="color: #be0318; font-size: 2rem; margin-bottom: 16px; font-weight: 700;">🥠 Какая удача ждёт вас сегодня?</h3>
+          <p style="color: #2a0808; font-size: 1.1rem; margin-bottom: 24px;">Откройте печенье и узнайте!</p>
+          <div style="font-size: 8rem; cursor: pointer; user-select: none; transition: transform 0.2s;" class="fortune-cookie" onmouseover="this.style.transform='scale(1.1) rotate(5deg)'" onmouseout="this.style.transform='scale(1) rotate(0deg)'">🥠</div>
+        </div>
+        <div class="fortune-screen2" style="display: none;">
+          <h3 style="color: #be0318; font-size: 1.8rem; margin-bottom: 20px; font-weight: 700;">Ваше предсказание:</h3>
+          <div style="background: #FBF6F2; padding: 24px; border-radius: 12px; margin-bottom: 24px; box-shadow: 2px 2px 4px rgba(85,85,85,0.3);">
+            <p class="fortune-text" style="font-family: 'Dancing Script', cursive; font-size: 1.8rem; color: #000; line-height: 1.5;"></p>
+          </div>
+          <div style="font-size: 6rem; margin-bottom: 20px;">🥠</div>
+          <button class="fortune-reset" style="background: #be0318; color: #fff; border: none; padding: 16px 32px; border-radius: 8px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: background 0.3s;" onmouseover="this.style.background='#9b0316'" onmouseout="this.style.background='#be0318'">Открыть другое печенье</button>
+        </div>
+      </div>
+    `;
+
+    fortuneSection.insertAdjacentHTML('afterbegin', fortuneHTML);
+
+    const screen1 = fortuneSection.querySelector('.fortune-screen1');
+    const screen2 = fortuneSection.querySelector('.fortune-screen2');
+    const cookie = fortuneSection.querySelector('.fortune-cookie');
+    const resetBtn = fortuneSection.querySelector('.fortune-reset');
+    const fortuneText = fortuneSection.querySelector('.fortune-text');
+
+    cookie.addEventListener('click', () => {
+      screen1.style.display = 'none';
+      screen2.style.display = 'block';
+      fortuneText.textContent = fortunePhrases[currentPhrase];
+      if (navigator.vibrate) navigator.vibrate(30);
+    });
+
+    resetBtn.addEventListener('click', () => {
+      screen2.style.display = 'none';
+      screen1.style.display = 'block';
+      currentPhrase = Math.floor(Math.random() * fortunePhrases.length);
+      if (navigator.vibrate) navigator.vibrate(20);
+    });
+  }or radial gradient effect
   if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     let mouseMoveTimer;
     document.querySelectorAll('.card').forEach(card => {
