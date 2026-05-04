@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#be0318">
+    <title>Дайджест — ComplexBar</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; background: #f5f5f3; }
+
+        .pdf-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 52px;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 100;
+            gap: 16px;
+        }
+        .pdf-nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            flex-shrink: 0;
+        }
+        .pdf-nav-logo img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .pdf-nav-title {
+            color: rgba(255,255,255,0.75);
+            font-size: 0.8rem;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .pdf-nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .pdf-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: opacity 0.2s;
+        }
+        .pdf-btn:hover { opacity: 0.85; }
+        .pdf-btn-back {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+        .pdf-btn-download {
+            background: #be0318;
+            color: #fff;
+        }
+
+        .pdf-wrapper {
+            padding-top: 52px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .pdf-embed {
+            flex: 1;
+            width: 100%;
+            border: none;
+            display: block;
+        }
+
+        /* Fallback для мобильных */
+        .pdf-fallback {
+            display: none;
+            flex: 1;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .pdf-fallback-icon { font-size: 3rem; }
+        .pdf-fallback h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+        .pdf-fallback p {
+            font-size: 0.85rem;
+            color: #888;
+            max-width: 320px;
+            line-height: 1.6;
+        }
+        .pdf-fallback-download {
+            background: #be0318;
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 640px) {
+            .pdf-embed { display: none; }
+            .pdf-fallback { display: flex; }
+            .pdf-nav-logo span { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="pdf-nav">
+    <a href="/" class="pdf-nav-logo">
+        <img src="assets/logo.png" alt="ComplexBar">
+        <span>ComplexBar Дайджест</span>
+    </a>
+    <span class="pdf-nav-title" id="pdf-title">Загрузка...</span>
+    <div class="pdf-nav-actions">
+        <a href="/" class="pdf-btn pdf-btn-back">← Назад</a>
+        <a href="#" class="pdf-btn pdf-btn-download" id="download-btn" download>↓ Скачать</a>
+    </div>
+</nav>
+
+<div class="pdf-wrapper">
+    <iframe class="pdf-embed" id="pdf-embed" src="" allowfullscreen></iframe>
+    <div class="pdf-fallback" id="pdf-fallback">
+        <div class="pdf-fallback-icon">📄</div>
+        <h2 id="fallback-title">Дайджест</h2>
+        <p>На мобильных устройствах PDF открывается отдельно — нажмите кнопку ниже.</p>
+        <a href="#" id="fallback-download" class="pdf-fallback-download" target="_blank">Открыть PDF</a>
+    </div>
+</div>
+
+<script>
+    const issues = {
+        '1': { file: 'assets/Дайджест№1.pdf',    title: 'Дайджест — Выпуск №1' },
+        '2': { file: 'assets/Дайджест №2.pdf',   title: 'Дайджест — Выпуск №2' },
+    };
+
+    const params = new URLSearchParams(location.search);
+    const id = params.get('issue');
+    const issue = issues[id];
+
+    if (!issue) {
+        document.getElementById('pdf-title').textContent = 'Файл не найден';
+    } else {
+        const encoded = issue.file.replace(/ /g, '%20');
+        document.title = issue.title + ' — ComplexBar';
+        document.getElementById('pdf-title').textContent = issue.title;
+        document.getElementById('pdf-embed').src = encoded;
+        document.getElementById('download-btn').href = encoded;
+        document.getElementById('download-btn').download = issue.file.split('/').pop();
+        document.getElementById('fallback-title').textContent = issue.title;
+        document.getElementById('fallback-download').href = encoded;
+    }
+</script>
+</body>
+</html>
