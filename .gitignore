@@ -3,3 +3,12 @@ node_modules/
 .DS_Store
 .firebase/
 .env*.local
+.claude/
+.vscode/
+*.backup
+*.mp4
+*.MP4
+*.mov
+*.MOV
+*.cr2
+*.CR2
