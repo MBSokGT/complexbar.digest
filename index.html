@@ -443,7 +443,13 @@
             margin-bottom: 16px;
         }
         .case-card.no-photo { grid-template-columns: 1fr; }
-        .case-photo { min-height: 260px; overflow: hidden; position: relative; background: #f0ece8; }
+        .case-photo {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background: #f0ece8;
+        }
         .case-body { padding: 32px 36px; display: flex; flex-direction: column; gap: 14px; }
         .case-title { font-size: 1.05rem; font-weight: 700; color: #111; line-height: 1.45; }
         h4.case-subtitle { font-size: 1.0rem; font-weight: 700; color: #111; line-height: 1.45; margin: 20px 0 4px; padding: 0; }
@@ -455,7 +461,15 @@
         .case-text li { margin-bottom: 6px; }
 
         /* ── Photo Carousel ── */
-        .photo-carousel { position: relative; width: 100%; height: 100%; min-height: 260px; background: #111; }
+        .photo-carousel {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 1 / 1;
+            background: #111;
+            border-radius: 10px;
+            overflow: hidden;
+        }
         .carousel-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.5s ease; pointer-events: none; display: block; }
         .carousel-img.active { opacity: 1; }
         .carousel-btn {
@@ -504,7 +518,7 @@
         .gallery-carousel {
             position: relative;
             width: 100%;
-            aspect-ratio: 4/3;
+            aspect-ratio: 1 / 1;
             background: #111;
             border-radius: 10px;
             overflow: hidden;
@@ -599,7 +613,7 @@
 
         @media (max-width: 900px) {
             .case-card { grid-template-columns: 1fr; }
-            .case-photo, .photo-carousel { min-height: 240px; max-height: 320px; }
+            .case-photo, .photo-carousel, .gallery-carousel { max-height: none; }
             .case-body { padding: 24px; }
         }
 
@@ -890,9 +904,9 @@
                     <div class="case-card feature">
                         <div class="case-photo">
                             <div class="photo-carousel" id="carousel-radisson">
-                                <img src="assets/Raddison/Radisson1.jpeg" class="carousel-img active" alt="Встреча с Radisson Hotels">
-                                <img src="assets/Raddison/Radisson2.jpeg" class="carousel-img" loading="lazy" alt="Radisson Hotels — фото 2">
-                                <img src="assets/Raddison/Radisson3.jpeg" class="carousel-img" loading="lazy" alt="Radisson Hotels — фото 3">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos/Radisson1.jpeg" class="carousel-img active" alt="Встреча с Radisson Hotels">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos/Radisson2.jpeg" class="carousel-img" loading="lazy" alt="Radisson Hotels — фото 2">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos/Radisson3.jpeg" class="carousel-img" loading="lazy" alt="Radisson Hotels — фото 3">
                                 <button class="carousel-btn prev" onclick="carouselStep('carousel-radisson',-1)">&#8249;</button>
                                 <button class="carousel-btn next" onclick="carouselStep('carousel-radisson',1)">&#8250;</button>
                                 <div class="carousel-dots" id="dots-carousel-radisson"></div>
@@ -918,17 +932,17 @@
                     <div class="case-card">
                         <div class="case-photo">
                             <div class="photo-carousel" id="carousel-beer">
-                                <img src="assets/Beer/stollen.jpg" class="carousel-img active" alt="Саур Эль Штоллен">
-                                <img src="assets/Beer/sour_ale_berlin_plum_pie.jpg" class="carousel-img" loading="lazy" alt="Берлинский сливовый пирог">
-                                <img src="assets/Beer/sour_ale_blueberry_nights.jpg" class="carousel-img" loading="lazy" alt="Черничные ночи">
-                                <img src="assets/Beer/sour_ale_boston_cranberry_pie.jpg" class="carousel-img" loading="lazy" alt="Бостонский клюквенный пирог">
-                                <img src="assets/Beer/fruit_beer_strawberry_margarita.jpg" class="carousel-img" loading="lazy" alt="Клубничная Маргарита">
-                                <img src="assets/Beer/fruit_beer_cherry_ale.jpg" class="carousel-img" loading="lazy" alt="Вишнёвый Эль">
-                                <img src="assets/Beer/fruit_beer_melon_and_pistachio.jpg" class="carousel-img" loading="lazy" alt="Дыня, фисташки">
-                                <img src="assets/Beer/fruit_beer_raspberry_passion_fruit_and_mango.jpg" class="carousel-img" loading="lazy" alt="Малина, маракуйя, манго">
-                                <img src="assets/Beer/sour_ale_chili_bear.jpg" class="carousel-img" loading="lazy" alt="Чили медведь">
-                                <img src="assets/Beer/double_milk_stout_henri_le_roux.jpg" class="carousel-img" loading="lazy" alt="Дабл Милк Стаут Анри Ле Ру">
-                                <img src="assets/Beer/sour_tangerines.jpg" class="carousel-img" loading="lazy" alt="Саур Мандарины">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/stollen.jpg" class="carousel-img active" alt="Саур Эль Штоллен">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/sour_ale_berlin_plum_pie.jpg" class="carousel-img" loading="lazy" alt="Берлинский сливовый пирог">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/sour_ale_blueberry_nights.jpg" class="carousel-img" loading="lazy" alt="Черничные ночи">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/sour_ale_boston_cranberry_pie.jpg" class="carousel-img" loading="lazy" alt="Бостонский клюквенный пирог">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/fruit_beer_strawberry_margarita.jpg" class="carousel-img" loading="lazy" alt="Клубничная Маргарита">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/fruit_beer_cherry_ale.jpg" class="carousel-img" loading="lazy" alt="Вишнёвый Эль">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/fruit_beer_melon_and_pistachio.jpg" class="carousel-img" loading="lazy" alt="Дыня, фисташки">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/fruit_beer_raspberry_passion_fruit_and_mango.jpg" class="carousel-img" loading="lazy" alt="Малина, маракуйя, манго">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/sour_ale_chili_bear.jpg" class="carousel-img" loading="lazy" alt="Чили медведь">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/double_milk_stout_henri_le_roux.jpg" class="carousel-img" loading="lazy" alt="Дабл Милк Стаут Анри Ле Ру">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/sour_tangerines.jpg" class="carousel-img" loading="lazy" alt="Саур Мандарины">
                                 <button class="carousel-btn prev" onclick="carouselStep('carousel-beer',-1)">&#8249;</button>
                                 <button class="carousel-btn next" onclick="carouselStep('carousel-beer',1)">&#8250;</button>
                                 <div class="carousel-dots" id="dots-carousel-beer"></div>
@@ -1087,27 +1101,20 @@
                     <div class="case-card">
                         <div class="case-photo">
                             <div class="photo-carousel" id="carousel-yaroslavl">
-                                <img src="assets/Yaroslavl%204/cover.jpg" class="carousel-img active" alt="WCC 2026 — обложка">
-                                <img src="assets/Yaroslavl%204/IMG_1012%20copy.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="assets/Yaroslavl%204/IMG_1016%20copy.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="assets/Yaroslavl%204/IMG_1077%20copy.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="assets/Yaroslavl%204/IMG_1084%20copy.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="assets/Yaroslavl%204/IMG_1155%20copy.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="assets/Yaroslavl%204/IMG_1161%20copy.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="assets/Yaroslavl%204/IMG_1293%20copy.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="assets/Yaroslavl%204/IMG_1349%20copy.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="assets/Yaroslavl%204/IMG_1358%20copy.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="assets/Yaroslavl%204/IMG_1390%20copy.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="assets/Yaroslavl%204/IMG_1409%20copy.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="assets/Yaroslavl%204/IMG_1418%20copy.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="assets/Yaroslavl%204/IMG_1431%20copy.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="assets/Yaroslavl%204/IMG_1472%20copy.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="assets/Yaroslavl%204/IMG_1479%20copy.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="assets/Yaroslavl%204/IMG_1525%20copy.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="assets/Yaroslavl%204/IMG_1540%20copy.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="assets/Yaroslavl%204/IMG_1675%20copy.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="assets/Yaroslavl%204/IMG_1699%20copy.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="assets/Yaroslavl%204/IMG_1764%20copy.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/Yaroslavl41.jpg" class="carousel-img active" alt="WCC 2026">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/Yaroslavl410.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/Yaroslavl411.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/Yaroslavl412.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/Yaroslavl413.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/Yaroslavl414.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/Yaroslavl42.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/Yaroslavl43.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/Yaroslavl44.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/Yaroslavl45.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/Yaroslavl46.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/Yaroslavl47.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/Yaroslavl48.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/Yaroslavl49.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
                                 <button class="carousel-btn prev" onclick="carouselStep('carousel-yaroslavl',-1)">&#8249;</button>
                                 <button class="carousel-btn next" onclick="carouselStep('carousel-yaroslavl',1)">&#8250;</button>
                                 <div class="carousel-dots" id="dots-carousel-yaroslavl"></div>
@@ -1413,7 +1420,7 @@
                             <div class="case-text">
                                 <p>Совместно с руководителями разработаны Индивидуальные Планы Развития для сотрудников отделов продаж. В основе — матрицы компетенций, учитывающие специфику работы каждого подразделения. Каждый сотрудник провёл самооценку и определил приоритетные зоны развития.</p>
                                 <p>Проект синхронизирует ожидания руководителей и сотрудников, обеспечивает точечное развитие на основе реальных потребностей и позволяет рационально распределять ресурсы на обучение.</p>
-                                <img src="assets/IPR.jpg" style="width:100%; border-radius:8px; margin:16px 0; display:block; cursor:pointer;" alt="ИПР — матрица компетенций" onclick="event.stopPropagation();openLightbox('lb-ipr',0)">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/IPR.jpg" style="width:100%; border-radius:8px; margin:16px 0; display:block; cursor:pointer;" alt="ИПР — матрица компетенций" onclick="event.stopPropagation();openLightbox('lb-ipr',0)">
                             </div>
                         </div>
                     </div>
@@ -1425,7 +1432,7 @@
                                 <p>В поддержку Индивидуальных Планов Развития в iSpring сформирована Библиотека компетенций — подборка литературы по ключевым навыкам: клиентоориентированность, ориентация на результат, переговоры, проактивность, внимательность к деталям, командная работа, гибкость и адаптивность, многозадачность, коммуникабельность.</p>
                                 <p>Также, в <a href="https://complexbar.ispringlearn.ru/catalog/category/b219c4aa-28f9-11f1-8163-d6c17ded1a25" target="_blank" rel="noopener" style="color:#be1f24; font-weight:600;">Библиотеку компетенций</a> подобраны универсальные тренажёры для практики работы с возражениями — пока доступны для команды КБ Москва.</p>
                                 <p>Напоминаем: отрабатывать возражения можно в боте <strong>Askasks</strong> — в удобном темпе и в любое время.</p>
-                                <img src="assets/askasks.png" style="width:100%; max-width:520px; border-radius:8px; margin:16px auto; display:block; cursor:pointer;" alt="Бот Askasks" onclick="event.stopPropagation();openLightbox('lb-askasks',0)">
+                                <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/askasks.png" style="width:100%; max-width:520px; border-radius:8px; margin:16px auto; display:block; cursor:pointer;" alt="Бот Askasks" onclick="event.stopPropagation();openLightbox('lb-askasks',0)">
                             </div>
                         </div>
                     </div>
@@ -1459,7 +1466,7 @@
                     <div class="gallery-block">
                         <div class="dept-name">Форум колледжей</div>
                         <div class="gallery-carousel" id="gc-forum">
-                            <img src="assets/forum_kolledzhey/photo_2026-04-27%2011.17.29.jpeg" class="carousel-img active" alt="Форум колледжей">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/photo_2026-04-27%2011.17.29.jpeg" class="carousel-img active" alt="Форум колледжей">
                             <video class="carousel-img" src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-videos/forum_kolledzhey.mp4" controls playsinline preload="metadata"></video>
                             <button class="carousel-btn prev" onclick="carouselStep('gc-forum',-1)">&#8249;</button>
                             <button class="carousel-btn next" onclick="carouselStep('gc-forum',1)">&#8250;</button>
@@ -1471,10 +1478,10 @@
                     <div class="gallery-block">
                         <div class="dept-name">Выступление Григория Торощина в Царицыно — День Бармена 2026</div>
                         <div class="gallery-carousel" id="gc-tsaritsyno">
-                            <img src="assets/tsaritsyno_den_barmena/2026-04-27%2011.19.07.jpg" class="carousel-img active" alt="День Бармена 2026">
-                            <img src="assets/tsaritsyno_den_barmena/photo_2026-04-27%2011.19.19.jpeg" class="carousel-img" loading="lazy" alt="День Бармена 2026">
-                            <img src="assets/tsaritsyno_den_barmena/2026-04-27%2011.19.14.jpg" class="carousel-img" loading="lazy" alt="День Бармена 2026">
-                            <img src="assets/tsaritsyno_den_barmena/2026-04-27%2011.19.31.jpg" class="carousel-img" loading="lazy" alt="День Бармена 2026">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/%20denbarmena1.jpg" class="carousel-img active" alt="День Бармена 2026">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/%20denbarmena2.jpg" class="carousel-img" loading="lazy" alt="День Бармена 2026">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/%20denbarmena3.jpg" class="carousel-img" loading="lazy" alt="День Бармена 2026">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/%20denbarmena4.jpeg" class="carousel-img" loading="lazy" alt="День Бармена 2026">
                             <button class="carousel-btn prev" onclick="carouselStep('gc-tsaritsyno',-1)">&#8249;</button>
                             <button class="carousel-btn next" onclick="carouselStep('gc-tsaritsyno',1)">&#8250;</button>
                             <div class="carousel-dots" id="dots-gc-tsaritsyno"></div>
@@ -1485,8 +1492,8 @@
                     <div class="gallery-block">
                         <div class="dept-name">Дни открытых дверей в Москве</div>
                         <div class="gallery-carousel" id="gc-otkrytye">
-                            <img src="assets/dni_otkrytykh_dverei/2026-04-27%2011.16.54.jpg" class="carousel-img active" alt="Дни открытых дверей">
-                            <img src="assets/dni_otkrytykh_dverei/photo_2026-04-27%2011.17.06.jpeg" class="carousel-img" loading="lazy" alt="Дни открытых дверей">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/2026-04-27%2011.16.54.jpg" class="carousel-img active" alt="Дни открытых дверей">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/photo_2026-04-27%2011.17.06.jpeg" class="carousel-img" loading="lazy" alt="Дни открытых дверей">
                             <button class="carousel-btn prev" onclick="carouselStep('gc-otkrytye',-1)">&#8249;</button>
                             <button class="carousel-btn next" onclick="carouselStep('gc-otkrytye',1)">&#8250;</button>
                             <div class="carousel-dots" id="dots-gc-otkrytye"></div>
@@ -1497,10 +1504,10 @@
                     <div class="gallery-block">
                         <div class="dept-name">Конкурс колледжей</div>
                         <div class="gallery-carousel" id="gc-konkurs">
-                            <img src="assets/konkurs_kolledzhey/IMG_9282.JPG" class="carousel-img active" alt="Конкурс колледжей">
-                            <img src="assets/konkurs_kolledzhey/IMG_9339.JPG" class="carousel-img" loading="lazy" alt="Конкурс колледжей">
-                            <img src="assets/konkurs_kolledzhey/IMG_9366.JPG" class="carousel-img" loading="lazy" alt="Конкурс колледжей">
-                            <img src="assets/konkurs_kolledzhey/IMG_9483.JPG" class="carousel-img" loading="lazy" alt="Конкурс колледжей">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/konkurskolledzhei1%20Medium.jpeg" class="carousel-img active" alt="Конкурс колледжей">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/konkurskolledzhei2%20Medium.jpeg" class="carousel-img" loading="lazy" alt="Конкурс колледжей">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/konkurskolledzhei3%20Medium.jpeg" class="carousel-img" loading="lazy" alt="Конкурс колледжей">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/konkurskolledzhei4%20Medium.jpeg" class="carousel-img" loading="lazy" alt="Конкурс колледжей">
                             <video class="carousel-img" src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-videos/konkurs_kolledzhey.mp4" controls playsinline preload="metadata"></video>
                             <button class="carousel-btn prev" onclick="carouselStep('gc-konkurs',-1)">&#8249;</button>
                             <button class="carousel-btn next" onclick="carouselStep('gc-konkurs',1)">&#8250;</button>
@@ -1512,21 +1519,21 @@
                     <div class="gallery-block full-width">
                         <div class="dept-name">Мастерята</div>
                         <div class="gallery-carousel" id="gc-masteryata">
-                            <img src="assets/masteryata/photo_2025-12-25%2011.52.12.jpeg" class="carousel-img active" alt="Мастерята">
-                            <img src="assets/masteryata/photo_2025-12-25%2011.52.19.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="assets/masteryata/photo_2025-12-25%2011.52.24.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="assets/masteryata/photo_2025-12-25%2011.52.29.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="assets/masteryata/photo_2025-12-25%2011.52.47.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="assets/masteryata/photo_2025-12-25%2011.52.50.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="assets/masteryata/photo_2025-12-25%2011.52.55.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="assets/masteryata/photo_2025-12-25%2011.53.02.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="assets/masteryata/photo_2025-12-25%2011.53.06.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="assets/masteryata/photo_2025-12-25%2011.53.11.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="assets/masteryata/photo_2025-12-25%2011.53.23.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="assets/masteryata/photo_2025-12-25%2011.54.33.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="assets/masteryata/photo_2025-12-25%2011.55.03.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="assets/masteryata/photo_2025-12-25%2011.55.29.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="assets/masteryata/photo_2025-12-25%2011.55.36.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/photo_2025-12-25%2011.52.12.jpeg" class="carousel-img active" alt="Мастерята">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/photo_2025-12-25%2011.52.19.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/photo_2025-12-25%2011.52.24.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/photo_2025-12-25%2011.52.29.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/photo_2025-12-25%2011.52.47.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/photo_2025-12-25%2011.52.50.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/photo_2025-12-25%2011.52.55.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/photo_2025-12-25%2011.53.02.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/photo_2025-12-25%2011.53.06.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/photo_2025-12-25%2011.53.11.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/photo_2025-12-25%2011.53.23.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/photo_2025-12-25%2011.54.33.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/photo_2025-12-25%2011.55.03.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/photo_2025-12-25%2011.55.29.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
+                            <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/photo_2025-12-25%2011.55.36.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
                             <video class="carousel-img" src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-videos/masteryata.mp4" controls playsinline preload="metadata"></video>
                             <button class="carousel-btn prev" onclick="carouselStep('gc-masteryata',-1)">&#8249;</button>
                             <button class="carousel-btn next" onclick="carouselStep('gc-masteryata',1)">&#8250;</button>
@@ -1971,8 +1978,8 @@ document.querySelectorAll('.photo-carousel, .gallery-carousel').forEach(carousel
 });
 
 // Register standalone inline images (IPR, askasks)
-lbGalleries['lb-ipr']     = [{ src: 'assets/IPR.jpg',      alt: 'ИПР — матрица компетенций' }];
-lbGalleries['lb-askasks'] = [{ src: 'assets/askasks.png',  alt: 'Бот Askasks' }];
+lbGalleries['lb-ipr']     = [{ src: 'https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/IPR.jpg', alt: 'ИПР — матрица компетенций' }];
+lbGalleries['lb-askasks'] = [{ src: 'https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/askasks.png', alt: 'Бот Askasks' }];
 
 let lbOpenTime = 0;
 function openLightbox(galleryId, idx) {
