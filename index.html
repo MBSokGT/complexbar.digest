@@ -574,6 +574,15 @@
         #nav-label.visible { opacity: 1; }
         body.lb-open #nav-label { visibility: hidden !important; }
 
+        /* ── Hide page nav while loading ── */
+        body:not(.loaded) #btn-back,
+        body:not(.loaded) #btn-forward,
+        body:not(.loaded) #btn-top,
+        body:not(.loaded) #btn-search,
+        body:not(.loaded) #nav-label,
+        body:not(.loaded) .scroll-progress,
+        body:not(.loaded) .side-nav { visibility: hidden !important; }
+
         /* ── Hide page nav when lightbox is open ── */
         body.lb-open #btn-back,
         body.lb-open #btn-forward,
@@ -1759,7 +1768,10 @@
 // ── Page loader ──
 window.addEventListener('load', () => {
     const loader = document.getElementById('page-loader');
-    setTimeout(() => loader && loader.classList.add('hidden'), 300);
+    setTimeout(() => {
+        loader && loader.classList.add('hidden');
+        document.body.classList.add('loaded');
+    }, 300);
 });
 
 // ── All navigable sections (hero + content sections) ──
