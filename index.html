@@ -515,6 +515,17 @@
         }
         .college-grid .gallery-block { margin-bottom: 0; }
         .college-grid .gallery-block.full-width { grid-column: 1 / -1; }
+
+        /* Мастерята: full-width но шириной одной колонки, по центру */
+        .gallery-block.masteryata-block {
+            grid-column: 1 / -1;
+            width: calc(50% - 10px);
+            margin: 0 auto;
+        }
+        @media (max-width: 640px) {
+            .gallery-block.masteryata-block { width: 100%; }
+        }
+
         .gallery-carousel {
             position: relative;
             width: 100%;
@@ -1527,8 +1538,8 @@
                         </div>
                     </div>
 
-                    <!-- Мастерята — full-width, центрировано -->
-                    <div class="gallery-block full-width" style="max-width: calc(50% - 10px); margin: 0 auto;">
+                    <!-- Мастерята — центрировано, размер как у других -->
+                    <div class="gallery-block masteryata-block">
                         <div class="dept-name">Мастерята</div>
                         <div class="gallery-carousel" id="gc-masteryata">
                             <img src="https://gdfwqciireebkhrpwchn.supabase.co/storage/v1/object/public/digest-photos4/photo_2025-12-25%2011.52.12.jpeg" class="carousel-img active" alt="Мастерята">
