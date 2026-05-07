@@ -722,16 +722,9 @@
         }
         .beer-group ul { margin-top: 2px; }
 
-        /* ── Mobile: nav-label always visible (sidebar hidden on mobile) ── */
+        /* ── Mobile: nav-label hidden ── */
         @media (max-width: 900px) {
-            #nav-label {
-                opacity: 1 !important;
-                bottom: 66px;
-                font-size: 0.68rem;
-                padding: 5px 16px;
-                background: rgba(255,255,255,0.98);
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            }
+            #nav-label { display: none !important; }
         }
 
         /* ── Gap fix: section-intro → первый h3 ── */
@@ -813,6 +806,7 @@
                 grid-template-columns: 1fr;
                 padding: 0 20px;
                 margin-top: 32px;
+                padding-bottom: 110px;
             }
             .hero-mission-sep { display: none; }
             .hero-mission-col {
