@@ -9,6 +9,27 @@
     <meta name="author" content="ComplexBar">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Дайджест — Комплекс-Бар</title>
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109098537', 'ym');
+        ym(109098537, 'init', {ssr:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/109098537" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+    <style>
+        /* Scroll animations */
+        .anim-fade { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .anim-fade.visible { opacity: 1; transform: translateY(0); }
+        .anim-fade-left { opacity: 0; transform: translateX(-28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .anim-fade-left.visible { opacity: 1; transform: translateX(0); }
+        .anim-fade-right { opacity: 0; transform: translateX(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .anim-fade-right.visible { opacity: 1; transform: translateX(0); }
+    </style>
     <link rel="icon" type="image/jpeg" href="/assets/browserlogo.jpg">
     <link rel="preload" as="image" href="assets/logo.png">
     <link rel="stylesheet" href="style.css">
@@ -2115,6 +2136,48 @@ document.querySelectorAll('.case-text strong').forEach(el => {
         el.classList.add('stat-pill');
     }
 });
+</script>
+
+<script>
+// Scroll animations
+(function() {
+    // Назначаем классы анимации элементам
+    const rules = [
+        { sel: '.spring-section h2',          cls: 'anim-fade' },
+        { sel: '.section-intro',              cls: 'anim-fade' },
+        { sel: '.dept-name',                  cls: 'anim-fade' },
+        { sel: '.case-card',                  cls: 'anim-fade' },
+        { sel: '.toc-card',                   cls: 'anim-fade' },
+        { sel: '.gallery-block',              cls: 'anim-fade' },
+        { sel: '.dept-block',                 cls: 'anim-fade' },
+        { sel: '.hero-stat',                  cls: 'anim-fade' },
+    ];
+
+    rules.forEach(({ sel, cls }) => {
+        document.querySelectorAll(sel).forEach((el, i) => {
+            if (!el.classList.contains('anim-fade') &&
+                !el.classList.contains('anim-fade-left') &&
+                !el.classList.contains('anim-fade-right')) {
+                el.classList.add(cls);
+                // Небольшая задержка для каждого следующего элемента в группе
+                el.style.transitionDelay = Math.min(i % 4 * 0.08, 0.24) + 's';
+            }
+        });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.anim-fade, .anim-fade-left, .anim-fade-right').forEach(el => {
+        observer.observe(el);
+    });
+})();
 </script>
 </body>
 </html>
