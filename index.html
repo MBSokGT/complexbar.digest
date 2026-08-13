@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="robots" content="noindex, nofollow">
-    <meta name="description" content="Корпоративный дайджест ComplexBar — Выпуск №4, Весна 2026.">
+    <meta name="description" content="Корпоративный дайджест ComplexBar — Выпуск №5, Осень 2026.">
     <meta name="theme-color" content="#be1f24">
     <meta name="author" content="ComplexBar">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -53,7 +53,7 @@
         /* ── Scrollbar — thin accent ── */
         html { scrollbar-color: #be1f24 transparent; }
         html::-webkit-scrollbar { width: 3px; }
-        html::-webkit-scrollbar-thumb { background: #be1f24; border-radius: 2px; }
+        html::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #be1f24, #c8711f); border-radius: 2px; }
 
         /* ── Page loader ── */
         .page-loader {
@@ -414,6 +414,24 @@
         /* Meadow clips to hero */
         .spring-hero { padding-bottom: 0 !important; }
         .spring-sections { margin-top: 0; }
+
+        /* ── Autumn edition — warm corporate gradient instead of spring pink ── */
+        .autumn-site .spring-hero {
+            background: linear-gradient(150deg, #6b1310 0%, #8a1006 30%, #be1f24 60%, #d9691a 100%) !important;
+        }
+        .autumn-site .spring-hero::before {
+            background:
+                radial-gradient(circle at 12% 88%, rgba(255,176,84,0.18) 0%, transparent 45%),
+                radial-gradient(circle at 88% 15%, rgba(255,140,66,0.14) 0%, transparent 45%) !important;
+            animation: heroGlowPulse 6s ease-in-out infinite;
+        }
+        @keyframes heroGlowPulse {
+            0%, 100% { opacity: 1; }
+            50%      { opacity: 0.55; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .autumn-site .spring-hero::before { animation: none; }
+        }
 
         /* ── Search button ── */
         #btn-search {
@@ -814,9 +832,228 @@
             }
             .hero-mission-col:last-child { border-bottom: none; }
         }
+
+        /* ══════════════════════════════════════════════
+           AUTUMN EDITION — уникальный дизайн Выпуска 5
+        ══════════════════════════════════════════════ */
+        body.autumn-page {
+            --autumn-bg: #fdf9f3;
+            --autumn-ink: #201914;
+            --autumn-muted: #8a7c6f;
+            --autumn-line: #ece1d3;
+            --autumn-red: #be1f24;
+            --autumn-amber: #c8711f;
+        }
+        body.autumn-page .spring-site,
+        body.autumn-page .spring-sections,
+        body.autumn-page .spring-footer-banner,
+        body.autumn-page .spring-site footer {
+            background: var(--autumn-bg) !important;
+        }
+        body.autumn-page .spring-section + .spring-section,
+        body.autumn-page .spring-footer-banner,
+        body.autumn-page .spring-site footer {
+            border-top-color: var(--autumn-line) !important;
+        }
+        body.autumn-page .spring-section h2,
+        body.autumn-page .case-title,
+        body.autumn-page .toc-title,
+        body.autumn-page h4.case-subtitle {
+            color: var(--autumn-ink);
+        }
+        body.autumn-page .section-intro {
+            color: var(--autumn-muted);
+        }
+        body.autumn-page .case-text {
+            color: #2b2420;
+        }
+        body.autumn-page .case-text strong { color: var(--autumn-ink); }
+
+        /* Цитата руководителя — выделенный блок */
+        body.autumn-page .exec-quote {
+            position: relative;
+            margin: 24px 0;
+            padding: 30px 30px 26px 62px;
+            background: linear-gradient(135deg, rgba(190,31,36,0.055), rgba(200,113,31,0.08));
+            border-left: 3px solid var(--autumn-red);
+            border-radius: 4px 18px 18px 4px;
+        }
+        body.autumn-page .exec-quote::before {
+            content: '“';
+            position: absolute;
+            top: -6px; left: 18px;
+            font-size: 4rem;
+            line-height: 1;
+            font-family: Georgia, 'Times New Roman', serif;
+            color: rgba(190,31,36,0.22);
+            pointer-events: none;
+        }
+        body.autumn-page .exec-quote p {
+            margin: 0 0 12px;
+            font-size: 0.92rem;
+            font-style: italic;
+            color: var(--autumn-ink);
+        }
+        body.autumn-page .exec-quote p:last-of-type { margin-bottom: 0; }
+        body.autumn-page .exec-quote p strong {
+            font-style: normal;
+            color: var(--autumn-red);
+        }
+        body.autumn-page .exec-quote cite {
+            display: block;
+            margin-top: 16px;
+            font-style: normal;
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            color: var(--autumn-amber);
+        }
+
+        /* Обводка вместо плоской заливки у фоновых номеров разделов */
+        body.autumn-page .spring-section::before {
+            color: rgba(200,113,31,0.05);
+            -webkit-text-stroke: 1px rgba(190,31,36,0.10);
+        }
+
+        /* Лист-водяной знак в каждом разделе */
+        body.autumn-page .spring-section .container { position: relative; z-index: 1; }
+        body.autumn-page .spring-section::after {
+            content: '🍂';
+            position: absolute;
+            bottom: 18px; left: 28px;
+            font-size: clamp(2.6rem, 5vw, 4.2rem);
+            opacity: 0.06;
+            line-height: 1;
+            transform: rotate(-14deg);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Анимированное подчёркивание заголовков разделов */
+        body.autumn-page .spring-section h2::after {
+            width: 0;
+            background: linear-gradient(90deg, var(--autumn-red), var(--autumn-amber));
+            transition: width 0.7s ease 0.15s;
+        }
+        body.autumn-page .spring-section.visible h2::after { width: 44px; }
+
+        /* Карточки — мягкая «бумажная» подача вместо газетной сетки */
+        body.autumn-page .spring-cards {
+            gap: 20px;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+        }
+        body.autumn-page .spring-card {
+            border-radius: 16px;
+            border: 1px solid var(--autumn-line);
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(70,40,10,0.045);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        body.autumn-page .spring-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 30px rgba(70,40,10,0.10);
+            border-color: rgba(190,31,36,0.22);
+        }
+
+        /* TOC-карточки — иконка-бейдж вместо цветной полоски слева */
+        body.autumn-page .toc-card { border-left: none; }
+        body.autumn-page .toc-card:hover {
+            background: #fff;
+            border-left: none;
+            transform: translateY(-5px);
+        }
+        body.autumn-page .toc-emoji {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 46px; height: 46px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(190,31,36,0.10), rgba(200,113,31,0.16));
+            font-size: 1.35rem;
+            transition: transform 0.35s ease;
+        }
+        body.autumn-page .toc-card:hover .toc-emoji { transform: scale(1.12) rotate(-8deg); animation-play-state: paused; }
+        body.autumn-page .toc-emoji { animation: tocIconSway 3.6s ease-in-out infinite; }
+        body.autumn-page .toc-card:nth-child(even) .toc-emoji { animation-direction: reverse; }
+        @keyframes tocIconSway {
+            0%, 100% { transform: rotate(-5deg); }
+            50%      { transform: rotate(5deg); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            body.autumn-page .toc-emoji { animation: none; }
+        }
+
+        /* Карточки кейсов — тёплая рамка и мягкая тень */
+        body.autumn-page .case-card {
+            border-color: var(--autumn-line);
+            box-shadow: 0 2px 10px rgba(70,40,10,0.04);
+        }
+        body.autumn-page .case-photo,
+        body.autumn-page .photo-carousel { background: #efe6da; }
+
+        /* Название отдела — пилюля вместо подчёркивания */
+        body.autumn-page .dept-name {
+            display: inline-block;
+            border-bottom: none;
+            padding: 6px 16px;
+            border-radius: 20px;
+            background: rgba(190,31,36,0.07);
+            color: #8a1418;
+            letter-spacing: 0.1em;
+        }
+
+        /* Подзаголовки h3 — тёплый градиент вместо сплошного красного */
+        body.autumn-page .spring-section h3 {
+            border-bottom: 3px solid transparent;
+            border-image: linear-gradient(90deg, var(--autumn-red), var(--autumn-amber)) 1;
+        }
+
+        /* Боковая навигация — тёплый градиент акцента */
+        body.autumn-page .side-nav-item.active .side-nav-pip,
+        body.autumn-page .side-nav-item:hover .side-nav-pip {
+            background: linear-gradient(180deg, var(--autumn-red), var(--autumn-amber));
+        }
+
+        /* Индикатор прокрутки — тёплый градиент */
+        body.autumn-page .scroll-progress {
+            background: linear-gradient(90deg, var(--autumn-red), var(--autumn-amber)) !important;
+            box-shadow: 0 2px 10px rgba(190,31,36,0.35) !important;
+        }
+
+        body.autumn-page .spring-footer-banner h2 .accent { color: var(--autumn-red); }
+        body.autumn-page .spring-footer-banner {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(180deg, var(--autumn-bg) 0%, #f3e3cd 100%) !important;
+        }
+
+        /* ── Плывущие по шапке листья (амбиентная анимация) ── */
+        .hero-leaves {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 4;
+        }
+        .hero-leaf {
+            position: absolute;
+            top: -40px;
+            opacity: 0;
+            animation: heroLeafFall linear forwards;
+            will-change: transform, opacity;
+        }
+        @keyframes heroLeafFall {
+            0%   { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+            8%   { opacity: 0.85; }
+            85%  { opacity: 0.7; }
+            100% { transform: translate(var(--drift, 40px), 620px) rotate(var(--spin, 300deg)); opacity: 0; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .hero-leaf { display: none; }
+        }
     </style>
 </head>
-<body class="has-top-nav">
+<body class="has-top-nav autumn-page">
 
 <!-- Навигационная полоса -->
 <nav class="top-nav">
@@ -829,8 +1066,8 @@
             <a href="https://complexbar.bitrix24.ru/~qSQFY" target="_blank" class="nav-issue nav-pdf">Выпуск 1</a>
             <a href="https://complexbar.bitrix24.ru/~T15sM" target="_blank" class="nav-issue nav-pdf">Выпуск 2</a>
             <a href="issue3.html" class="nav-issue">Выпуск 3</a>
-            <a href="index.html" class="nav-issue active">Выпуск 4</a>
-            <a href="issue5.html" class="nav-issue">Выпуск 5</a>
+            <a href="issue4.html" class="nav-issue">Выпуск 4</a>
+            <a href="index.html" class="nav-issue active">Выпуск 5</a>
         </div>
     </div>
 </nav>
@@ -850,7 +1087,7 @@
 <!-- Лейбл текущего раздела над кнопками -->
 <div id="nav-label"></div>
 
-<div class="spring-site">
+<div class="spring-site autumn-site">
 
     <!-- ═══════════════════════════════════════════════
          HERO
@@ -862,7 +1099,7 @@
         </a>
         <h1>Корпоративный дайджест</h1>
         <p class="hero-tagline">Следите за достижениями команды, кейсами отделов<br>и ключевыми событиями компании</p>
-        <div class="hero-badge">Выпуск №4 &nbsp;·&nbsp; Весна 2026</div>
+        <div class="hero-badge">🍂&nbsp; Выпуск №5 &nbsp;·&nbsp; Осень 2026 &nbsp;🍂</div>
 
         <!-- Mission & Goal -->
         <div class="hero-mission" aria-label="Миссия и цель компании">
@@ -880,27 +1117,34 @@
         <!-- Flower meadow at the bottom of the hero -->
         <div class="hero-meadow" aria-hidden="true">
             <svg class="meadow-svg" viewBox="0 0 1440 130" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0,90 C240,40 480,110 720,70 C960,30 1200,100 1440,60 L1440,130 L0,130 Z" fill="#fff"/>
+                <defs>
+                    <linearGradient id="meadowGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#eeddc0"/>
+                        <stop offset="55%" stop-color="#f7ecd9"/>
+                        <stop offset="100%" stop-color="#fdf9f3"/>
+                    </linearGradient>
+                </defs>
+                <path d="M0,90 C240,40 480,110 720,70 C960,30 1200,100 1440,60 L1440,130 L0,130 Z" fill="url(#meadowGradient)"/>
             </svg>
             <div class="meadow-flowers">
-                <span class="mf" style="left:0%;   bottom:16px; font-size:20px; animation-delay:0s;">🌸</span>
-                <span class="mf" style="left:4%;   bottom:28px; font-size:16px; animation-delay:0.4s;">🌿</span>
-                <span class="mf" style="left:9%;   bottom:18px; font-size:24px; animation-delay:0.8s;">🌸</span>
-                <span class="mf" style="left:15%;  bottom:12px; font-size:18px; animation-delay:0.2s;">🌺</span>
-                <span class="mf" style="left:21%;  bottom:26px; font-size:14px; animation-delay:1.1s;">🌸</span>
-                <span class="mf" style="left:27%;  bottom:14px; font-size:22px; animation-delay:0.6s;">🌼</span>
-                <span class="mf" style="left:33%;  bottom:22px; font-size:18px; animation-delay:1.4s;">🌸</span>
-                <span class="mf" style="left:39%;  bottom:10px; font-size:20px; animation-delay:0.3s;">🌿</span>
-                <span class="mf" style="left:45%;  bottom:28px; font-size:26px; animation-delay:0.9s;">🌸</span>
-                <span class="mf" style="left:51%;  bottom:14px; font-size:16px; animation-delay:1.6s;">🌺</span>
-                <span class="mf" style="left:57%;  bottom:24px; font-size:22px; animation-delay:0.5s;">🌸</span>
-                <span class="mf" style="left:63%;  bottom:12px; font-size:18px; animation-delay:1.2s;">🌼</span>
-                <span class="mf" style="left:69%;  bottom:20px; font-size:24px; animation-delay:0.7s;">🌸</span>
-                <span class="mf" style="left:75%;  bottom:16px; font-size:14px; animation-delay:1.8s;">🌿</span>
-                <span class="mf" style="left:81%;  bottom:26px; font-size:20px; animation-delay:0.1s;">🌸</span>
-                <span class="mf" style="left:87%;  bottom:14px; font-size:22px; animation-delay:1.0s;">🌺</span>
-                <span class="mf" style="left:92%;  bottom:20px; font-size:16px; animation-delay:0.5s;">🌸</span>
-                <span class="mf" style="left:97%;  bottom:24px; font-size:20px; animation-delay:1.3s;">🌼</span>
+                <span class="mf" style="left:0%;   bottom:16px; font-size:20px; animation-delay:0s;">🍁</span>
+                <span class="mf" style="left:4%;   bottom:28px; font-size:16px; animation-delay:0.4s;">🍄</span>
+                <span class="mf" style="left:9%;   bottom:18px; font-size:24px; animation-delay:0.8s;">🍁</span>
+                <span class="mf" style="left:15%;  bottom:12px; font-size:18px; animation-delay:0.2s;">🍂</span>
+                <span class="mf" style="left:21%;  bottom:26px; font-size:14px; animation-delay:1.1s;">🍁</span>
+                <span class="mf" style="left:27%;  bottom:14px; font-size:22px; animation-delay:0.6s;">🌰</span>
+                <span class="mf" style="left:33%;  bottom:22px; font-size:18px; animation-delay:1.4s;">🍁</span>
+                <span class="mf" style="left:39%;  bottom:10px; font-size:20px; animation-delay:0.3s;">🍄</span>
+                <span class="mf" style="left:45%;  bottom:28px; font-size:26px; animation-delay:0.9s;">🍁</span>
+                <span class="mf" style="left:51%;  bottom:14px; font-size:16px; animation-delay:1.6s;">🍂</span>
+                <span class="mf" style="left:57%;  bottom:24px; font-size:22px; animation-delay:0.5s;">🍁</span>
+                <span class="mf" style="left:63%;  bottom:12px; font-size:18px; animation-delay:1.2s;">🌰</span>
+                <span class="mf" style="left:69%;  bottom:20px; font-size:24px; animation-delay:0.7s;">🍁</span>
+                <span class="mf" style="left:75%;  bottom:16px; font-size:14px; animation-delay:1.8s;">🍄</span>
+                <span class="mf" style="left:81%;  bottom:26px; font-size:20px; animation-delay:0.1s;">🍁</span>
+                <span class="mf" style="left:87%;  bottom:14px; font-size:22px; animation-delay:1.0s;">🍂</span>
+                <span class="mf" style="left:92%;  bottom:20px; font-size:16px; animation-delay:0.5s;">🍁</span>
+                <span class="mf" style="left:97%;  bottom:24px; font-size:20px; animation-delay:1.3s;">🌰</span>
             </div>
         </div>
 
@@ -924,37 +1168,32 @@
                     <div class="spring-card toc-card" onclick="document.getElementById('section-sales').scrollIntoView({behavior:'smooth'})">
                         <div class="toc-emoji">🔥</div>
                         <div class="toc-title">Сила продаж</div>
-                        <div class="toc-desc">Гостиничный отдел, колл-центр, Ярославль, Алматы</div>
+                        <div class="toc-desc">Кейтеринг-конференция, деколь для WU SHU, Lali и Главвино</div>
                     </div>
                     <div class="spring-card toc-card" onclick="document.getElementById('section-procurement').scrollIntoView({behavior:'smooth'})">
                         <div class="toc-emoji">📦</div>
                         <div class="toc-title">Закупка</div>
-                        <div class="toc-desc">Новые партнёры, ODK, условия поставок</div>
+                        <div class="toc-desc"></div>
                     </div>
                     <div class="spring-card toc-card" onclick="document.getElementById('section-logistics').scrollIntoView({behavior:'smooth'})">
                         <div class="toc-emoji">🚚</div>
                         <div class="toc-title">Логистика</div>
-                        <div class="toc-desc">Таможня, сертификация, экспорт, оптимизация затрат</div>
+                        <div class="toc-desc"></div>
                     </div>
                     <div class="spring-card toc-card" onclick="document.getElementById('section-training').scrollIntoView({behavior:'smooth'})">
                         <div class="toc-emoji">📚</div>
                         <div class="toc-title">Обучение и развитие</div>
-                        <div class="toc-desc">Переговорные игры, ИПР, Библиотека компетенций, Askasks</div>
-                    </div>
-                    <div class="spring-card toc-card" onclick="document.getElementById('section-colleges').scrollIntoView({behavior:'smooth'})">
-                        <div class="toc-emoji">🎓</div>
-                        <div class="toc-title">Сотрудничество с колледжами</div>
-                        <div class="toc-desc">Форум, Мастерята, конкурсы, дни открытых дверей</div>
+                        <div class="toc-desc"></div>
                     </div>
                     <div class="spring-card toc-card" onclick="document.getElementById('section-horeca').scrollIntoView({behavior:'smooth'})">
                         <div class="toc-emoji">🍽</div>
                         <div class="toc-title">Ресторанные хроники</div>
-                        <div class="toc-desc">Ava Team, Lucky Group, Family Garden — новые точки по всей стране</div>
+                        <div class="toc-desc"></div>
                     </div>
-                    <div class="spring-card toc-card wide" style="text-align:center; align-items:center;" onclick="document.getElementById('section-spring').scrollIntoView({behavior:'smooth'})">
+                    <div class="spring-card toc-card" onclick="document.getElementById('section-spring').scrollIntoView({behavior:'smooth'})">
                         <div class="toc-emoji">📊</div>
                         <div class="toc-title">Тренды HoReCa</div>
-                        <div class="toc-desc">Куда движется рынок — сейчас и на два года вперёд</div>
+                        <div class="toc-desc"></div>
                     </div>
                 </div>
             </div>
@@ -966,262 +1205,290 @@
                 <h2>🔥 Сила продаж</h2>
                 <p class="section-intro">Победы, партнёрства и ключевые сделки</p>
 
-                <h3>🏙️ Москва</h3>
-
-                <!-- Отдел гостиничных продаж -->
+                <!-- Гостиничный отдел -->
                 <div class="dept-block">
-                    <div class="dept-name">Отдел гостиничных продаж</div>
+                    <div class="dept-name">Гостиничный отдел</div>
                     <div class="case-card feature photo-vcenter">
                         <div class="case-photo">
-                            <div class="photo-carousel" id="carousel-radisson">
-                                <img src="http://153.80.247.162/assets/Radisson1.jpeg" class="carousel-img active" alt="Встреча с <strong>Radisson Hotels</strong>">
-                                <img src="http://153.80.247.162/assets/Radisson2.jpeg" class="carousel-img" loading="lazy" alt="<strong>Radisson Hotels</strong> — фото 2">
-                                <img src="http://153.80.247.162/assets/Radisson3.jpeg" class="carousel-img" loading="lazy" alt="<strong>Radisson Hotels</strong> — фото 3">
-                                <button class="carousel-btn prev" onclick="carouselStep('carousel-radisson',-1)">&#8249;</button>
-                                <button class="carousel-btn next" onclick="carouselStep('carousel-radisson',1)">&#8250;</button>
-                                <div class="carousel-dots" id="dots-carousel-radisson"></div>
+                            <div class="photo-carousel" id="carousel-catering-heroes">
+                                <img src="assets/five_hotels/catering-heroes-1.jpg" class="carousel-img active" alt="Конференция CATERING HEROES в Санкт-Петербурге">
+                                <img src="assets/five_hotels/catering-heroes-2.jpg" class="carousel-img" loading="lazy" alt="Конференция CATERING HEROES в Санкт-Петербурге">
+                                <img src="assets/five_hotels/catering-heroes-3.jpg" class="carousel-img" loading="lazy" alt="Конференция CATERING HEROES в Санкт-Петербурге">
+                                <img src="assets/five_hotels/catering-heroes-4.jpg" class="carousel-img" loading="lazy" alt="Конференция CATERING HEROES в Санкт-Петербурге">
+                                <img src="assets/five_hotels/catering-heroes-5.jpg" class="carousel-img" loading="lazy" alt="Забег «Белые ночи» и йога на закате в Москве">
+                                <button class="carousel-btn prev" onclick="carouselStep('carousel-catering-heroes',-1)">&#8249;</button>
+                                <button class="carousel-btn next" onclick="carouselStep('carousel-catering-heroes',1)">&#8250;</button>
+                                <div class="carousel-dots" id="dots-carousel-catering-heroes"></div>
                             </div>
                         </div>
                         <div class="case-body">
-                            <div class="case-title">Как мы «поселили» новые тренды в <strong>Radisson</strong>: встреча, которая изменила закупки</div>
+                            <div class="case-title">Развиваем партнёрство с кейтерингом — не только на словах, но и на деле!</div>
                             <div class="case-text">
-                                <p>Главное достижение, которым мы по-настоящему гордимся, — системное укрепление отношений с ключевыми игроками гостиничного бизнеса. Мы не просто поддерживаем контакты, а переходим на уровень стратегического партнёрства.</p>
-                                <p>Ключевой прорыв: успешное проведение закрытой встречи с сетью отелей <strong>Radisson Hotels</strong>. В мероприятии приняли участие более <strong>25 человек</strong> из разных отелей Москвы: управляющие отелями, F&amp;B-менеджеры и бар-менеджеры. Это редкий формат, когда так много лиц, принимающих решения, собрались вместе ради одной темы.</p>
-                                <p>Организатором и идейным вдохновителем этой встречи выступила <strong>Анна Решетникова</strong>, которая занимается развитием сотрудничества именно с сетевыми отелями и предложила формат не просто презентации, а глубокой проработки трендов. Темой встречи стали «<strong>Новинки и тренды в напитках 2026</strong>».</p>
-                                <p>Вместе с командой <strong>Radisson</strong> разобрали актуальные решения, которые идеально вписываются в их высокие стандарты. Анна выстроила диалог так, что клиенты ушли не с каталогом, а с готовой картой идей для своего меню.</p>
-                                <p>По итогам встречи сеть <strong>Radisson</strong> расширила матрицу и увеличила категории закупаемых продуктовых товаров. Главное — зафиксирован кратный <strong>рост лояльности</strong> к нашей компании. Нас теперь воспринимают не как поставщика, а как <strong>эксперта индустрии</strong>.</p>
-                                <p>Встреча состоялась в Учебном центре Романа Торощина.</p>
-                                <p>Огромная благодарность коллегам из УЦ: структурированная подача информации, зона для дегустации и общая атмосфера встречи помогли провести мероприятие на высшем уровне.</p>
+                                <p>Департамент по работе с гостиницами и кейтерингом активно развивает сотрудничество с кейтеринговыми компаниями по всей России — и каждый новый проект становится возможностью не только познакомиться, но и создать действительно крепкое партнёрство.</p>
+                                <p>В июле мы приняли участие в конференции Ассоциации кейтеринговых компаний «Герои кейтеринга» (<strong>CATERING HEROES</strong>) в Санкт-Петербурге.</p>
+                                <p>Мероприятие объединило руководителей <strong>40 кейтеринговых компаний</strong> со всей страны — от Москвы и Санкт-Петербурга до Владивостока и Новосибирска.</p>
+                                <p>В рамках конференции <strong>Екатерина Бенцианова</strong> при поддержке коллег из филиала в Санкт-Петербурге — <strong>Анны Кундозеровой</strong> и <strong>Андрея Рочева</strong> — провела презентацию основ для лимонадов <strong>PINCH&amp;DROP</strong>.</p>
+                                <p>А корпоративный бармен и агент по продажам <strong>Алексей Горяев</strong> сразу перешёл от слов к делу: угощал гостей свежеприготовленными лимонадами на основе наших продуктов.</p>
+                                <p>Но на деловом общении мы не остановились! 🤝</p>
+                                <p>Продолжили знакомство уже в дружеском формате: вместе пробежали знаменитый забег «Белые ночи», а затем встретились на массовой йоге на закате в Москве.</p>
+                                <p>Именно так мы и видим настоящее партнёрство: общие проекты, энергия, движение и удовольствие от общения — и в работе, и за её пределами.</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Оптовый отдел -->
+                <!-- Оптовый отдел и отдел деколирования -->
                 <div class="dept-block">
-                    <div class="dept-name">Оптовый отдел</div>
+                    <div class="dept-name">Оптовый отдел и отдел деколирования</div>
+
+                    <div class="case-card no-photo">
+                        <div class="case-body">
+                            <div class="case-text">
+                                <p>За последнее время направление деколи заметно выросло: от отдельных заказов мы постепенно пришли к работе с крупными ресторанными проектами, сетями и брендами. И представленные ниже кейсы — лишь небольшая часть работы, которая ведётся сегодня.</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="case-card photo-vcenter">
                         <div class="case-photo">
-                            <div class="photo-carousel" id="carousel-beer">
-                                <img src="http://153.80.247.162/assets/stollen.jpg" class="carousel-img active" alt="Саур Эль Штоллен">
-                                <img src="http://153.80.247.162/assets/sour_ale_berlin_plum_pie.jpg" class="carousel-img" loading="lazy" alt="Берлинский сливовый пирог">
-                                <img src="http://153.80.247.162/assets/sour_ale_blueberry_nights.jpg" class="carousel-img" loading="lazy" alt="Черничные ночи">
-                                <img src="http://153.80.247.162/assets/sour_ale_boston_cranberry_pie.jpg" class="carousel-img" loading="lazy" alt="Бостонский клюквенный пирог">
-                                <img src="http://153.80.247.162/assets/fruit_beer_strawberry_margarita.jpg" class="carousel-img" loading="lazy" alt="Клубничная Маргарита">
-                                <img src="http://153.80.247.162/assets/fruit_beer_cherry_ale.jpg" class="carousel-img" loading="lazy" alt="Вишнёвый Эль">
-                                <img src="http://153.80.247.162/assets/fruit_beer_melon_and_pistachio.jpg" class="carousel-img" loading="lazy" alt="Дыня, фисташки">
-                                <img src="http://153.80.247.162/assets/fruit_beer_raspberry_passion_fruit_and_mango.jpg" class="carousel-img" loading="lazy" alt="Малина, маракуйя, манго">
-                                <img src="http://153.80.247.162/assets/sour_ale_chili_bear.jpg" class="carousel-img" loading="lazy" alt="Чили медведь">
-                                <img src="http://153.80.247.162/assets/double_milk_stout_henri_le_roux.jpg" class="carousel-img" loading="lazy" alt="Дабл Милк Стаут Анри Ле Ру">
-                                <img src="http://153.80.247.162/assets/sour_tangerines.jpg" class="carousel-img" loading="lazy" alt="Саур Мандарины">
-                                <button class="carousel-btn prev" onclick="carouselStep('carousel-beer',-1)">&#8249;</button>
-                                <button class="carousel-btn next" onclick="carouselStep('carousel-beer',1)">&#8250;</button>
-                                <div class="carousel-dots" id="dots-carousel-beer"></div>
+                            <div class="photo-carousel" id="carousel-decal-wushu">
+                                <img src="assets/5_opt/decal-wushu-1.jpg" class="carousel-img active" alt="Брендированная посуда с гравировкой для ресторана WU SHU">
+                                <button class="carousel-btn prev" onclick="carouselStep('carousel-decal-wushu',-1)">&#8249;</button>
+                                <button class="carousel-btn next" onclick="carouselStep('carousel-decal-wushu',1)">&#8250;</button>
+                                <div class="carousel-dots" id="dots-carousel-decal-wushu"></div>
                             </div>
                         </div>
                         <div class="case-body">
-                            <div class="case-title"><strong>Pinch&amp;Drop</strong> — выход на пивоваренные заводы</div>
+                            <div class="case-title">WU SHU</div>
                             <div class="case-text">
-                                <p><strong>Егор Грачёв</strong> договорился о поставках сиропов <strong>Pinch&amp;Drop</strong> в формате больших канистр напрямую на заводы пивоварен: Alaska Brewery, Kulinar Brewery, White Stone Brewery. Благодаря такому формату партнёры стали меньше тратить на производство новых напитков — им проще и выгоднее делать свой продукт. Это помогло снизить себестоимость и наладить производственный процесс.</p>
-                                <p>Технологи заводов высоко оценили первый этап работы. Егора пригласили на закрытую встречу, где они совместно с технологом разработали несколько новых напитков. Во всех позициях — сиропы и пюре <strong>Pinch&amp;Drop</strong>:</p>
-                                <div class="beer-group">
-                                    <div class="beer-category">Саур Эль</div>
-                                    <ul>
-                                        <li><strong>«Штоллен»</strong> — карамель, клубника, лимон, пекан (сиропы Клубника и Карамель)</li>
-                                        <li><strong>«Берлинский сливовый пирог»</strong> — слива, яблоко, грецкий орех, штрейзель (кордиал <strong>C.O.D.E</strong> Лимонный Крамбл)</li>
-                                        <li><strong>«Черничные ночи»</strong> — черника с шоколадным бисквитом (сиропы Черника и Чёрная смородина)</li>
-                                        <li><strong>«Бостонский клюквенный пирог»</strong> — клюква с грецким орехом (пюре клюквы)</li>
-                                        <li><strong>«Чили медведь»</strong> — сироп <strong>ODK</strong> Чили + пюре малины</li>
-                                        <li><strong>«Мандарины»</strong> — новогодний эксклюзив с пюре мандаринов</li>
-                                    </ul>
-                                </div>
-                                <div class="beer-group">
-                                    <div class="beer-category">Фрут Бир</div>
-                                    <ul>
-                                        <li><strong>«Клубничная Маргарита»</strong> — сироп Клубника</li>
-                                        <li><strong>«Вишнёвый Эль»</strong> — сироп Македонская вишня</li>
-                                        <li><strong>«Дыня, фисташки»</strong> — сироп Фисташковое мороженое</li>
-                                        <li><strong>«Малина, маракуйя, манго»</strong> — сиропы Малина и Маракуйя</li>
-                                        <li><strong>«Смородина, голубика, бузина»</strong> — сиропы Чёрная смородина и Бузина</li>
-                                    </ul>
-                                </div>
-                                <div class="beer-group">
-                                    <div class="beer-category">Стаут</div>
-                                    <ul>
-                                        <li><strong>«Дабл Милк Стаут "Анри Ле Ру"»</strong> — сироп Солёная карамель</li>
-                                    </ul>
-                                </div>
-                                <p>В целом, работа прошла отлично, и результаты вкусные!</p>
+                                <p>Один из ярких примеров — ресторан <strong>WU SHU</strong>. Совместно с <strong>Владимиром Денщиковым</strong> удалось полностью реализовать потребность клиента в брендированной посуде.</p>
+                                <p>Дизайн и логотип были разработаны самим клиентом, а отдел деколи отвечал за реализацию проекта: подбор цветов и расположения нанесения, согласование технических деталей с подрядчиками и контроль производства.</p>
+                                <p>В результате получилась стильная посуда, которая стала частью визуального образа ресторана и представлена не только в самом заведении, но и в его меню.</p>
+                                <p>На сегодняшний день клиенту отгружено более <strong>10 000 единиц посуды</strong> с нанесением.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card photo-vcenter">
+                        <div class="case-photo">
+                            <div class="photo-carousel" id="carousel-decal-lali">
+                                <img src="assets/5_opt/decal-lali-1.jpg" class="carousel-img active" alt="Декорированная посуда для проектов Аркадия Новикова">
+                                <img src="assets/5_opt/decal-lali-2.jpg" class="carousel-img" loading="lazy" alt="Декорированная посуда для Lali и Чайхона №1">
+                                <button class="carousel-btn prev" onclick="carouselStep('carousel-decal-lali',-1)">&#8249;</button>
+                                <button class="carousel-btn next" onclick="carouselStep('carousel-decal-lali',1)">&#8250;</button>
+                                <div class="carousel-dots" id="dots-carousel-decal-lali"></div>
+                            </div>
+                        </div>
+                        <div class="case-body">
+                            <div class="case-title">Lali, Чайхона №1 и проекты Аркадия Новикова</div>
+                            <div class="case-text">
+                                <p>Отдельно стоит отметить проекты <strong>Аркадия Новикова</strong>. Благодаря работе <strong>Евгения Гололобова</strong> с клиентом, отдел деколи реализует посуду с нанесением для таких проектов, как <strong>Lali</strong>, <strong>Чайхона №1</strong> и других заведений.</p>
+                                <p>Здесь работа включает полный цикл реализации деколи: проработку нанесения, подбор цветов и расположения, взаимодействие с подрядчиками, решение технических вопросов и контроль готового результата.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card photo-vcenter">
+                        <div class="case-photo">
+                            <div class="photo-carousel" id="carousel-decal-sibwellness">
+                                <img src="assets/5_opt/decal-sibwellness-1.jpg" class="carousel-img active" alt="Siberian Wellness — бокалы под фирменную упаковку бренда">
+                                <img src="assets/5_opt/decal-sibwellness-2.jpg" class="carousel-img" loading="lazy" alt="Siberian Wellness — бокалы под фирменную упаковку бренда">
+                                <img src="assets/5_opt/decal-sibwellness-3.jpg" class="carousel-img" loading="lazy" alt="Siberian Wellness — бокалы под фирменную упаковку бренда">
+                                <img src="assets/5_opt/decal-sibwellness-4.jpg" class="carousel-img" loading="lazy" alt="Siberian Wellness — бокалы под фирменную упаковку бренда">
+                                <button class="carousel-btn prev" onclick="carouselStep('carousel-decal-sibwellness',-1)">&#8249;</button>
+                                <button class="carousel-btn next" onclick="carouselStep('carousel-decal-sibwellness',1)">&#8250;</button>
+                                <div class="carousel-dots" id="dots-carousel-decal-sibwellness"></div>
+                            </div>
+                        </div>
+                        <div class="case-body">
+                            <div class="case-title">Siberian Wellness</div>
+                            <div class="case-text">
+                                <p>Ещё один показательный кейс — работа с <strong>Siberian Wellness</strong>, проект директора департамента по деколированию <strong>Михаила Микенина</strong>. В рамках проекта были согласованы и подобраны бокалы, которые должны были гармонично сочетаться с фирменной упаковкой бренда.</p>
+                                <p>Результат настолько понравился клиенту, что практически сразу после реализации первого проекта был размещён новый заказ — уже в три раза больший по объёму.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card photo-vcenter">
+                        <div class="case-photo">
+                            <div class="photo-carousel" id="carousel-decal-glavvino">
+                                <img src="assets/5_opt/decal-glavvino-1.jpg" class="carousel-img active" alt="Бокалы с гравировкой для фестиваля вина «Главвино»">
+                                <button class="carousel-btn prev" onclick="carouselStep('carousel-decal-glavvino',-1)">&#8249;</button>
+                                <button class="carousel-btn next" onclick="carouselStep('carousel-decal-glavvino',1)">&#8250;</button>
+                                <div class="carousel-dots" id="dots-carousel-decal-glavvino"></div>
+                            </div>
+                        </div>
+                        <div class="case-body">
+                            <div class="case-title">Главвино — фестиваль вина</div>
+                            <div class="case-text">
+                                <p>Для фестиваля вина совместно с <strong>Егором Грачёвым</strong> для <strong>Главвино</strong> было изготовлено <strong>5 000 бокалов</strong> с гравировкой.</p>
+                                <p>При этом гравировка выполняла не только декоративную функцию. На бокалах были предусмотрены специальные отметки 125 и 250 мл, которые позволяют официантам и барменам быстро и точно определять объём наливаемого вина.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card no-photo">
+                        <div class="case-body">
+                            <div class="case-text">
+                                <p>Сегодня деколь постепенно превращается из дополнительной услуги в полноценное направление, которое позволяет работать с крупными клиентами, получать повторные заказы и увеличивать объёмы сотрудничества.</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Колл-центр -->
+                <!-- Комплекс-Бар Невский -->
                 <div class="dept-block">
-                    <div class="dept-name">Колл-центр</div>
+                    <div class="dept-name">Комплекс-Бар Невский</div>
                     <div class="case-card no-photo feature">
                         <div class="case-body">
-                            <div class="case-title">Дистанционный запуск ресторана и победа над конкурентами в условиях многозадачности</div>
+                            <div class="case-title">Переезд шоурума и склада — общими силами</div>
                             <div class="case-text">
-                                <p><strong>Задача:</strong> полное оснащение и открытие ресторана в дистанционном режиме. Сумма сделки: <strong>1 500 000 рублей</strong>.</p>
-                                <p><strong>Условия:</strong> сокращённый штат (двойная нагрузка на сотрудников), жёсткая ценовая конкуренция.</p>
-                                <p>Клиент находился в другом городе и планировал открытие ресторана «под ключ». Из-за расстояния не мог лично присутствовать при выборе ассортимента, поэтому выбирал среди нескольких поставщиков. Основные критерии: надёжность, цена, наличие товара.</p>
-                                <p>Перед <strong>Кариной Гулиевой</strong> стояло три вызова:</p>
-                                <ul>
-                                    <li><strong>Стратегическое ценообразование:</strong> проанализировала предложения конкурентов, не просто дала скидку, а оптимизировала смету — предложила более эффективные аналоги оборудования без потери качества. Клиент сэкономил бюджет, сохранив технологический цикл.</li>
-                                    <li><strong>Дистанционный сервис:</strong> оперативно отвечала на все запросы клиента.</li>
-                                    <li><strong>Профессиональная настойчивость:</strong> работала с возражениями на каждом этапе. Пока конкуренты медлили с ответами, Карина предоставляла расчёты и консультации мгновенно.</li>
-                                </ul>
-                                <p><strong>Результат:</strong> оплачено открытие ресторана на сумму <strong>1 500 000 рублей</strong>. Клиент отказался от сотрудничества с конкурентами. Ресторан открыт в срок, иногородний клиент стал постоянным партнёром. Задача выполнена силами одного менеджера без привлечения дополнительного штата.</p>
+                                <p>Команда «Комплекс-Бар Невский» в лице всех без исключения своих сотрудников участвовала в переезде шоурума и склада.</p>
+                                <p>Бережно упаковывали товар с витрин и складских полок, грузили, носили, переносили, перевозили, мыли. Разбирали и собирали витрины и мебель. Практически жили на работе, чтобы успеть в сроки, обозначенные руководителем. И мы всё сделали вовремя!</p>
+                                <blockquote class="exec-quote">
+                                    <p>От себя лично хочу выразить благодарность всему нашему коллективу!</p>
+                                    <p>Всем сотрудникам склада, логистики, менеджерам, которые помогали собирать заказы на складе, выставлять и собирать товар, дизайнеру и завхозу! Менеджерам, которые в этой «боевой обстановке» оставались на передовой продаж под грохот посуды, мебели и звуки скотча, которым мы заклеивали коробки) Сотрудникам бухгалтерии, которые также участвовали во всех процессах упаковки и сборки.</p>
+                                    <p>Отдельно никого выделять не хочу, молодцы все. Это очень тяжёлый период, как морально, так и физически, мы его прошли все вместе. <strong>Спасибо каждому!!!</strong></p>
+                                    <cite>— Анна Кундозерова, заместитель генерального директора по оперативному управлению</cite>
+                                </blockquote>
+                                <p>Упаковав больше 100 витрин, мы разбили всего 1 бокал и 1 блюдо)</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Департамент развития продаж -->
+                <!-- Комплекс Бар Ярославль -->
                 <div class="dept-block">
-                    <div class="dept-name">Департамент развития продаж</div>
-                    <div class="case-card no-photo">
-                        <div class="case-body">
-                            <div class="case-title">Расширяем пул клиентов</div>
-                            <div class="case-text">
-                                <p><strong>Юлиана Моллу</strong> совместно с командой отдела закупок оперативно обеспечила поставку фарфора бренда <strong>Tognana</strong> с логотипом ресторана <strong>Loro</strong> в новый ресторан. Общая сумма закупки по бренду <strong>Tognana</strong> составила более <strong>1 200 000 рублей</strong>.</p>
-                                <p>Новые клиенты в портфеле:</p>
-                                <ul>
-                                    <li><strong>Дмитрий Зверев</strong> подписал сеть спортивных клубов <strong>DDX</strong>.</li>
-                                    <li><strong>Владимир Денщиков</strong> с новинкой — лимонадной основой <strong>«Щавель-Лайм»</strong> — подписал сеть <strong>Coffee Like</strong> на летнюю программу.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Отдел поддержки продаж -->
-                <div class="dept-block">
-                    <div class="dept-name">Отдел поддержки продаж</div>
-
-                    <div class="case-card no-photo">
-                        <div class="case-body">
-                            <div class="case-title">Азбука Вкуса — полное оснащение двух новых точек</div>
-                            <div class="case-text">
-                                <p>Успешно завершено полное оснащение двух новых точек сети «Азбука Вкуса». Общая сумма контрактов — более <strong>4 000 000 рублей</strong>.</p>
-                                <p>Главный вызов: наличие товара и сроки. <strong>Анастасия Раби</strong> оперативно подобрала и согласовала качественные альтернативы по отсутствующим позициям, что позволило осуществить отгрузку точно в срок и обеспечить бесперебойный запуск магазинов.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="case-card no-photo">
-                        <div class="case-body">
-                            <div class="case-title">X5 Group — партия 7 000+ бутылок сиропа с разработкой этикетки с нуля</div>
-                            <div class="case-text">
-                                <p>Реализован <strong>Анастасией Раби</strong> крупный проект для сети X5: поставлена партия объёмом более <strong>7 000 бутылок сиропа</strong>.</p>
-                                <p>Под специфические потребности клиента с нуля разработана этикетка и пройдена полная сертификация продукции. Позиция успешно введена в основное меню крупнейшей ритейл-сети страны.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="case-card no-photo">
-                        <div class="case-body">
-                            <div class="case-title">Новое заведение в г. Королёв, Ресторан Сирокко — открытие «под ключ»</div>
-                            <div class="case-text">
-                                <p><strong>Юлия Васенина</strong> и <strong>Татьяна Ларина</strong> реализовали проект по комплексному оснащению нового крупного заведения в Московской области. Задача: обеспечить полное и своевременное открытие объекта, закрыв все ключевые категории инвентаря — от фарфора до кухонного оборудования.</p>
-                                <p>Что было сделано:</p>
-                                <ul>
-                                    <li>Детально проработаны и презентованы образцы по всем направлениям: фарфор, стекло, столовые приборы, барный и кухонный инвентарь.</li>
-                                    <li>Разработаны персональные условия сотрудничества с учётом масштаба и специфики открытия.</li>
-                                    <li>Сопровождение 360°: менеджеры находились на связи в режиме 24/7, лично контролировали каждый этап — от проработки ассортимента до контроля оплат и логистики.</li>
-                                </ul>
-                                <p>Заведение открыто в срок без задержек по вине поставщика. Общая сумма реализации — более <strong>1 400 000 рублей</strong>.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="case-card no-photo">
-                        <div class="case-body">
-                            <div class="case-title">Усадьба «Покровское-Стрешнево» — большой ресторан и оранжерея-кофейня</div>
-                            <div class="case-text">
-                                <p><strong>Юлия Васенина</strong> и <strong>Дарья Куприянова</strong> помогли нам стать частью масштабного возрождения Главного дома усадьбы Покровское-Стрешнево, где в ближайшее время откроются большой ресторан и оранжерея-кофейня.</p>
-                                <p>Работа велась в тесной связке с шеф-поваром и бар-менеджером заведения. Серия встреч в шоу-руме позволила клиенту «вживую» оценить качество и эстетику каждой позиции; для проекта подготовлены персональные подборки под концепцию ресторана и кофейни.</p>
-                                <p>На объект отгружено всё необходимое для запуска «под ключ»: кухонный и барный инвентарь, стекло, столовые приборы, профессиональный фарфор. Общая сумма реализации — более <strong>3 700 000 рублей</strong>.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="case-card no-photo">
-                        <div class="case-body">
-                            <div class="case-title">Масштабные открытия с <strong>Family Garden</strong> и <strong>Novikov Group</strong></div>
-                            <div class="case-text">
-                                <p><strong>Евгений Гололобов</strong> и <strong>Ольга Шманова</strong> реализовали серию открытий для крупнейших ресторанных холдингов: <strong>Family Garden</strong>, <strong>Novikov Group</strong> и <strong>White Rabbit Family</strong>. География проектов — от Минска до Ташкента, от Москвы до Ростова-на-Дону. В большинстве заведений 90–95% всего инвентаря — ассортимент «Комплекс Бар».</p>
-                                <ul>
-                                    <li><strong>Ресторан «Сорренто» (Минск)</strong> — сумма отгрузки: ~7 500 000 руб. Успешно проработан и поставлен заказной итальянский фарфор <strong>Ilsa</strong> (серия Neo Antiros), ставший визитной карточкой сервировки.</li>
-                                    <li><strong>Ресторан «Lali» (Москва, ТЦ «Авиапарк»)</strong> — первый в столице ресторан узбекской кухни от холдинга. Эксклюзивно поставлена посуда <strong>Kunstwerk</strong> с индивидуальной деколью «Пахта», подчеркнувшей аутентичность концепции.</li>
-                                    <li><strong>«Горыныч» (Ташкент)</strong> — громкое открытие и первое сотрудничество Бориса Зарькова и Ерванда Галстяна. Московский офис полностью обеспечил запуск проекта, подтвердив статус надёжного партнёра для международных коллабораций <strong>WRF</strong> и <strong>Family Garden</strong>.</li>
-                                    <li><strong>«PRO.Хинкали» (Ростов-на-Дону)</strong> — масштабное открытие второго ресторана сети на 167 посадочных мест. Сумма отгрузки: <strong>12 000 000 руб.</strong> — рекорд за один проект.</li>
-                                    <li><strong>Сеть «Ramen Room» (Москва)</strong> — 21 апреля открылась вторая точка на Земляном Валу, 9. В проект интегрирован фарфор бренда <strong>Rinart</strong>.</li>
-                                </ul>
-                                <p>Евгений и Ольга доказали, что глубокое знание продукта и умение работать с «тяжеловесами» индустрии позволяют «Комплекс Бар» становиться не просто поставщиком, а фундаментом для запуска самых амбициозных ресторанов СНГ.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <h3>🏢 Филиалы и обособленные подразделения</h3>
-
-                <!-- Ярославль -->
-                <div class="dept-block">
-                    <div class="dept-name">Ярославль</div>
-                    <div class="case-card">
+                    <div class="dept-name">Комплекс Бар Ярославль</div>
+                    <div class="case-card feature photo-vcenter">
                         <div class="case-photo">
-                            <div class="photo-carousel" id="carousel-yaroslavl">
-                                <img src="http://153.80.247.162/assets/Yaroslavl41.jpg" class="carousel-img active" alt="WCC 2026">
-                                <img src="http://153.80.247.162/assets/Yaroslavl410.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="http://153.80.247.162/assets/Yaroslavl411.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="http://153.80.247.162/assets/Yaroslavl412.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="http://153.80.247.162/assets/Yaroslavl413.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="http://153.80.247.162/assets/Yaroslavl414.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="http://153.80.247.162/assets/Yaroslavl42.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="http://153.80.247.162/assets/Yaroslavl43.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="http://153.80.247.162/assets/Yaroslavl44.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="http://153.80.247.162/assets/Yaroslavl45.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="http://153.80.247.162/assets/Yaroslavl46.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="http://153.80.247.162/assets/Yaroslavl47.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="http://153.80.247.162/assets/Yaroslavl48.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <img src="http://153.80.247.162/assets/Yaroslavl49.jpg" class="carousel-img" loading="lazy" alt="WCC 2026">
-                                <button class="carousel-btn prev" onclick="carouselStep('carousel-yaroslavl',-1)">&#8249;</button>
-                                <button class="carousel-btn next" onclick="carouselStep('carousel-yaroslavl',1)">&#8250;</button>
-                                <div class="carousel-dots" id="dots-carousel-yaroslavl"></div>
+                            <div class="photo-carousel" id="carousel-yaroslavl5">
+                                <img src="assets/five_yaroslavl/yaroslavl-visit-1.jpg" class="carousel-img active" alt="Встреча с барменами Ярославской и Костромской областей">
+                                <img src="assets/five_yaroslavl/yaroslavl-visit-2.jpg" class="carousel-img" loading="lazy" alt="Встреча с барменами Ярославской и Костромской областей">
+                                <img src="assets/five_yaroslavl/yaroslavl-visit-3.jpg" class="carousel-img" loading="lazy" alt="Встреча с барменами Ярославской и Костромской областей">
+                                <img src="assets/five_yaroslavl/yaroslavl-visit-4.jpg" class="carousel-img" loading="lazy" alt="Встреча с барменами Ярославской и Костромской областей">
+                                <img src="assets/five_yaroslavl/yaroslavl-visit-5.jpg" class="carousel-img" loading="lazy" alt="Встреча с барменами Ярославской и Костромской областей">
+                                <img src="assets/five_yaroslavl/yaroslavl-visit-6.jpg" class="carousel-img" loading="lazy" alt="Встреча с барменами Ярославской и Костромской областей">
+                                <button class="carousel-btn prev" onclick="carouselStep('carousel-yaroslavl5',-1)">&#8249;</button>
+                                <button class="carousel-btn next" onclick="carouselStep('carousel-yaroslavl5',1)">&#8250;</button>
+                                <div class="carousel-dots" id="dots-carousel-yaroslavl5"></div>
                             </div>
                         </div>
                         <div class="case-body">
-                            <div class="case-title">Конкурс WCC 2026</div>
+                            <div class="case-title">Приезд Романа Торощина: встреча с барменами Ярославской и Костромской областей</div>
                             <div class="case-text">
-                                <p>Благодаря работе <strong>Алёны Тоцкой</strong> подразделению согласовали спонсорство в конкурсе World Coffee Championship 2026. Участие осуществлялось совместно с брендами <strong>Pinch&amp;Drop</strong> и<strong> <strong>CODE</strong>.</strong></p>
-                                <p>В конкурсе приняли участие <strong>13 кандидатов из 10 заведений</strong> Ярославской области. Победители получили приглашение на обучение в Учебный центр Романа Торощина.</p>
+                                <p>25 июня в Ярославле мы провели встречу с барменами и бар-менеджерами Ярославской и Костромской областей. На встрече присутствовали более 54 человек, и все были в восторге от мероприятия.</p>
+                                <p>Команда провела переговоры в городах Рыбинск, Кострома и Переславль-Залесский — после них удалось подключить крупные сети.</p>
+                                <p>За счёт такого мероприятия, где собралась большая часть заведений Ярославской и Костромской области, нам удалось провести дегустацию наших новинок, пообщаться с клиентами, услышать их запросы и договориться о дальнейшей работе. Июль показал прирост Pinch&amp;Drop на 25%.</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Алматы -->
+                <!-- Департамент поддержки продаж -->
                 <div class="dept-block">
-                    <div class="dept-name">Алматы</div>
+                    <div class="dept-name">Департамент поддержки продаж</div>
+
+                    <div class="case-card no-photo feature">
+                        <div class="case-body">
+                            <div class="case-title">Успешное комплексное оснащение двух проектов Crocus Group — «Шаолинь» и «Иль Монте»</div>
+                            <div class="case-text">
+                                <p><strong>Задача:</strong> обеспечить полное оснащение двух новых заведений от Crocus Group, расположенных по одному адресу, — ресторана «Шаолинь» и ресторана «Иль Монте». Общая сумма отгрузки превысила 5 000 000 рублей.</p>
+                                <p><strong>Решение:</strong> комплексная работа команды профессионалов позволила не только выполнить все требования клиента, но и превзойти его ожидания, обеспечив выгодные условия и высокий уровень сервиса.</p>
+                                <p><strong>Ключевые участники проекта:</strong></p>
+                                <ul>
+                                    <li><strong>Анастасия Балакирева (Раби)</strong>, поддержка продаж, персональный менеджер: сыграла решающую роль в привлечении и удержании клиента. Благодаря проактивной позиции и глубокому пониманию рынка Анастасия смогла предложить конкурентные цены, перебив предложения соперников. Её персональный подход и умение находить компромиссы стали залогом полного доверия клиента и его решения о выкупе всего ассортимента.</li>
+                                    <li><strong>Юлия Островерхова и Дарья Антонова</strong>, менеджеры торгового зала: продемонстрировали высочайший профессионализм в работе с клиентом в шоу-руме. Их грамотная презентация, знание ассортимента и умение раскрыть преимущества каждого товара произвели на клиента неизгладимое впечатление. Они не просто показали продукцию, но и помогли клиенту представить, как она будет интегрирована в новые заведения, что стало важным фактором принятия решения.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="case-card no-photo">
                         <div class="case-body">
+                            <div class="case-title">Family Garden: новые открытия «321 клуба» и сети «Про Хинкали»</div>
                             <div class="case-text">
-                                <h4 class="case-subtitle">Развитие ключевых партнёрств</h4>
-                                <p>КБ Алматы продолжает углублять сотрудничество по <strong>СТМ Глобал Кофе</strong>: в рамках второй совместной СТМ ассортимент поставок расширен — к сиропам добавлены <strong>основы для напитков и барный инвентарь</strong>.</p>
-                                <p>Партнёрство с сетью <strong>I'M (McDonald's)</strong> также вышло на новый уровень: помимо сиропов введены основы для напитков, переговоры по инвентарю продолжаются.</p>
+                                <ol>
+                                    <li><strong>321 клуб (Рёберная), Ташкент.</strong> Новый проект холдинга FG — всё по стандартам мясных ресторанов, посуда из нержавейки и дерева. Менеджеры <strong>Евгений Гололобов</strong> и <strong>Ольга Шманова</strong> проделали огромную работу по наполнению этого проекта: за основу взяли посуду Tex Mex, инвентарь и стекло — из ассортимента КБ. Столовые приборы и часть посуды не входили в постоянный ассортимент компании, но благодаря профессионализму менеджеров удалось найти альтернативные варианты у заказных поставщиков и полностью укомплектовать проект под заказ. Открытие состоялось 1 мая на сумму 6 000 000 рублей, а через две недели открылось второе заведение — уже в Сочи. По этому холдингу менеджеры Москвы и Сочи всегда работают сообща, благодаря чему клиент получает отличный сервис и коммуникацию.</li>
+                                    <li><strong>«Про Хинкали», Воронеж.</strong> Уже третий ресторан сети в городе! Здесь всё по стандарту — ассортимент поставлен полностью, от посуды до инвентаря. Сумма — 5 000 000 рублей.</li>
+                                    <li><strong>«Про Хинкали», Ханты-Мансийск.</strong> Ресторан находится на территории гостиницы. Стояла задача не просто открыть ресторан, но и оснастить посудой линию раздачи. Сумма открытия — 6 000 000 рублей.</li>
+                                    <li><strong>«Про Хинкали», Мытищи.</strong> Долгожданный и непростой проект в Мытищах наконец завершён! Ресторан моментально завоевал популярность среди местных жителей, о чём свидетельствуют полные залы и активное освещение в соцсетях. На оснащение ресторана выделено 7 000 000 рублей.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
 
-                                <h4 class="case-subtitle">Выход на <strong>Americana Holding</strong></h4>
-                                <p>Начат диалог с <strong>Americana Holding</strong> (KFC, <strong>Hardee's</strong>, Pizza Hut, <strong>Krispy Kreme</strong>, Costa Coffee). <strong>Hardee's</strong> уже утвердил поставку сиропов. 6 мая на площадке нашей студии состоялась масштабная презентация решений для холдинга. <strong>Krispy Kreme</strong> — следующий приоритет; <strong>KFC</strong> проявляет интерес, требуется проработка вопроса сертификации GFSI.</p>
+                    <div class="case-card no-photo">
+                        <div class="case-body">
+                            <div class="case-title">Успешное открытие ресторана русской кухни «Мариванна» в Ташкенте: кейс командной работы</div>
+                            <div class="case-text">
+                                <p>Проект, над которым команда работала почти полтора года, наконец увенчался успехом. Это яркий пример того, как слаженная командная работа, чёткое распределение обязанностей и высокий профессионализм каждого участника могут привести к впечатляющим результатам.</p>
+                                <ul>
+                                    <li><strong>Дарья Куприянова</strong>, менеджер поддержки продаж: взяла на себя ответственность за подготовку коммерческих предложений (КП) по запросам клиента. Её внимательность к деталям и оперативность обеспечили точное соответствие предложений ожиданиям заказчика.</li>
+                                    <li><strong>Владимир Денщиков</strong>, территориальный менеджер: эффективно провёл переговоры по ценообразованию, достигнув выгодных условий для обеих сторон. Его стратегический подход и умение находить компромиссы сыграли решающую роль в формировании финального бюджета проекта.</li>
+                                    <li><strong>Николай Соловьёв и Елена Покровская</strong>: отвечали за весь пакет документов, необходимых для успешной отгрузки оборудования в Ташкент. Их скрупулёзность и знание всех тонкостей логистики и таможенного оформления гарантировали бесперебойный процесс поставок.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 
-                                <h4 class="case-subtitle">Выход в ретейл</h4>
-                                <p>Ведутся переговоры с сетями супермаркетов <strong>Magnum</strong> и <strong>Small (Казахстан)</strong>. С <strong>Magnum</strong> заключён договор на поставку инвентаря, на очереди — презентация пищевых решений для фудзоны. По Small договор на финальном этапе согласования; интерес к пищевой продукции подтверждён. В перспективе сеть рассматривает переформатирование фудзон в мини-кофейни — потенциал для расширения присутствия нашего ассортимента.</p>
+                    <div class="case-card no-photo">
+                        <div class="case-body">
+                            <div class="case-title">Успех на межрегиональном уровне: «Дымов Керамик», Суздаль</div>
+                            <div class="case-text">
+                                <p>В условиях высокой конкуренции и специфики региона менеджер по продажам <strong>Надежда Кикашова</strong> продемонстрировала исключительный профессионализм, успешно организовав продажу столовых приборов и стекла для крупного мероприятия компании «Дымов Керамик» в городе Суздаль. Этот кейс — яркий пример того, как грамотный подход, глубокое знание рынка и нацеленность на результат позволяют достигать впечатляющих показателей даже в условиях, казалось бы, ограниченных возможностей.</p>
+                                <p>Сумма заказа составила более 500 000 рублей.</p>
+                            </div>
+                        </div>
+                    </div>
 
-                                <h4 class="case-subtitle">Команда</h4>
-                                <p>Достигнутые результаты — итог общей работы: каждый сотрудник филиала вносит вклад в развитие компании.</p>
-                                <p>В условиях макроэкономической нестабильности и внутренних изменений проведены мероприятия по поддержке команды: фокус на мотивации, дисциплине и командном духе. Ключевой посыл — именно мы, совместными усилиями, через оптимизацию процессов и постоянное улучшение, строим общее будущее компании.</p>
+                    <div class="case-card no-photo">
+                        <div class="case-body">
+                            <div class="case-title">Открытие ресторана «Мамука», г. Владимир</div>
+                            <div class="case-text">
+                                <p>Менеджер <strong>Алиса Рассказова</strong> взяла на себя полную ответственность за дистанционную работу с клиентом. С марта она плотно занималась этим проектом:</p>
+                                <ul>
+                                    <li>не просто принимала заказ, а вела подробный учёт всех пожеланий клиента, оперативно вносила изменения в позиции с учётом наличия товаров;</li>
+                                    <li>подбирала аналоги, запрашивала их у поставщиков;</li>
+                                    <li>управляла оплатами и ценообразованием, чтобы сделка была выгодной для обеих сторон.</li>
+                                </ul>
+                                <p>Благодаря настойчивости, внимательности и профессионализму Алисы ресторан «Мамука» смог открыться на сумму более 600 000 рублей. Клиент остался полностью доволен результатом и качеством обслуживания.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card no-photo">
+                        <div class="case-body">
+                            <div class="case-title">Pinskiy&amp;Co: успешное открытие ресторана «Рубель» — новой звезды русской кухни</div>
+                            <div class="case-text">
+                                <p>Особую признательность хочется выразить менеджеру <strong>Екатерине Воронковой</strong>, которая проявила выдающиеся профессиональные качества и настоящую самоотдачу в ходе оснащения кухни этого уникального заведения. Несмотря на то что основное электрооборудование клиент приобретал у других поставщиков, Екатерина сумела выстроить доверительные отношения и продемонстрировать высокий уровень экспертизы. Её настойчивость и умение находить индивидуальный подход к каждому клиенту привели к тому, что Pinskiy&amp;Co тоже стало частью этого грандиозного проекта, реализовав оборудование на сумму около 1 000 000 рублей.</p>
+                                <p>Открытие ресторана «Рубель» — это не просто ещё один успешный кейс, а подтверждение нашей способности реализовывать амбициозные проекты и вносить вклад в развитие гастрономической индустрии. Общая сумма продаж при открытии ресторана составила около 3 000 000 рублей.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card no-photo">
+                        <div class="case-body">
+                            <div class="case-title">Успешное закрытие сделки в Москве и передача клиента в Тулу</div>
+                            <div class="case-text">
+                                <p>Менеджер московского офиса <strong>Мария Спиридонова</strong> продемонстрировала высочайший профессионализм, успешно завершив сделку с клиентом, приехавшим из Обнинска для оснащения небольшого итальянского кафе. Несмотря на долгое и непростое принятие решения, Мария сумела выдержать все его претензии и придирки, провела колоссальную работу, предложив ему широкий ассортимент компании.</p>
+                                <p>В результате кропотливой работы клиент приобрёл необходимый товар и забрал его самостоятельно. Кроме того, Мария презентовала клиенту программу лояльности на сайте, которой он успешно воспользовался, оформив последующие заказы.</p>
+                                <p>Теперь клиент передан в ОП Тула для дальнейшей работы. Этот случай — яркий пример того, как профессионализм, терпение и клиентоориентированность помогают достигать поставленных целей и развивать долгосрочные отношения с партнёрами.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card no-photo">
+                        <div class="case-body">
+                            <div class="case-title">Гагава Ресторантс: три новых вкуса лимонадов в сети</div>
+                            <div class="case-text">
+                                <p>Благодаря совместной работе <strong>Евгения Гололобова</strong>, <strong>Екатерины Воронковой</strong> и <strong>Дэниса Вальдеса</strong> впервые в сети ресторанов Гагава появились наши лимонады — сразу три вкуса:</p>
+                                <ul>
+                                    <li>«Щавель-Лайм»</li>
+                                    <li>«Фейхоа-Клубника»</li>
+                                    <li>«Манго-Маракуйя»</li>
+                                </ul>
+                                <p>Все три напитка хорошо зарекомендовали себя во всей сети, благодаря чему мы продолжаем успешное сотрудничество! Общее количество проданных бутылок с апреля по август — 6 573 шт. Это большой успех для нас!</p>
                             </div>
                         </div>
                     </div>
@@ -1236,122 +1503,7 @@
                 <h2>📦 Закупка</h2>
                 <p class="section-intro">Ассортимент, условия и новые поставщики</p>
 
-                <div class="dept-grid">
-
-                    <div class="dept-block full-width">
-                        <div class="dept-name">Общие результаты отдела</div>
-                        <div class="case-card no-photo feature">
-                            <div class="case-body">
-                                <div class="case-text">
-                                    <ul>
-                                        <li>Заведение новых партнёров на Портал поставщиков: бренды <strong>Bonna</strong>, <strong>MGsteel</strong>, <strong>Emile Henry</strong>, <strong>Gastroplast</strong>, <strong>Tribeca</strong> (поставщик Мастер Гласс), <strong>Лаборатория Кофе</strong>, <strong>Crazy Pan</strong>; несколько десятков заявок в работе.</li>
-                                        <li>Финальная проработка и запуск прямых поставок сиропов, пюре и смесей <strong>ODK</strong> из Италии в <strong>КБ КейЗет</strong>. Согласована отгрузка нецелыми паллетами, получен кредитный лимит <strong>100 000 €</strong> и отсрочка платежа <strong>90 дней</strong>.</li>
-                                        <li>Переход на поставки от нового собственника <strong>ARC France — компания VERRERIE ARC 1825</strong>.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dept-block">
-                        <div class="dept-name">Николаева Екатерина</div>
-                        <div class="case-card no-photo">
-                            <div class="case-body">
-                                <div class="case-text">
-                                    <ul>
-                                        <li>Выявлена проблема с отрицательной рентабельностью по позиции Tara у сетевого клиента — менеджеры сетевого отдела приостановили отгрузки, спеццены пересчитаны.</li>
-                                        <li>Проведён анализ заказного ассортимента, завезённого под сети и находящегося без движения на складе.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dept-block">
-                        <div class="dept-name">Шекшаева Ольга совместно с Деевой Анной</div>
-                        <div class="case-card no-photo">
-                            <div class="case-body">
-                                <div class="case-text">
-                                    <p>Договорились с <strong>King Metal</strong> о снижении цен по всему прайс-листу. Разные артикулы снижены на разный процент, в среднем на <strong>14%</strong>. Новый прайс вступает в силу со следующего заказа.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dept-block">
-                        <div class="dept-name">Дьякова Мария</div>
-                        <div class="case-card no-photo">
-                            <div class="case-body">
-                                <div class="case-text">
-                                    <ul>
-                                        <li>Заключила новый договор с <strong>Неман</strong> о поставке напрямую с завода, без посредника; осуществлена первая поставка.</li>
-                                        <li>Заключила новый договор с <strong>Дымов</strong>, согласовала получение бесплатных образцов на новые серии.</li>
-                                        <li>Завела около <strong>50 новых артикулов</strong> по бренду <strong>Osnova</strong>.</li>
-                                        <li>Получена первая поставка от нового поставщика Canwillon (кристалл-боллы).</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dept-block">
-                        <div class="dept-name">Родионова Екатерина</div>
-                        <div class="case-card no-photo">
-                            <div class="case-body">
-                                <div class="case-text">
-                                    <ul>
-                                        <li>Новинки фарфора — серия <strong>Фенхель</strong>, поставка произведена.</li>
-                                        <li>Расширение коллекции <strong>Блисс</strong>, поставка произведена.</li>
-                                        <li>Выбрано расширение к коллекции <strong>Фиори</strong>.</li>
-                                        <li>Привезён спецзаказ <strong>Турандот</strong>.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dept-block">
-                        <div class="dept-name">Мишина Полина</div>
-                        <div class="case-card no-photo">
-                            <div class="case-body">
-                                <div class="case-text">
-                                    <p>Увеличение кредитного лимита до <strong>30 млн ₽</strong> и отсрочки до <strong>60 дней</strong> с <strong>ОСЗ</strong> на весь 2026 год.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dept-block">
-                        <div class="dept-name">Зайцева Виктория</div>
-                        <div class="case-card no-photo">
-                            <div class="case-body">
-                                <div class="case-text">
-                                    <p>По <strong>Пашабахче</strong> Россия: отсрочка оплаты в пределах календарного месяца, скидка <strong>10%</strong> на количества от 10 000 шт., скидка <strong>7,5%</strong> на товар в подарочной упаковке.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dept-block full-width">
-                        <div class="dept-name">Епифанова Ольга</div>
-                        <div class="case-card no-photo">
-                            <div class="case-body">
-                                <div class="case-text">
-                                    <ul>
-                                        <li>Разработка и добавление в ассортимент новинок, в том числе чая <strong>Doppio</strong> меньшей фасовки (150–250 г, 24 позиции).</li>
-                                        <li>Организация первых поставок с новыми поставщиками: <strong>Gibco</strong> (ИП Фёдоров Сергей Николаевич), <strong>1EA</strong> (1Земля), <strong>Termobox</strong> (ТАРА.МАРКЕТ).</li>
-                                        <li>Заключение договоров на выгодных условиях с новыми поставщиками: Крейзи Пен (Шеф Тайм), Алеф Трейд (Ист Рус); в процессе заключения — договоры с <strong>Addwine</strong> и <strong>Омнитрейд</strong> (ЛК-Прогресс).</li>
-                                        <li>Заключение договоров и организация разовых поставок по стоковой посуде <strong>Lucky Glass</strong> (поставщик Happy Trade).</li>
-                                        <li>Соглашение с <strong>Добрушским фарфоровым заводом</strong> на дополнительную скидку на январь–февраль: <strong>33% вместо 29%</strong> на весь ассортимент.</li>
-                                        <li>Договорённость с <strong>Паперскоп Рус</strong> об уменьшении минимальной суммы заказа для отгрузки: со 100 000 ₽ до <strong>65–70 000 ₽</strong>.</li>
-                                        <li>Запуск в производство нового продукта в линейке безалкогольных напитков — <strong>Коралловая вода</strong>.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+                <!-- TODO: контент раздела «Закупка» для выпуска 5 -->
 
             </div>
         </section>
@@ -1362,99 +1514,7 @@
                 <h2>🚚 Логистика</h2>
                 <p class="section-intro">Сертификация, таможня и оптимизация потоков</p>
 
-                <div class="dept-grid">
-
-                    <div class="dept-block">
-                        <div class="dept-name">Антоненко Алексей</div>
-                        <div class="case-card no-photo">
-                            <div class="case-body">
-                                <div class="case-text">
-                                    <ul>
-                                        <li>Организовал срочную доставку спецзаказа <strong>Стилайт</strong> в декабре в предпраздничный период за <strong>17 календарных дней</strong> при стандартных сроках 28 дней.</li>
-                                        <li>Обеспечил бесперебойную коммуникацию с поставщиками при четырёхдневном графике работы отделов логистики и закупок.</li>
-                                        <li>Разработал технологию сбора данных для подачи экологических сборов по 3 юридическим лицам, сократив трудоёмкость операции с 12 до <strong>4 часов</strong>.</li>
-                                        <li>Организовал 2 экспортные авиадоставки образцов в страны Ближнего Востока.</li>
-                                        <li>Увеличил число перевозчиков по грузам из Европы, проработал схемы экспорта — <strong>экономия</strong> за 2026 год составила <strong>5 600 €</strong>.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dept-block">
-                        <div class="dept-name">Шиманская Елена</div>
-                        <div class="case-card no-photo">
-                            <div class="case-body">
-                                <div class="case-text">
-                                    <ul>
-                                        <li><strong>Удешевила</strong> сертификацию путём подбора оптимального сочетания цены и количества образцов — <strong>экономия</strong> от <strong>4 000 до 20 000 ₽</strong> за одну Декларацию соответствия.</li>
-                                        <li>Взяла на себя дополнительные обязанности по заведению в 1С деклараций на новый товар и замене истекших ДС на новые.</li>
-                                        <li>Организовала взаимодействие с коллегами из смежных отделов по своевременному предоставлению ДС от поставщиков местного рынка.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dept-block">
-                        <div class="dept-name">Шмыгин Николай</div>
-                        <div class="case-card no-photo">
-                            <div class="case-body">
-                                <div class="case-text">
-                                    <ul>
-                                        <li>Через обращения в Федеральную таможенную службу защитил интересы компании и предотвратил корректировку таможенных платежей на сумму <strong>~300 000 ₽</strong>.</li>
-                                        <li>В результате переговоров с перевозчиками получены отсрочки по оплате перевозки на <strong>3 месяца</strong>.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dept-block">
-                        <div class="dept-name">Юлия Куприянова</div>
-                        <div class="case-card no-photo">
-                            <div class="case-body">
-                                <div class="case-text">
-                                    <ul>
-                                        <li>Предложила и реализовала вариант вывоза запрещённого в Европе товара <strong>Risoli</strong> — <strong>экономия</strong> <strong>~2 000 €</strong> за счёт отказа от доставки по санкционной схеме.</li>
-                                        <li>Сформировала пакет документов ARC по новой схеме для оформления экспортных деклараций в Польше — сроки сократились с 3–5 дней до <strong>1–2 дней</strong>.</li>
-                                        <li>Предложила и реализовала новую схему вывоза товара San Miguel — <strong>экономия</strong> <strong>~1 400 €</strong>.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dept-block">
-                        <div class="dept-name">Борисова Анастасия</div>
-                        <div class="case-card no-photo">
-                            <div class="case-body">
-                                <div class="case-text">
-                                    <ul>
-                                        <li>Организовала взаимодействие с таможней по запросам о подтверждении стоимости по поставке <strong>Tognana</strong>: все документы приняты, финансовые риски исключены, возвращено <strong>140 000 ₽</strong> замороженных таможенных платежей.</li>
-                                        <li>Сформировала структурированную базу номенклатуры для статистических форм (экспорт в ЕАЭС) — систематизировано более <strong>200 товарных позиций</strong>, сокращено время на подготовку отчётности, минимизирован риск ошибок.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dept-block">
-                        <div class="dept-name">Татьянченко Денис</div>
-                        <div class="case-card no-photo">
-                            <div class="case-body">
-                                <div class="case-text">
-                                    <ul>
-                                        <li>Организовал документальное сопровождение экспорта по 2 новым направлениям: <strong>Саудовская Аравия</strong>, <strong>Ирак</strong>.</li>
-                                        <li>Отладил отгрузку и таможенное оформление товаров с маркировкой Честный Знак (концентраты <strong>ODK</strong>) — срок подготовки пакета документов не отличается от сроков для немаркируемой продукции.</li>
-                                        <li>По итогам переговоров с перевозчиками согласовано снижение ставок по отгрузкам из Италии и Словакии — <strong>экономия</strong> <strong>~4 200 €</strong>.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+                <!-- TODO: контент раздела «Логистика» для выпуска 5 -->
 
             </div>
         </section>
@@ -1465,191 +1525,7 @@
                 <h2>📚 Обучение и развитие</h2>
                 <p class="section-intro">Тренинги, обучения, и успехи команды</p>
 
-                <div class="dept-block">
-                    <div class="dept-name">Департамент обучения и развития персонала</div>
-
-                    <div class="case-card no-photo">
-                        <div class="case-body">
-                            <div class="case-title">Переговорные игры</div>
-                            <div class="case-text">
-                                <p><strong>Валерия Галанина</strong> запустила новый формат обучения — «Переговорные игры: Практика и обмен опытом». Это регулярные встречи в безопасном пространстве, где сотрудники отрабатывают переговорные навыки в живых играх: на реальных рабочих кейсах и смоделированных ситуациях. Участники получают честную обратную связь от коллег, знакомятся с их лайфхаками и выявляют собственные зоны роста без риска для реальных сделок.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="case-card no-photo">
-                        <div class="case-body">
-                            <div class="case-title">Обучение филиалов и обособленных подразделений</div>
-                            <div class="case-text">
-                                <p>В январе–феврале <strong>Валерия Галанина</strong> провела серию тренингов и воркшопов по продажам для команд филиалов и обособленных подразделений.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="case-card no-photo">
-                        <div class="case-body">
-                            <div class="case-title">Индивидуальные планы развития</div>
-                            <div class="case-text">
-                                <p>Совместно с руководителями <strong>Валерия Галанина</strong> разработала Индивидуальные Планы Развития для сотрудников отделов продаж. В основе — матрицы компетенций, учитывающие специфику работы каждого подразделения. Каждый сотрудник провёл самооценку и определил приоритетные зоны развития.</p>
-                                <p>Проект синхронизирует ожидания руководителей и сотрудников, обеспечивает точечное развитие на основе реальных потребностей и позволяет рационально распределять ресурсы на обучение.</p>
-                                <img src="http://153.80.247.162/assets/IPR.jpg" style="width:100%; border-radius:8px; margin:16px 0; display:block; cursor:pointer;" alt="ИПР — матрица компетенций" onclick="event.stopPropagation();openLightbox('lb-ipr',0)">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="case-card no-photo">
-                        <div class="case-body">
-                            <div class="case-title">Лонгриды</div>
-                            <div class="case-text">
-                                <p>Два материала по soft skills, один продуктовый и пять — для траектории руководителей (на базе библиотеки iSpring) — все подготовлены <strong>Марией Соколовой</strong>. Soft skills сегодня — не бонус, а базовое требование к менеджеру по продажам. Умение слышать клиента, управлять конфликтом, выстраивать доверие — именно это отличает хорошего продавца от сильного. Мария создала для команды возможность развивать эти навыки внутри компании, в удобном формате: открыл, прочитал, применил.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="case-card no-photo">
-                        <div class="case-body">
-                            <div class="case-title">Приложение для бронирования коворкингов КБ Москва</div>
-                            <div class="case-text">
-                                <p><strong>Мария Соколова</strong> реализовала его с привлечением современных инструментов разработки — уникальное решение, которого у нас раньше просто не было и которое уже экономит время сотрудников каждый день.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="case-card no-photo">
-                        <div class="case-body">
-                            <div class="case-title">Курс «Язык сомелье»</div>
-                            <div class="case-text">
-                                <p><strong>Мария Соколова</strong> разработала курс и погрузилась в тему настолько глубоко, что добавила факультативный блок «Как стать сомелье» — не потому что так требовалось, а потому что увидела, как это усилит разговор менеджера с клиентом. Не просто обучение продукту — погружение в культуру, которое меняет то, как команда говорит с клиентами.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="case-card no-photo">
-                        <div class="case-body">
-                            <div class="case-title">Ежемесячные обновления по ассортименту</div>
-                            <div class="case-text">
-                                <p><strong>Мария Соколова</strong> системно поддерживает знания команды о новинках — чтобы ни один менеджер не выходил на встречу с клиентом неподготовленным.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="case-card no-photo">
-                        <div class="case-body">
-                            <div class="case-title">Библиотека компетенций в iSpring</div>
-                            <div class="case-text">
-                                <p>В iSpring сформирована Библиотека компетенций — подборка литературы по ключевым навыкам: клиентоориентированность, ориентация на результат, переговоры, проактивность, внимательность к деталям, командная работа, гибкость и адаптивность, многозадачность, коммуникабельность.</p>
-                                <p>Также, в <a href="https://complexbar.ispringlearn.ru/catalog/category/b219c4aa-28f9-11f1-8163-d6c17ded1a25" target="_blank" rel="noopener" style="color:#be1f24; font-weight:600;">Библиотеку компетенций</a> подобраны универсальные тренажёры для практики работы с возражениями — пока доступны для команды <strong>КБ Москва</strong>.</p>
-                                <p>Напоминаем: отрабатывать возражения можно в боте <strong>Askasks</strong> — в удобном темпе и в любое время.</p>
-                                <img src="http://153.80.247.162/assets/askasks.png" style="width:100%; max-width:520px; border-radius:8px; margin:16px auto; display:block; cursor:pointer;" alt="Бот Askasks" onclick="event.stopPropagation();openLightbox('lb-askasks',0)">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Сотрудничество с колледжами -->
-        <section class="spring-section" id="section-colleges" data-label="Колледжи">
-            <div class="container">
-                <h2>🎓 Сотрудничество с колледжами</h2>
-                <p class="section-intro">Системная работа с будущими кадрами HoReCa</p>
-
-                <div class="case-card no-photo" style="margin-bottom: 52px;">
-                    <div class="case-body">
-                        <div class="case-text">
-                            <p><strong>Команда Маркетинга</strong> системно работает с профильными колледжами по всей стране, готовящими кадры для ресторанной индустрии. Направления сотрудничества:</p>
-                            <ul>
-                                <li><strong>Продуктовая и методическая поддержка.</strong> Колледжи получают фрипродукт и инвентарь для практических занятий, сиропы, пюре и топпинги <strong>Pinch&amp;Drop</strong>, а также ежегодно обновляемые учебные пособия по барному искусству от Романа Торощина.</li>
-                                <li><strong>Спонсорство отраслевых конкурсов.</strong> Компания поддерживает соревнования регионального и федерального уровня: Абилимпикс, Мастерята, Открытый чемпионат по кулинарному искусству и сервису среди юниоров, Форум колледжей Москвы и другие.</li>
-                                <li><strong>Дни открытых дверей.</strong> В городах присутствия компании корпоративные бармены проводят экскурсии в шоу-румы и практические мастер-классы для студентов — из первых уст рассказывают о профессии и индустрии.</li>
-                            </ul>
-                            <p>Такой подход формирует лояльность к бренду ещё на этапе обучения: будущие специалисты HoReCa знакомятся с продукцией Комплекс-Бар до выхода на рынок труда.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="college-grid">
-
-                    <!-- Форум колледжей -->
-                    <div class="gallery-block">
-                        <div class="dept-name">Форум колледжей</div>
-                        <div class="gallery-carousel" id="gc-forum">
-                            <img src="http://153.80.247.162/assets/photo_2026-04-27%2011.17.29.jpeg" class="carousel-img active" alt="Форум колледжей">
-                            <video class="carousel-img" src="http://153.80.247.162/assets/forum_kolledzhey.mp4" controls playsinline preload="metadata"></video>
-                            <button class="carousel-btn prev" onclick="carouselStep('gc-forum',-1)">&#8249;</button>
-                            <button class="carousel-btn next" onclick="carouselStep('gc-forum',1)">&#8250;</button>
-                            <div class="carousel-dots" id="dots-gc-forum"></div>
-                        </div>
-                    </div>
-
-                    <!-- Царицыно — День Бармена -->
-                    <div class="gallery-block">
-                        <div class="dept-name">Выступление Григория Торощина в Царицыно — День Бармена 2026</div>
-                        <div class="gallery-carousel" id="gc-tsaritsyno">
-                            <img src="http://153.80.247.162/assets/denbarmena1.jpg" class="carousel-img active" alt="День Бармена 2026">
-                            <img src="http://153.80.247.162/assets/denbarmena2.jpg" class="carousel-img" loading="lazy" alt="День Бармена 2026">
-                            <img src="http://153.80.247.162/assets/denbarmena3.jpg" class="carousel-img" loading="lazy" alt="День Бармена 2026">
-                            <img src="http://153.80.247.162/assets/denbarmena4.jpeg" class="carousel-img" loading="lazy" alt="День Бармена 2026">
-                            <button class="carousel-btn prev" onclick="carouselStep('gc-tsaritsyno',-1)">&#8249;</button>
-                            <button class="carousel-btn next" onclick="carouselStep('gc-tsaritsyno',1)">&#8250;</button>
-                            <div class="carousel-dots" id="dots-gc-tsaritsyno"></div>
-                        </div>
-                    </div>
-
-                    <!-- Дни открытых дверей -->
-                    <div class="gallery-block">
-                        <div class="dept-name">Дни открытых дверей в Москве</div>
-                        <div class="gallery-carousel" id="gc-otkrytye">
-                            <img src="http://153.80.247.162/assets/2026-04-27%2011.16.54.jpg" class="carousel-img active" alt="Дни открытых дверей">
-                            <img src="http://153.80.247.162/assets/photo_2026-04-27%2011.17.06.jpeg" class="carousel-img" loading="lazy" alt="Дни открытых дверей">
-                            <button class="carousel-btn prev" onclick="carouselStep('gc-otkrytye',-1)">&#8249;</button>
-                            <button class="carousel-btn next" onclick="carouselStep('gc-otkrytye',1)">&#8250;</button>
-                            <div class="carousel-dots" id="dots-gc-otkrytye"></div>
-                        </div>
-                    </div>
-
-                    <!-- Конкурс колледжей -->
-                    <div class="gallery-block">
-                        <div class="dept-name">Конкурс колледжей</div>
-                        <div class="gallery-carousel" id="gc-konkurs">
-                            <img src="http://153.80.247.162/assets/konkurskolledzhei1%20Medium.jpeg" class="carousel-img active" alt="Конкурс колледжей">
-                            <img src="http://153.80.247.162/assets/konkurskolledzhei2%20Medium.jpeg" class="carousel-img" loading="lazy" alt="Конкурс колледжей">
-                            <img src="http://153.80.247.162/assets/konkurskolledzhei3%20Medium.jpeg" class="carousel-img" loading="lazy" alt="Конкурс колледжей">
-                            <img src="http://153.80.247.162/assets/konkurskolledzhei4%20Medium.jpeg" class="carousel-img" loading="lazy" alt="Конкурс колледжей">
-                            <video class="carousel-img" src="http://153.80.247.162/assets/konkurs_kolledzhey.mp4" controls playsinline preload="metadata"></video>
-                            <button class="carousel-btn prev" onclick="carouselStep('gc-konkurs',-1)">&#8249;</button>
-                            <button class="carousel-btn next" onclick="carouselStep('gc-konkurs',1)">&#8250;</button>
-                            <div class="carousel-dots" id="dots-gc-konkurs"></div>
-                        </div>
-                    </div>
-
-                    <!-- Мастерята — центрировано, размер как у других -->
-                    <div class="gallery-block masteryata-block">
-                        <div class="dept-name">Мастерята</div>
-                        <div class="gallery-carousel" id="gc-masteryata">
-                            <img src="http://153.80.247.162/assets/photo_2025-12-25%2011.52.12.jpeg" class="carousel-img active" alt="Мастерята">
-                            <img src="http://153.80.247.162/assets/photo_2025-12-25%2011.52.19.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="http://153.80.247.162/assets/photo_2025-12-25%2011.52.24.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="http://153.80.247.162/assets/photo_2025-12-25%2011.52.29.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="http://153.80.247.162/assets/photo_2025-12-25%2011.52.47.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="http://153.80.247.162/assets/photo_2025-12-25%2011.52.50.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="http://153.80.247.162/assets/photo_2025-12-25%2011.52.55.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="http://153.80.247.162/assets/photo_2025-12-25%2011.53.02.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="http://153.80.247.162/assets/photo_2025-12-25%2011.53.06.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="http://153.80.247.162/assets/photo_2025-12-25%2011.53.11.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="http://153.80.247.162/assets/photo_2025-12-25%2011.53.23.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="http://153.80.247.162/assets/photo_2025-12-25%2011.54.33.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="http://153.80.247.162/assets/photo_2025-12-25%2011.55.03.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="http://153.80.247.162/assets/photo_2025-12-25%2011.55.29.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <img src="http://153.80.247.162/assets/photo_2025-12-25%2011.55.36.jpeg" class="carousel-img" loading="lazy" alt="Мастерята">
-                            <video class="carousel-img" src="http://153.80.247.162/assets/masteryata.mp4" controls playsinline preload="metadata"></video>
-                            <button class="carousel-btn prev" onclick="carouselStep('gc-masteryata',-1)">&#8249;</button>
-                            <button class="carousel-btn next" onclick="carouselStep('gc-masteryata',1)">&#8250;</button>
-                            <div class="carousel-dots" id="dots-gc-masteryata"></div>
-                        </div>
-                    </div>
-
-                </div>
+                <!-- TODO: контент раздела «Обучение и развитие» для выпуска 5 -->
 
             </div>
         </section>
@@ -1658,110 +1534,9 @@
         <section class="spring-section" id="section-horeca" data-label="HoReCa">
             <div class="container">
                 <h2>🍽 Ресторанные хроники</h2>
-                <p class="section-intro">Три крупные сети расширили присутствие на нашей продукции</p>
+                <p class="section-intro">Открытия, партнёрства и новости точек</p>
 
-                <h3>🏙️ Москва</h3>
-
-                <div class="dept-block">
-                    <div class="dept-name">Ava Team — 5 открытий</div>
-                    <div class="case-card no-photo">
-                        <div class="case-body">
-                            <div class="case-text">
-                                <p><strong>AVA Bistro</strong> — авторский проект ресторатора Антона Пинского совместно с шефами Виталием Истоминым и Артемом Лосевым: средиземноморская кухня, собственная пекарня и выверенная винная карта. В этом сезоне сеть открыла сразу пять новых точек:</p>
-                                <ul>
-                                    <li>ТЦ «Авиапарк»</li>
-                                    <li>Лужники</li>
-                                    <li>«Метрополис» на Ленинградском шоссе</li>
-                                    <li><strong>Ava Cafe</strong> в ГУМе</li>
-                                    <li><strong>«Луна» (Loona)</strong> — Лужнецкая наб., д. 24с17/1 — городское кафе с ранними завтраками и вином на кранах, интерьером в стиле mid-century с деревянной мебелью и панорамными окнами.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="dept-block">
-                    <div class="dept-name">Lucky Group — 2 открытия</div>
-                    <div class="case-card no-photo">
-                        <div class="case-body">
-                            <div class="case-text">
-                                <ul>
-                                    <li><strong>«<strong>Loro</strong>»</strong> — Трубецкая, д. 10 — итальянский ресторан в Хамовниках с открытым огнём, контактной кухней, raw bar и обширной винной картой. Классика вне времени — теперь и на правом берегу.</li>
-                                    <li><strong>«Eva»</strong> — Большая Грузинская, д. 69 — ресторан современной греческой кухни с акцентом на мезе, дипах и блюдах на открытом огне и из печи. Один из заметных адресов Lucky Group, удостоенный наград ресторанных гидов.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="dept-block">
-                    <div class="dept-name"><strong>Family Garden</strong> Group — 4 открытия в Москве</div>
-                    <div class="case-card no-photo">
-                        <div class="case-body">
-                            <div class="case-text">
-                                <ul>
-                                    <li><strong>«Сыроварня»</strong> — Кутузовский пр-кт, д. 57 — знаковый формат группы выходит на одну из самых статусных магистралей Москвы.</li>
-                                    <li><strong>«Ramen Room»</strong> — Садовая-Кудринская, д. 3б — японский уличный формат в центральном кольце.</li>
-                                    <li><strong>«Lali»</strong> — Хордынский б-р, д. 4 — грузинская кухня в жилом районе севера Москвы.</li>
-                                    <li><strong>«Чайхона "Инжир"»</strong> — Каланчевская, д. 33 — восточный акцент в деловом центре города.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <h3>🌍 Регионы</h3>
-
-                <div class="dept-grid">
-
-                    <div class="dept-block">
-                        <div class="dept-name">Московская область</div>
-                        <div class="case-card no-photo">
-                            <div class="case-body">
-                                <div class="case-text">
-                                    <ul>
-                                        <li><strong>«Кафе "Сирокко"»</strong> — Королёв, Подмосковная, д. 7 — средиземноморская comfort food с итальянским акцентом: домашняя паста ручной раскатки, устрицы, тартары и марсельская уха.</li>
-                                        <li><strong>«Ресторан "Сыроварня"»</strong> — Химки, аэропорт Шереметьево — узнаваемый бренд <strong>Family Garden</strong> Group встречает гостей в главных воздушных воротах страны.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dept-block">
-                        <div class="dept-name">Саратов</div>
-                        <div class="case-card no-photo">
-                            <div class="case-body">
-                                <div class="case-text">
-                                    <p><strong>«Ресторан "Гвоздь"»</strong> — набережная Космонавтов, д. 5а — ресторан, где живут мясные рецепты разных кухонь мира: русской, ближневосточной, кавказской, корейской, европейской, американской… Гвоздь — это Саратов, где Волга соединяется со звуками скрипки, саксофона, гитары, а диджей наполняет пространство пьянящими мотивами. Гвоздь — это интерьер, где искусственный интеллект, живое дерево, холодный металл и натуральная кожа гармонично уживаются, как единое целое. Гвоздь — это дом, где рады дедушкам, бабушкам, детям и их родителям. Гвоздь — это место силы, где сохраняют старое, изобретая новое!</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dept-block">
-                        <div class="dept-name">Сочи</div>
-                        <div class="case-card no-photo">
-                            <div class="case-body">
-                                <div class="case-text">
-                                    <p><strong>«Brasserie Lambic»</strong> — территория «Горная карусель», д. 6, Красная Поляна — ресторан знаменитой сети бельгийских брассери с фламандской и европейской гастрономией, коллекцией пива со всего мира и интерьером с видом на горы.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dept-block">
-                        <div class="dept-name">Екатеринбург</div>
-                        <div class="case-card no-photo">
-                            <div class="case-body">
-                                <div class="case-text">
-                                    <p><strong>«Креветки и Бургеры»</strong> — Малышева, д. 24 — культовое заведение уральской гастросцены, где гостей «креветствуют» при входе: авторские бургеры и морепродукты на углях с фирменными соусами.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+                <!-- TODO: контент раздела «Ресторанные хроники» для выпуска 5 -->
 
             </div>
         </section>
@@ -1772,33 +1547,7 @@
                 <h2>📊 Тренды HoReCa: куда мы идём</h2>
                 <p class="section-intro">Что происходит на рынке — и куда смотреть</p>
 
-                <div class="trends-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
-                    <div class="case-card no-photo" style="margin:0; height:100%;">
-                        <div class="case-body">
-                            <div class="case-title">Рынок 2026: комфорт побеждает провокацию</div>
-                            <div class="case-text">
-                                <p>2026-й расставил акценты жёстче, чем многие ожидали. Рынок не просто меняется, он буквально сортируется: <strong>слабые проекты закрываются, сильные переосмысляют формат.</strong> Ресторанный критик Катерина Смирнова назвала <strong>комфорт главным вектором года.</strong> Не иммерсивность, не провокация. Просто хорошо и понятно.</p>
-                                <p><strong>Потребитель устал переплачивать.</strong> По данным «Яндекс Еды», побеждают <strong>комбо-предложения, сет-меню, ланчи с понятным составом.</strong> Чем проще выбор, тем быстрее покупка — и это <strong>усталость от избыточного выбора.</strong> Параллельно часть ресторанов движется в противоположную сторону: становятся клубными пространствами, где ужин идёт вместе с концертом, галереей или книжным клубом. <strong>Граница между заведением и культурной точкой стирается.</strong></p>
-                                <p>Ещё одна вещь, которую сложно не заметить, — возвращение к своему. <strong>Русская кухня возвращается без лубка:</strong> старые техники, региональные продукты, авторское переосмысление. В Казахстане то же самое происходит вокруг <strong>«алматинской души»</strong> — рестораны с местной идентичностью обходят глобальные концепции по посещаемости. <strong>Глобальное проигрывает местному.</strong></p>
-                                <p>Отдельная история — трезвость. <strong>Безалкогольные коктейли перестали быть нишей.</strong> Молодая аудитория хочет тусоваться без последствий на утро, бары расширяют безалкогольные карты, <strong>собер-бар оформился в полноценный формат с серьёзной выручкой.</strong></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="case-card no-photo" style="margin:0; height:100%;">
-                        <div class="case-body">
-                            <div class="case-title">Что идёт к нам с Запада</div>
-                            <div class="case-text">
-                                <p>Здесь интереснее, потому что можно смотреть на год-два вперёд.</p>
-                                <p><strong>Протеиновая история</strong> не закончилась, она мутирует. Если раньше протеин был про спортзал, теперь он везде: в выпечке, мороженом, йогуртах, снеках. Западные аналитики фиксируют взрывной рост протеиновых молочных продуктов, в России это уже заметно в ритейле. В ресторанном меню пока почти нет, но придёт.</p>
-                                <p><strong>Клетчатка</strong> — следующий протеин. По данным Datassential, 60% зумеров целенаправленно ищут продукты с высоким содержанием клетчатки. Пребиотические напитки, ферментированные продукты, «здоровье кишечника» как позиционирование — всё это формирует отдельный сегмент. Pepsi уже выпустил пребиотическую версию своей колы. К нам это придёт через specialty-кофейни и health-форматы.</p>
-                                <p><strong>Swicy</strong> — сладкое плюс острое. Горячий мёд, чили с кленовым сиропом, острая карамель. На Западе это уже не тренд, это норма меню. Сейчас swicy эволюционирует в swangy (добавляется кислота) и swavory (добавляется умами). В России пока на уровне крафтовых соусов и отдельных баров, до массового общепита добирается медленно.</p>
-                                <p><strong>«Ньюстальгия»</strong> — бефстроганов из фермерской говядины, советские десерты в современном прочтении, бабушкины рецепты с другой подачей. Комфорт знакомого вкуса плюс что-то неожиданное. В московских ресторанах это уже есть, в регионах и на рынках СНГ потенциал почти не тронут.</p>
-                                <p>И последнее. На Западе активно поднимается «второй эшелон» мировых кухонь: индийский fast-casual вышел за пределы этнических кварталов, за ним идут перуанские вкусы и восточноафриканские специи. Паттерн один и тот же: сначала хайп в Нью-Йорке и Лондоне, через два-три года — Москва, потом остальные. Следить за этим — значит понимать, чем будут торговать наши клиенты послезавтра.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- TODO: контент раздела «Тренды HoReCa» для выпуска 5 -->
 
             </div>
         </section>
@@ -2027,6 +1776,11 @@ function initCarousel(el) {
     const dotsEl = el.querySelector('.carousel-dots');
     if (!imgs.length || !dotsEl) return;
 
+    if (imgs.length <= 1) {
+        el.querySelectorAll('.carousel-btn').forEach(btn => { btn.style.display = 'none'; });
+        dotsEl.style.display = 'none';
+    }
+
     let cur = 0;
     imgs.forEach((_, i) => {
         const d = document.createElement('button');
@@ -2183,6 +1937,42 @@ document.querySelectorAll('.case-text strong').forEach(el => {
         });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.anim-fade, .anim-fade-left, .anim-fade-right').forEach(el => observer.observe(el));
+})();
+</script>
+
+<!-- Осенние листья: шапка + прощальный баннер -->
+<script>
+(function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const glyphs = ['🍁', '🍂', '🌰'];
+
+    function attachLeafStream(container, { burst, intervalMs, minDuration, maxDuration }) {
+        if (!container) return;
+        const wrap = document.createElement('div');
+        wrap.className = 'hero-leaves';
+        wrap.setAttribute('aria-hidden', 'true');
+        container.appendChild(wrap);
+
+        function spawnLeaf() {
+            const leaf = document.createElement('span');
+            leaf.className = 'hero-leaf';
+            leaf.textContent = glyphs[Math.floor(Math.random() * glyphs.length)];
+            const duration = minDuration + Math.random() * (maxDuration - minDuration);
+            leaf.style.left = Math.random() * 100 + '%';
+            leaf.style.fontSize = (14 + Math.random() * 14) + 'px';
+            leaf.style.animationDuration = duration + 's';
+            leaf.style.setProperty('--drift', (Math.random() * 120 - 60) + 'px');
+            leaf.style.setProperty('--spin', (Math.random() * 360 + 180) + 'deg');
+            wrap.appendChild(leaf);
+            setTimeout(() => leaf.remove(), duration * 1000 + 200);
+        }
+
+        for (let i = 0; i < burst; i++) setTimeout(spawnLeaf, i * 700);
+        setInterval(spawnLeaf, intervalMs);
+    }
+
+    attachLeafStream(document.querySelector('.spring-hero'),          { burst: 8, intervalMs: 1100, minDuration: 9,  maxDuration: 15 });
+    attachLeafStream(document.querySelector('.spring-footer-banner'), { burst: 3, intervalMs: 2600, minDuration: 10, maxDuration: 16 });
 })();
 </script>
 </body>
