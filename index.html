@@ -1027,6 +1027,212 @@
             background: linear-gradient(180deg, var(--autumn-bg) 0%, #f3e3cd 100%) !important;
         }
 
+        /* ── Что пьют осенью: карусель карточек ── */
+        .drinks-lead {
+            font-size: 0.92rem;
+            line-height: 1.8;
+            color: #2b2420;
+            max-width: 760px;
+            margin: 20px 0;
+        }
+        .drinks-carousel-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 28px 0;
+        }
+        .drinks-carousel {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            padding: 4px 2px 14px;
+            flex: 1;
+            scrollbar-width: thin;
+        }
+        .drink-card {
+            flex: 0 0 260px;
+            scroll-snap-align: start;
+            border-radius: 18px;
+            background: #fff;
+            border: 1px solid var(--autumn-line, #ece1d3);
+            box-shadow: 0 2px 10px rgba(70,40,10,0.05);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .drink-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 30px rgba(70,40,10,0.10);
+        }
+        .drink-card-photo {
+            position: relative;
+            aspect-ratio: 4 / 5;
+            background: linear-gradient(160deg, #f3e3cd 0%, #ecd2ae 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .drink-card-icon { font-size: 2.6rem; opacity: 0.55; }
+        .drink-card-body { padding: 18px 20px 22px; display: flex; flex-direction: column; gap: 8px; }
+        .drink-card-title { font-size: 0.98rem; font-weight: 700; color: var(--autumn-ink, #201914); margin: 0; }
+        .drink-card-text { font-size: 0.82rem; line-height: 1.65; color: #2b2420; margin: 0; }
+        .drinks-nav {
+            flex-shrink: 0;
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(190,31,36,0.25);
+            background: #fff;
+            color: var(--autumn-red, #be1f24);
+            font-size: 1.3rem;
+            line-height: 1;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        .drinks-nav:hover { background: var(--autumn-red, #be1f24); color: #fff; }
+        @media (max-width: 640px) {
+            .drinks-nav { display: none; }
+            .drink-card { flex-basis: 220px; }
+        }
+
+        /* ── Барный IQ-тест ── */
+        .quiz-box {
+            margin-top: 32px;
+            max-width: 640px;
+            padding: 32px 36px;
+            border-radius: 20px;
+            background: #fff;
+            border: 1px solid var(--autumn-line, #ece1d3);
+            box-shadow: 0 4px 20px rgba(70,40,10,0.06);
+        }
+        .quiz-progress {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--autumn-amber, #c8711f);
+            margin-bottom: 14px;
+        }
+        .quiz-question {
+            font-size: 1.08rem;
+            font-weight: 700;
+            color: var(--autumn-ink, #201914);
+            line-height: 1.5;
+            margin-bottom: 22px;
+        }
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .quiz-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            width: 100%;
+            text-align: left;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 1.5px solid var(--autumn-line, #ece1d3);
+            background: #fdf9f3;
+            color: #2b2420;
+            font-family: inherit;
+            font-size: 0.92rem;
+            line-height: 1.5;
+            cursor: pointer;
+            transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+        }
+        .quiz-option:hover:not(:disabled) {
+            border-color: rgba(190,31,36,0.35);
+            transform: translateX(2px);
+        }
+        .quiz-option .quiz-letter {
+            flex-shrink: 0;
+            font-weight: 800;
+            color: var(--autumn-red, #be1f24);
+        }
+        .quiz-option:disabled { cursor: default; }
+        .quiz-option.is-correct {
+            background: rgba(60,140,80,0.10);
+            border-color: #3c8c50;
+        }
+        .quiz-option.is-correct .quiz-letter { color: #3c8c50; }
+        .quiz-option.is-wrong {
+            background: rgba(190,31,36,0.08);
+            border-color: var(--autumn-red, #be1f24);
+        }
+        .quiz-explain {
+            display: none;
+            margin-top: 18px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(190,31,36,0.05), rgba(200,113,31,0.08));
+            border-left: 3px solid var(--autumn-amber, #c8711f);
+            font-size: 0.86rem;
+            line-height: 1.6;
+            color: #2b2420;
+        }
+        .quiz-explain.visible { display: block; }
+        .quiz-next-btn {
+            display: none;
+            margin-top: 22px;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(90deg, var(--autumn-red, #be1f24), var(--autumn-amber, #c8711f));
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.2s ease;
+        }
+        .quiz-next-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(190,31,36,0.25); }
+        .quiz-next-btn.visible { display: inline-block; }
+        .quiz-result {
+            text-align: center;
+        }
+        .quiz-result-score {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--autumn-amber, #c8711f);
+            margin-bottom: 10px;
+        }
+        .quiz-result-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--autumn-red, #be1f24);
+            margin-bottom: 14px;
+        }
+        .quiz-result-desc {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: #2b2420;
+            margin-bottom: 26px;
+        }
+        .quiz-retry-btn {
+            padding: 10px 24px;
+            border-radius: 30px;
+            border: 1.5px solid var(--autumn-red, #be1f24);
+            background: transparent;
+            color: var(--autumn-red, #be1f24);
+            font-family: inherit;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        .quiz-retry-btn:hover { background: var(--autumn-red, #be1f24); color: #fff; }
+        @media (max-width: 640px) {
+            .quiz-box { padding: 24px 20px; }
+        }
+
         /* ── Плывущие по шапке листья (амбиентная анимация) ── */
         .hero-leaves {
             position: absolute;
@@ -1190,9 +1396,14 @@
                         <div class="toc-title">Ресторанные хроники</div>
                         <div class="toc-desc"></div>
                     </div>
-                    <div class="spring-card toc-card" onclick="document.getElementById('section-spring').scrollIntoView({behavior:'smooth'})">
-                        <div class="toc-emoji">📊</div>
-                        <div class="toc-title">Тренды HoReCa</div>
+                    <div class="spring-card toc-card" onclick="document.getElementById('section-autumn-drinks').scrollIntoView({behavior:'smooth'})">
+                        <div class="toc-emoji">🍂</div>
+                        <div class="toc-title">Что пьют осенью</div>
+                        <div class="toc-desc"></div>
+                    </div>
+                    <div class="spring-card toc-card" onclick="document.getElementById('section-quiz').scrollIntoView({behavior:'smooth'})">
+                        <div class="toc-emoji">🍸</div>
+                        <div class="toc-title">Барный IQ-тест</div>
                         <div class="toc-desc"></div>
                     </div>
                 </div>
@@ -1541,13 +1752,76 @@
             </div>
         </section>
 
-        <!-- Тренды HoReCa -->
-        <section class="spring-section" id="section-spring" data-label="Тренды">
+        <!-- Что пьют осенью -->
+        <section class="spring-section" id="section-autumn-drinks" data-label="Напитки">
             <div class="container">
-                <h2>📊 Тренды HoReCa: куда мы идём</h2>
-                <p class="section-intro">Что происходит на рынке — и куда смотреть</p>
+                <h2>🍂 Что пьют осенью</h2>
+                <p class="section-intro">Сезонные хиты меню — от глинтвейна до яблочных коктейлей</p>
 
-                <!-- TODO: контент раздела «Тренды HoReCa» для выпуска 5 -->
+                <p class="drinks-lead">За окном дождь, температура ползёт вниз, а меню общепита незаметно меняется целиком. Собрали, какие напитки сейчас на пике сезона — от классики до неожиданных вариаций, которые уже пробуют в столичных заведениях.</p>
+
+                <div class="drinks-carousel-wrap">
+                    <button type="button" class="drinks-nav prev" onclick="drinksScroll(-1)" aria-label="Предыдущий напиток">&#8249;</button>
+                    <div class="drinks-carousel" id="drinks-carousel">
+                        <div class="drink-card">
+                            <div class="drink-card-photo" data-drink="glintwein"><span class="drink-card-icon">🍷</span></div>
+                            <div class="drink-card-body">
+                                <h4 class="drink-card-title">Глинтвейн</h4>
+                                <p class="drink-card-text">Первую строчку уверенно держит глинтвейн — сомелье называют его безусловным осенним фаворитом, создающим ощущение уюта. Продажи вырастают вдвое по сравнению с тёплым периодом года. В московских заведениях помимо классики уже подают вариации с облепихой, а в некоторых барах — чешский вариант с бехеровкой и мёдом.</p>
+                            </div>
+                        </div>
+                        <div class="drink-card">
+                            <div class="drink-card-photo" data-drink="hot-toddy"><span class="drink-card-icon">🥃</span></div>
+                            <div class="drink-card-body">
+                                <h4 class="drink-card-title">Хот-тодди</h4>
+                                <p class="drink-card-text">Дальше по популярности идёт хот-тодди — виски, лимон и мёд в горячей подаче, пришедший из шотландской традиции. Баланс между мягкостью и крепостью — то, что выбирают, когда хочется согреться, но не терять контроль над вечером.</p>
+                            </div>
+                        </div>
+                        <div class="drink-card">
+                            <div class="drink-card-photo" data-drink="irish-coffee"><span class="drink-card-icon">☕</span></div>
+                            <div class="drink-card-body">
+                                <h4 class="drink-card-title">Айриш-кофе</h4>
+                                <p class="drink-card-text">Кофе, ирландский виски и сливки. Особенно хорошо заходит именно в межсезонье — когда ещё не готовы к плотному глинтвейну, но уже не хочется просто американо.</p>
+                            </div>
+                        </div>
+                        <div class="drink-card">
+                            <div class="drink-card-photo" data-drink="morsy"><span class="drink-card-icon">🍓</span></div>
+                            <div class="drink-card-body">
+                                <h4 class="drink-card-title">Ягодные морсы и наливки</h4>
+                                <p class="drink-card-text">Согревающие морсы на клюкве и бруснике, а также наливки и настойки на клюкве, бруснике, черноплодной рябине. Не всегда алкогольные — часто именно безалкогольная версия становится сезонным хитом меню.</p>
+                            </div>
+                        </div>
+                        <div class="drink-card">
+                            <div class="drink-card-photo" data-drink="apple-cocktails"><span class="drink-card-icon">🍎</span></div>
+                            <div class="drink-card-body">
+                                <h4 class="drink-card-title">Яблочные коктейли на кальвадосе и бренди</h4>
+                                <p class="drink-card-text">Отдельно набирают обороты — терпкий, насыщенный, максимально «осенний по вкусу» вариант для тех, кто ищет что-то отличное от вина со специями.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="drinks-nav next" onclick="drinksScroll(1)" aria-label="Следующий напиток">&#8250;</button>
+                </div>
+
+                <p class="drinks-lead">И дело не только во вкусах. Дождь и похолодание — это не просто фон, а прямой драйвер спроса: погода влияет на продажи примерно 30% товаров и услуг в ресторанах и гостиничном бизнесе. Осенью эта зависимость работает предельно наглядно — чем хуже погода за окном, тем выше спрос на горячее и посадку в зале вместо веранды. Так что если меню вокруг вас вдруг стало теплее и уютнее — это не совпадение, а реакция индустрии на календарь.</p>
+
+                <p class="drinks-lead"><em>В комментариях в Битрикс можете поделиться любимыми осенними напитками — заведениями, где готовят ваш любимый осенний напиток.</em></p>
+
+            </div>
+        </section>
+
+        <!-- Барный IQ-тест -->
+        <section class="spring-section" id="section-quiz" data-label="IQ-тест">
+            <div class="container">
+                <h2>🍸 Барный IQ-тест</h2>
+                <p class="section-intro">Шесть вопросов — от лёгкого до трюка на внимательность. Проверьте свою барную эрудицию</p>
+
+                <div class="quiz-box" id="quiz-box">
+                    <div class="quiz-progress"><span id="quiz-progress-text">Вопрос 1 из 6</span></div>
+                    <div class="quiz-question" id="quiz-question"></div>
+                    <div class="quiz-options" id="quiz-options"></div>
+                    <div class="quiz-explain" id="quiz-explain"></div>
+                    <button class="quiz-next-btn" id="quiz-next-btn" type="button">Далее</button>
+                </div>
 
             </div>
         </section>
@@ -1973,6 +2247,156 @@ document.querySelectorAll('.case-text strong').forEach(el => {
 
     attachLeafStream(document.querySelector('.spring-hero'),          { burst: 8, intervalMs: 1100, minDuration: 9,  maxDuration: 15 });
     attachLeafStream(document.querySelector('.spring-footer-banner'), { burst: 3, intervalMs: 2600, minDuration: 10, maxDuration: 16 });
+})();
+</script>
+
+<!-- Что пьют осенью: карусель -->
+<script>
+function drinksScroll(dir) {
+    const el = document.getElementById('drinks-carousel');
+    if (!el) return;
+    const card = el.querySelector('.drink-card');
+    const step = card ? card.getBoundingClientRect().width + 20 : 280;
+    el.scrollBy({ left: dir * step, behavior: 'smooth' });
+}
+</script>
+
+<!-- Барный IQ-тест -->
+<script>
+(function () {
+    const box = document.getElementById('quiz-box');
+    if (!box) return;
+
+    const letters = ['А', 'Б', 'В', 'Г'];
+
+    const questions = [
+        {
+            q: 'Один и тот же человек — венецианский ресторатор, владелец знаменитого бара Harry\'s Bar — изобрёл и блюдо карпаччо, и коктейль на основе игристого вина и персикового пюре. Как называется этот коктейль?',
+            options: ['Мимоза', 'Беллини', 'Апероль шпритц', 'Фраголино'],
+            correct: 1,
+            explain: 'Придумал венецианец Джузеппе Чиприани — он же изобрёл карпаччо.'
+        },
+        {
+            q: 'Почему в дорогих коктейль-барах лёд в бокале идеально прозрачный, без единого пузырька?',
+            options: ['Используют дистиллированную воду', 'Замораживают направленно, в одну сторону, а не со всех сторон сразу', 'Добавляют желатин для плотности', 'Специально кипятят лёд после заморозки'],
+            correct: 1,
+            explain: 'Пузырьки воздуха и примеси при этом уходят в одну сторону куска льда — получается прозрачный лёд.'
+        },
+        {
+            q: 'По легенде, широкий плоский бокал-купе для шампанского был отлит по слепку женской груди. Чьё имя обычно называют в этой легенде?',
+            options: ['Клеопатры', 'Марии-Антуанетты', 'Екатерины Медичи', 'Жозефины Бонапарт'],
+            correct: 1,
+            explain: 'Это самая распространённая версия легенды (встречается и вариант с мадам де Помпадур).'
+        },
+        {
+            q: 'Где находится крупнейший в мире винный погреб по количеству хранящихся бутылок — 1,5 миллиона штук в 55 км подземных галерей?',
+            options: ['Франция', 'Италия', 'Молдова', 'Грузия'],
+            correct: 2,
+            explain: 'Это завод «Милештий Мичь» — рекорд зафиксирован в 2005 году.'
+        },
+        {
+            q: 'У коктейля «Маргарита» существует минимум три конкурирующие легенды происхождения — про мексиканскую актрису, про светскую львицу Марго Самес и про бармена, влюблённого в клиентку. Какая из версий признана исторически достоверной?',
+            options: ['Версия с актрисой', 'Версия с Марго Самес', 'Версия с влюблённым барменом', 'Ни одна не доказана — все версии остаются легендами'],
+            correct: 3,
+            explain: 'У «Маргариты» нет единого канонического происхождения, несмотря на то что чаще всего рассказывают версию с актрисой.'
+        },
+        {
+            q: 'Древнегреческий кубок «Пифагорова чаша» («кубок жадности») наливали вином до определённой метки. Что случится, если налить выше метки — как в обычном стакане, который просто переполнится через край?',
+            options: ['Да, просто перельётся через край, как в обычном стакане', 'Ничего — чаша устроена так, что лишнее просто не помещается', 'Через скрытый канал внутри ножки сработает эффект сифона, и вся жидкость до последней капли вытечет через отверстие в дне', 'Чаша треснет от давления'],
+            correct: 2,
+            explain: 'Сифонный эффект утекает содержимое полностью через дно, а не переливает через край — ловушка в том, что интуитивно кажется наоборот.'
+        }
+    ];
+
+    const tiers = [
+        { max: 2, title: '«Джин-тоник»', desc: 'Простой и безотказный выбор, но к барной матчасти явно не приглядывались. Освежите знания — следующий выпуск дайджеста в помощь.' },
+        { max: 4, title: '«Апероль шпритц»', desc: 'Освежает, но крепости знаний пока не хватает. Половина фактов легла — уже неплохой барный кругозор для не-профи.' },
+        { max: 6, title: '«Негрони»', desc: 'Классика, которая не подводит. Вы либо давно в теме, либо очень внимательно читали прошлые выпуски дайджеста.' }
+    ];
+
+    const progressText = document.getElementById('quiz-progress-text');
+    const questionEl   = document.getElementById('quiz-question');
+    const optionsEl    = document.getElementById('quiz-options');
+    const explainEl    = document.getElementById('quiz-explain');
+    const nextBtn      = document.getElementById('quiz-next-btn');
+
+    let idx = 0;
+    let score = 0;
+    let answered = false;
+
+    function renderQuestion() {
+        answered = false;
+        const item = questions[idx];
+        progressText.textContent = `Вопрос ${idx + 1} из ${questions.length}`;
+        questionEl.textContent = item.q;
+        explainEl.classList.remove('visible');
+        explainEl.textContent = '';
+        nextBtn.classList.remove('visible');
+        nextBtn.textContent = idx === questions.length - 1 ? 'Показать результат' : 'Далее';
+
+        optionsEl.innerHTML = '';
+        item.options.forEach((opt, i) => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'quiz-option';
+            btn.innerHTML = `<span class="quiz-letter">${letters[i]})</span><span>${opt}</span>`;
+            btn.addEventListener('click', () => selectAnswer(i, btn));
+            optionsEl.appendChild(btn);
+        });
+    }
+
+    function selectAnswer(i, btn) {
+        if (answered) return;
+        answered = true;
+        const item = questions[idx];
+        const allBtns = optionsEl.querySelectorAll('.quiz-option');
+        allBtns.forEach(b => { b.disabled = true; });
+
+        if (i === item.correct) {
+            score++;
+            btn.classList.add('is-correct');
+        } else {
+            btn.classList.add('is-wrong');
+            allBtns[item.correct].classList.add('is-correct');
+        }
+
+        explainEl.textContent = `${letters[item.correct]}) ${item.options[item.correct]} — ${item.explain}`;
+        explainEl.classList.add('visible');
+        nextBtn.classList.add('visible');
+    }
+
+    function renderResult() {
+        const tier = tiers.find(t => score <= t.max);
+        progressText.textContent = 'Результат';
+        questionEl.textContent = '';
+        explainEl.classList.remove('visible');
+        nextBtn.classList.remove('visible');
+
+        optionsEl.innerHTML = `
+            <div class="quiz-result">
+                <div class="quiz-result-score">${score} из ${questions.length} правильных</div>
+                <div class="quiz-result-title">${tier.title}</div>
+                <div class="quiz-result-desc">${tier.desc}</div>
+                <button type="button" class="quiz-retry-btn" id="quiz-retry-btn">Пройти ещё раз</button>
+            </div>
+        `;
+        document.getElementById('quiz-retry-btn').addEventListener('click', () => {
+            idx = 0;
+            score = 0;
+            renderQuestion();
+        });
+    }
+
+    nextBtn.addEventListener('click', () => {
+        idx++;
+        if (idx < questions.length) {
+            renderQuestion();
+        } else {
+            renderResult();
+        }
+    });
+
+    renderQuestion();
 })();
 </script>
 </body>
