@@ -949,7 +949,7 @@
             border: 1px solid var(--autumn-line);
             background: #fff;
             box-shadow: 0 2px 10px rgba(70,40,10,0.045);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
         }
         body.autumn-page .spring-card:hover {
             transform: translateY(-5px);
@@ -1027,6 +1027,27 @@
             background: linear-gradient(180deg, var(--autumn-bg) 0%, #f3e3cd 100%) !important;
         }
 
+        /* ── Плейлист выпуска ── */
+        .issue-playlist {
+            background: var(--autumn-bg, #fdf9f3);
+            padding: 28px 20px 32px;
+            text-align: center;
+            border-bottom: 1px solid var(--autumn-line, #ece1d3);
+        }
+        .issue-playlist-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--autumn-red, #be1f24);
+            margin: 0 0 14px;
+        }
+        .issue-playlist iframe {
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 10px 26px rgba(70,40,10,0.10);
+        }
+
         /* ── Что пьют осенью: карусель карточек ── */
         .drinks-lead {
             font-size: 0.92rem;
@@ -1061,7 +1082,7 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .drink-card:hover {
             transform: translateY(-5px);
@@ -1359,6 +1380,12 @@
             <div class="scroll-hint-arrow">↓</div>
         </div>
     </header>
+
+    <!-- Плейлист выпуска -->
+    <div class="issue-playlist">
+        <p class="issue-playlist-label">🎧 Плейлист выпуска — Lofi Autumn: Cozy Fall Beats</p>
+        <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="450" style="width:100%;max-width:660px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/playlist/lofi-autumn-cozy-fall-beats/pl.c298c6bff2724989853823794356c181"></iframe>
+    </div>
 
     <!-- ═══════════════════════════════════════════════
          SECTIONS
@@ -2025,7 +2052,7 @@
     </main>
 
     <div class="spring-footer-banner">
-        <h2>Спасибо за <span class="accent">внимание</span></h2>
+        <h2>☕ Спасибо за <span class="accent">внимание</span></h2>
     </div>
 
     <footer>
