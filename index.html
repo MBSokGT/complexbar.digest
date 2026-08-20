@@ -2211,7 +2211,7 @@
         <button class="mini-player-next" id="mini-player-next" type="button" aria-label="Следующий трек">⏭</button>
         <button class="mini-player-close" id="mini-player-close" type="button" aria-label="Свернуть плеер">✕</button>
     </div>
-    <audio id="mini-player-audio" preload="none"></audio>
+    <audio id="mini-player-audio" preload="metadata"></audio>
 </div>
 
 <script>
@@ -2690,13 +2690,14 @@ function drinksScroll(dir) {
         if (autoplay) audio.play().catch(() => {});
     }
 
-    audio.addEventListener('canplay', () => {
-        if (!revealed) {
-            revealed = true;
-            player.style.display = 'block';
-            player.setAttribute('aria-hidden', 'false');
-        }
-    });
+    function reveal() {
+        if (revealed) return;
+        revealed = true;
+        player.style.display = 'block';
+        player.setAttribute('aria-hidden', 'false');
+    }
+    audio.addEventListener('loadedmetadata', reveal);
+    audio.addEventListener('canplay', reveal);
     audio.addEventListener('error', () => {
         if (!revealed) player.style.display = 'none';
     });
