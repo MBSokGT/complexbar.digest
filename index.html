@@ -448,6 +448,104 @@
             box-shadow: 0 4px 16px rgba(190,31,36,0.28) !important;
         }
 
+        /* ── Мини-плеер выпуска ── */
+        .mini-player {
+            position: fixed;
+            left: 20px; bottom: 20px;
+            z-index: 9998;
+            display: none;
+        }
+        .mini-player-toggle {
+            width: 52px; height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #be1f24, #c8711f);
+            color: #fff;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            box-shadow: 0 8px 22px rgba(70,40,10,0.25);
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+            animation: miniPlayerPulse 2.4s ease-in-out infinite;
+        }
+        .mini-player-toggle:hover { transform: scale(1.08); }
+        @keyframes miniPlayerPulse {
+            0%, 100% { box-shadow: 0 8px 22px rgba(70,40,10,0.25); }
+            50%      { box-shadow: 0 8px 22px rgba(190,31,36,0.4); }
+        }
+        .mini-player-panel {
+            display: none;
+            align-items: center;
+            gap: 12px;
+            position: absolute;
+            left: 0; bottom: 0;
+            background: #fff;
+            border-radius: 30px;
+            padding: 8px 14px 8px 8px;
+            box-shadow: 0 12px 30px rgba(70,40,10,0.18);
+            width: 300px;
+            border: 1px solid rgba(190,31,36,0.12);
+        }
+        .mini-player.expanded .mini-player-panel { display: flex; }
+        .mini-player.expanded .mini-player-toggle { display: none; }
+        .mini-player-play {
+            flex-shrink: 0;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #be1f24, #c8711f);
+            color: #fff;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .mini-player-info { flex: 1; min-width: 0; }
+        .mini-player-label {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #be1f24;
+        }
+        .mini-player-track {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #201914;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin: 2px 0 5px;
+        }
+        .mini-player-progress {
+            height: 3px;
+            background: rgba(32,25,20,0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .mini-player-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #be1f24, #c8711f);
+            transition: width 0.1s linear;
+        }
+        .mini-player-next, .mini-player-close {
+            flex-shrink: 0;
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            color: #8a7c6f;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s, color 0.2s;
+        }
+        .mini-player-next:hover, .mini-player-close:hover { background: rgba(190,31,36,0.08); color: #be1f24; }
+        @media (max-width: 640px) {
+            .mini-player { left: 12px; bottom: 12px; }
+            .mini-player-panel { width: calc(100vw - 90px); }
+        }
+
         /* ── Back / Forward / Top — modern brand style ── */
         #btn-back, #btn-forward, #btn-top {
             width: 46px; height: 46px;
@@ -838,11 +936,28 @@
         ══════════════════════════════════════════════ */
         body.autumn-page {
             --autumn-bg: #fdf9f3;
-            --autumn-ink: #201914;
-            --autumn-muted: #8a7c6f;
-            --autumn-line: #ece1d3;
+            /* Один базовый цвет для всех нейтральных тонов — остальное производные по прозрачности */
+            --autumn-ink-rgb: 32, 25, 20;
+            --autumn-ink: rgb(var(--autumn-ink-rgb));
+            --autumn-text: rgba(var(--autumn-ink-rgb), 0.92);
+            --autumn-muted: rgba(var(--autumn-ink-rgb), 0.5);
+            --autumn-line: rgba(var(--autumn-ink-rgb), 0.1);
+            --autumn-line-soft: rgba(var(--autumn-ink-rgb), 0.05);
             --autumn-red: #be1f24;
             --autumn-amber: #c8711f;
+
+            /* Модульная типографическая шкала */
+            --text-3xs: 0.68rem;
+            --text-2xs: 0.74rem;
+            --text-xs: 0.8rem;
+            --text-sm: 0.875rem;
+            --text-base: 0.95rem;
+            --text-lg: 1.05rem;
+            --text-xl: 1.2rem;
+            --text-h4: 1.35rem;
+            --text-h3: 1.15rem;
+            --text-h2: clamp(1.2rem, 2.4vw, 1.6rem);
+            --text-h1: clamp(2.8rem, 7.5vw, 7rem);
         }
         body.autumn-page .spring-site,
         body.autumn-page .spring-sections,
@@ -863,11 +978,23 @@
         }
         body.autumn-page .section-intro {
             color: var(--autumn-muted);
+            font-size: var(--text-xs);
         }
         body.autumn-page .case-text {
-            color: #2b2420;
+            color: var(--autumn-text);
+            font-size: var(--text-sm);
         }
         body.autumn-page .case-text strong { color: var(--autumn-ink); }
+
+        /* Модульная шкала — заголовки и подписи */
+        body.autumn-page .spring-section h2 { font-size: var(--text-h2); }
+        body.autumn-page .case-title { font-size: var(--text-lg); }
+        body.autumn-page h4.case-subtitle,
+        body.autumn-page .drink-card-title { font-size: var(--text-h4); }
+        body.autumn-page .toc-title { font-size: var(--text-lg); }
+        body.autumn-page .toc-desc,
+        body.autumn-page .drink-card-text { font-size: var(--text-2xs); }
+        body.autumn-page .dept-name { font-size: var(--text-2xs); }
 
         /* Цитата руководителя — выделенный блок */
         body.autumn-page .exec-quote {
@@ -975,6 +1102,18 @@
         body.autumn-page .toc-card:hover .toc-emoji { transform: scale(1.12) rotate(-8deg); animation-play-state: paused; }
         body.autumn-page .toc-emoji { animation: tocIconSway 3.6s ease-in-out infinite; }
         body.autumn-page .toc-card:nth-child(even) .toc-emoji { animation-direction: reverse; }
+
+        /* Анимированное подчёркивание — вырастает слева направо при наведении */
+        body.autumn-page .toc-title {
+            align-self: flex-start;
+            background-image: linear-gradient(currentColor, currentColor);
+            background-size: 0% 1px;
+            background-position: 0% 100%;
+            background-repeat: no-repeat;
+            transition: background-size 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            padding-bottom: 1px;
+        }
+        body.autumn-page .toc-card:hover .toc-title { background-size: 100% 1px; }
         @keyframes tocIconSway {
             0%, 100% { transform: rotate(-5deg); }
             50%      { transform: rotate(5deg); }
@@ -1027,32 +1166,11 @@
             background: linear-gradient(180deg, var(--autumn-bg) 0%, #f3e3cd 100%) !important;
         }
 
-        /* ── Плейлист выпуска ── */
-        .issue-playlist {
-            background: var(--autumn-bg, #fdf9f3);
-            padding: 28px 20px 32px;
-            text-align: center;
-            border-bottom: 1px solid var(--autumn-line, #ece1d3);
-        }
-        .issue-playlist-label {
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--autumn-red, #be1f24);
-            margin: 0 0 14px;
-        }
-        .issue-playlist iframe {
-            display: block;
-            margin: 0 auto;
-            box-shadow: 0 10px 26px rgba(70,40,10,0.10);
-        }
-
         /* ── Что пьют осенью: карусель карточек ── */
         .drinks-lead {
             font-size: 0.92rem;
             line-height: 1.8;
-            color: #2b2420;
+            color: var(--autumn-text);
             max-width: 760px;
             margin: 20px 0;
         }
@@ -1099,7 +1217,7 @@
         .drink-card-icon { font-size: 2.6rem; opacity: 0.55; }
         .drink-card-body { padding: 18px 20px 22px; display: flex; flex-direction: column; gap: 8px; }
         .drink-card-title { font-size: 0.98rem; font-weight: 700; color: var(--autumn-ink, #201914); margin: 0; }
-        .drink-card-text { font-size: 0.82rem; line-height: 1.65; color: #2b2420; margin: 0; }
+        .drink-card-text { font-size: 0.82rem; line-height: 1.65; color: var(--autumn-text); margin: 0; }
         .drinks-nav {
             flex-shrink: 0;
             width: 38px; height: 38px;
@@ -1159,7 +1277,7 @@
             border-radius: 12px;
             border: 1.5px solid var(--autumn-line, #ece1d3);
             background: #fdf9f3;
-            color: #2b2420;
+            color: var(--autumn-text);
             font-family: inherit;
             font-size: 0.92rem;
             line-height: 1.5;
@@ -1194,7 +1312,7 @@
             border-left: 3px solid var(--autumn-amber, #c8711f);
             font-size: 0.86rem;
             line-height: 1.6;
-            color: #2b2420;
+            color: var(--autumn-text);
         }
         .quiz-explain.visible { display: block; }
         .quiz-next-btn {
@@ -1234,7 +1352,7 @@
         .quiz-result-desc {
             font-size: 0.92rem;
             line-height: 1.7;
-            color: #2b2420;
+            color: var(--autumn-text);
             margin-bottom: 26px;
         }
         .quiz-retry-btn {
@@ -1380,12 +1498,6 @@
             <div class="scroll-hint-arrow">↓</div>
         </div>
     </header>
-
-    <!-- Плейлист выпуска -->
-    <div class="issue-playlist">
-        <p class="issue-playlist-label">🎧 Плейлист выпуска — Lofi Autumn: Cozy Fall Beats</p>
-        <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="450" style="width:100%;max-width:660px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/playlist/lofi-autumn-cozy-fall-beats/pl.c298c6bff2724989853823794356c181"></iframe>
-    </div>
 
     <!-- ═══════════════════════════════════════════════
          SECTIONS
@@ -2086,6 +2198,22 @@
     <div class="search-results" id="search-results"></div>
 </div>
 
+<!-- Мини-плеер выпуска -->
+<div class="mini-player" id="mini-player" aria-hidden="true">
+    <button class="mini-player-toggle" id="mini-player-toggle" type="button" aria-label="Развернуть плеер">🎵</button>
+    <div class="mini-player-panel">
+        <button class="mini-player-play" id="mini-player-play" type="button" aria-label="Играть">▶</button>
+        <div class="mini-player-info">
+            <div class="mini-player-label">Плейлист выпуска</div>
+            <div class="mini-player-track" id="mini-player-track">—</div>
+            <div class="mini-player-progress"><div class="mini-player-progress-fill" id="mini-player-progress-fill"></div></div>
+        </div>
+        <button class="mini-player-next" id="mini-player-next" type="button" aria-label="Следующий трек">⏭</button>
+        <button class="mini-player-close" id="mini-player-close" type="button" aria-label="Свернуть плеер">✕</button>
+    </div>
+    <audio id="mini-player-audio" preload="none"></audio>
+</div>
+
 <script>
 // ── Page loader ──
 window.addEventListener('load', () => {
@@ -2482,6 +2610,112 @@ function drinksScroll(dir) {
     const step = card ? card.getBoundingClientRect().width + 20 : 280;
     el.scrollBy({ left: dir * step, behavior: 'smooth' });
 }
+</script>
+
+<!-- Мини-плеер выпуска -->
+<script>
+(function () {
+    // Плейлист «LiFi Autumn Vibe»
+    const tracks = [
+        { title: 'Adam Space — Beam Me Up', src: 'assets/LiFi Autumn Vibe/Adam%20Space%20-%20Beam%20Me%20Up.mp3' },
+        { title: 'Akkoro — Our Feelings', src: 'assets/LiFi Autumn Vibe/Akkoro%20-%20Our%20Feelings.mp3' },
+        { title: 'Brø, Hilaria — Endless', src: 'assets/LiFi Autumn Vibe/Br%C3%B8%2C%C2%A0Hilaria%20-%20Endless.mp3' },
+        { title: 'Brø, Hilaria, Drxnk — At Night', src: 'assets/LiFi Autumn Vibe/Br%C3%B8%2C%C2%A0Hilaria%2C%C2%A0Drxnk%20-%20At%20Night.mp3' },
+        { title: 'Coltsfoot — Bottled Message', src: 'assets/LiFi Autumn Vibe/Coltsfoot%20-%20Bottled%20Message.mp3' },
+        { title: 'Cyber Bloom — The Tallest Mountain', src: 'assets/LiFi Autumn Vibe/Cyber%20Bloom%20-%20The%20Tallest%20Mountain.mp3' },
+        { title: 'Deauxnuts, Nokiaa — Empty Fields', src: 'assets/LiFi Autumn Vibe/Deauxnuts%2C%C2%A0Nokiaa%20-%20Empty%20Fields.mp3' },
+        { title: 'Drxnk, Myríad — Flyby', src: 'assets/LiFi Autumn Vibe/Drxnk%2C%C2%A0Myri%CC%81ad%20-%20Flyby.mp3' },
+        { title: 'Erwin Do, Toti Cisneros, Vibe Provide Collective — Fragments', src: 'assets/LiFi Autumn Vibe/Erwin%20Do%2C%C2%A0Toti%20Cisneros%2C%C2%A0Vibe%20Provide%20Collective%20-%20Fragments.mp3' },
+        { title: 'Flitz&Suppe, Leavv — lohmar', src: 'assets/LiFi Autumn Vibe/Flitz%26Suppe%2C%C2%A0Leavv%20-%20lohmar.mp3' },
+        { title: 'Fracta Aurea — Fizzdrop', src: 'assets/LiFi Autumn Vibe/Fracta%20Aurea%20-%20Fizzdrop.mp3' },
+        { title: 'French Connection — Sail Setter', src: 'assets/LiFi Autumn Vibe/French%20Connection%20-%20Sail%20Setter.mp3' },
+        { title: 'Fuzzy Donut — Cherry Orchards', src: 'assets/LiFi Autumn Vibe/Fuzzy%20Donut%20-%20Cherry%20Orchards.mp3' },
+        { title: 'Golden Mist — Mindset', src: 'assets/LiFi Autumn Vibe/Golden%20Mist%20-%20Mindset.mp3' },
+        { title: 'Hi Hat Henry — Island Bounce', src: 'assets/LiFi Autumn Vibe/Hi%20Hat%20Henry%20-%20Island%20Bounce.mp3' },
+        { title: 'JAKKARTA — Flower Lane', src: 'assets/LiFi Autumn Vibe/JAKKARTA%20-%20Flower%20Lane.mp3' },
+        { title: 'JAKKARTA — Glowing Tears', src: 'assets/LiFi Autumn Vibe/JAKKARTA%20-%20Glowing%20Tears.mp3' },
+        { title: 'Lenny Loops, refill — autumn morning', src: 'assets/LiFi Autumn Vibe/Lenny%20Loops%2C%C2%A0refill%20-%20autumn%20morning.mp3' },
+        { title: 'Lil Leaf — Morning Dew', src: 'assets/LiFi Autumn Vibe/Lil%20Leaf%20-%20Morning%20Dew.mp3' },
+        { title: 'Mondo Loops — Maple Sunsets', src: 'assets/LiFi Autumn Vibe/Mondo%20Loops%20-%20Maple%20Sunsets.mp3' },
+        { title: 'Nova Night — Long Road Home', src: 'assets/LiFi Autumn Vibe/Nova%20Night%20-%20Long%20Road%20Home.mp3' },
+        { title: 'ORANCHA — Hotaru', src: 'assets/LiFi Autumn Vibe/ORANCHA%20-%20Hotaru.mp3' },
+        { title: 'Oroshi — temporary approved', src: 'assets/LiFi Autumn Vibe/Oroshi%20-%20temporary%20approved.mp3' },
+        { title: 'Sihu — Hazy', src: 'assets/LiFi Autumn Vibe/Sihu%20-%20Hazy.mp3' },
+        { title: 'Sleepr Cell — slow turn', src: 'assets/LiFi Autumn Vibe/Sleepr%20Cell%20-%20slow%20turn.mp3' },
+        { title: 'Soibú — Solitude', src: 'assets/LiFi Autumn Vibe/Soibu%CC%81%20-%20Solitude.mp3' },
+        { title: 'SumPlusOne — Renaissance', src: 'assets/LiFi Autumn Vibe/SumPlusOne%20-%20Renaissance.mp3' },
+        { title: 'Vincent Rayn — Windmill', src: 'assets/LiFi Autumn Vibe/Vincent%20Rayn%20-%20Windmill.mp3' },
+        { title: 'aroramo — machine', src: 'assets/LiFi Autumn Vibe/aroramo%20-%20machine.mp3' },
+        { title: 'azayaka — when the leaves', src: 'assets/LiFi Autumn Vibe/azayaka%20-%20when%20the%20leaves.mp3' },
+        { title: 'butterfli — far away', src: 'assets/LiFi Autumn Vibe/butterfli%20-%20far%20away.mp3' },
+        { title: 'costa rossa — mellow out', src: 'assets/LiFi Autumn Vibe/costa%20rossa%20-%20mellow%20out.mp3' },
+        { title: 'eun — Short of Breath', src: 'assets/LiFi Autumn Vibe/eun%20-%20Short%20of%20Breath.mp3' },
+        { title: 'ffoorreesstt — clouded', src: 'assets/LiFi Autumn Vibe/ffoorreesstt%20-%20clouded.mp3' },
+        { title: 'joorla — Ends', src: 'assets/LiFi Autumn Vibe/joorla%20-%20Ends.mp3' },
+        { title: 'lilibu — broth', src: 'assets/LiFi Autumn Vibe/lilibu%20-%20broth.mp3' },
+        { title: 'lilibu — ghee', src: 'assets/LiFi Autumn Vibe/lilibu%20-%20ghee.mp3' },
+        { title: 'mellow fox — fika', src: 'assets/LiFi Autumn Vibe/mellow%20fox%20-%20fika.mp3' },
+        { title: 'morning green — Summer\'s End', src: 'assets/LiFi Autumn Vibe/morning%20green%20-%20Summer%27s%20End.mp3' },
+        { title: 'mxgnetic. — sunrise', src: 'assets/LiFi Autumn Vibe/mxgnetic.%20-%20sunrise.mp3' },
+        { title: 'new vibe — thyme moves slow', src: 'assets/LiFi Autumn Vibe/new%20vibe%20-%20thyme%20moves%20slow.mp3' },
+        { title: 'rollinsmpls — chuli', src: 'assets/LiFi Autumn Vibe/rollinsmpls%20-%20chuli.mp3' },
+        { title: 'sellar — midnight escape', src: 'assets/LiFi Autumn Vibe/sellar%20-%20midnight%20escape.mp3' },
+        { title: 'slowburn — still images', src: 'assets/LiFi Autumn Vibe/slowburn%20-%20still%20images.mp3' },
+        { title: 'softclouds — Amnesia', src: 'assets/LiFi Autumn Vibe/softclouds%20-%20Amnesia.mp3' },
+        { title: 'yellow sofa — slow down time', src: 'assets/LiFi Autumn Vibe/yellow%20sofa%20-%20slow%20down%20time.mp3' },
+    ];
+    // Перемешаем порядок один раз при загрузке страницы
+    for (let i = tracks.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [tracks[i], tracks[j]] = [tracks[j], tracks[i]];
+    }
+
+    const player  = document.getElementById('mini-player');
+    const toggle  = document.getElementById('mini-player-toggle');
+    const closeBtn = document.getElementById('mini-player-close');
+    const playBtn = document.getElementById('mini-player-play');
+    const nextBtn = document.getElementById('mini-player-next');
+    const trackEl = document.getElementById('mini-player-track');
+    const fillEl  = document.getElementById('mini-player-progress-fill');
+    const audio   = document.getElementById('mini-player-audio');
+    if (!player || !audio || !tracks.length) return;
+
+    let idx = 0;
+    let revealed = false;
+
+    function loadTrack(i, autoplay) {
+        idx = ((i % tracks.length) + tracks.length) % tracks.length;
+        audio.src = tracks[idx].src;
+        trackEl.textContent = tracks[idx].title;
+        if (autoplay) audio.play().catch(() => {});
+    }
+
+    audio.addEventListener('canplay', () => {
+        if (!revealed) {
+            revealed = true;
+            player.style.display = 'block';
+            player.setAttribute('aria-hidden', 'false');
+        }
+    });
+    audio.addEventListener('error', () => {
+        if (!revealed) player.style.display = 'none';
+    });
+    audio.addEventListener('timeupdate', () => {
+        if (audio.duration) fillEl.style.width = (audio.currentTime / audio.duration * 100) + '%';
+    });
+    audio.addEventListener('ended', () => loadTrack(idx + 1, true));
+    audio.addEventListener('play',  () => { playBtn.textContent = '⏸'; });
+    audio.addEventListener('pause', () => { playBtn.textContent = '▶'; });
+
+    playBtn.addEventListener('click', () => {
+        if (audio.paused) audio.play().catch(() => {}); else audio.pause();
+    });
+    nextBtn.addEventListener('click', () => loadTrack(idx + 1, !audio.paused));
+    toggle.addEventListener('click', () => { player.classList.add('expanded'); if (!audio.src) loadTrack(0, false); });
+    closeBtn.addEventListener('click', () => player.classList.remove('expanded'));
+
+    loadTrack(0, false);
+})();
 </script>
 
 <!-- Барный IQ-тест -->
