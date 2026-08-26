@@ -417,7 +417,6 @@
             animation: meadowSway 3s ease-in-out infinite alternate;
         }
         .mf.pile-leaf { filter: drop-shadow(0 1px 2px rgba(0,0,0,0.16)); }
-        .leaf-vector { display: block; }
         @keyframes meadowSway {
             from { transform: rotate(-4deg) scale(1); }
             to   { transform: rotate(4deg) scale(1.06); }
@@ -490,75 +489,76 @@
         }
         .mini-player-panel {
             display: none;
-            align-items: center;
-            gap: 12px;
+            flex-direction: column;
             position: absolute;
             left: 0; bottom: 0;
-            background: #fff;
-            border-radius: 30px;
-            padding: 8px 14px 8px 8px;
-            box-shadow: 0 12px 30px rgba(70,40,10,0.18);
-            width: 300px;
-            border: 1px solid rgba(190,31,36,0.12);
+            width: 260px;
+            background: #111;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(70,40,10,0.22);
+            border: 1px solid rgba(190,31,36,0.15);
         }
         .mini-player.expanded .mini-player-panel { display: flex; }
         .mini-player.expanded .mini-player-toggle { display: none; }
+        .mini-player-video {
+            width: 100%;
+            display: block;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            object-fit: cover;
+        }
+        .mini-player-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            background: #fff;
+        }
         .mini-player-play {
             flex-shrink: 0;
-            width: 36px; height: 36px;
+            width: 32px; height: 32px;
             border-radius: 50%;
             border: none;
             background: linear-gradient(135deg, #be1f24, #c8711f);
             color: #fff;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             display: flex; align-items: center; justify-content: center;
         }
-        .mini-player-info { flex: 1; min-width: 0; }
-        .mini-player-label {
-            font-size: 0.6rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #be1f24;
-        }
-        .mini-player-track {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #201914;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin: 2px 0 5px;
-        }
-        .mini-player-progress {
-            height: 3px;
-            background: rgba(32,25,20,0.1);
-            border-radius: 2px;
-            overflow: hidden;
-        }
-        .mini-player-progress-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #be1f24, #c8711f);
-            transition: width 0.1s linear;
-        }
-        .mini-player-next, .mini-player-close {
+        .mini-player-volume-btn {
             flex-shrink: 0;
-            width: 28px; height: 28px;
+            width: 24px; height: 24px;
+            border: none;
+            background: transparent;
+            color: #8a7c6f;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            padding: 0;
+        }
+        .mini-player-volume {
+            flex: 1;
+            accent-color: #be1f24;
+            height: 4px;
+            cursor: pointer;
+        }
+        .mini-player-close {
+            flex-shrink: 0;
+            width: 24px; height: 24px;
             border-radius: 50%;
             border: none;
             background: transparent;
             color: #8a7c6f;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             cursor: pointer;
             display: flex; align-items: center; justify-content: center;
             transition: background 0.2s, color 0.2s;
         }
-        .mini-player-next:hover, .mini-player-close:hover { background: rgba(190,31,36,0.08); color: #be1f24; }
+        .mini-player-close:hover { background: rgba(190,31,36,0.08); color: #be1f24; }
         @media (max-width: 640px) {
             .mini-player { left: 12px; bottom: 12px; }
-            .mini-player-panel { width: calc(100vw - 90px); }
+            .mini-player-panel { width: calc(100vw - 60px); max-width: 300px; }
         }
 
         /* ── Back / Forward / Top — modern brand style ── */
@@ -2319,20 +2319,18 @@
     <div class="search-results" id="search-results"></div>
 </div>
 
-<!-- Мини-плеер выпуска -->
+<!-- Мини-видеоплеер выпуска -->
 <div class="mini-player" id="mini-player" aria-hidden="true">
-    <button class="mini-player-toggle" id="mini-player-toggle" type="button" aria-label="Развернуть плеер">🎵</button>
+    <button class="mini-player-toggle" id="mini-player-toggle" type="button" aria-label="Развернуть плеер">🎬</button>
     <div class="mini-player-panel">
-        <button class="mini-player-play" id="mini-player-play" type="button" aria-label="Играть">▶</button>
-        <div class="mini-player-info">
-            <div class="mini-player-label">Плейлист выпуска</div>
-            <div class="mini-player-track" id="mini-player-track">—</div>
-            <div class="mini-player-progress"><div class="mini-player-progress-fill" id="mini-player-progress-fill"></div></div>
+        <video class="mini-player-video" id="mini-player-video" loop playsinline preload="metadata"></video>
+        <div class="mini-player-controls">
+            <button class="mini-player-play" id="mini-player-play" type="button" aria-label="Играть">▶</button>
+            <button class="mini-player-volume-btn" id="mini-player-mute" type="button" aria-label="Выключить звук">🔊</button>
+            <input class="mini-player-volume" id="mini-player-volume" type="range" min="0" max="1" step="0.01" value="0.6" aria-label="Громкость">
+            <button class="mini-player-close" id="mini-player-close" type="button" aria-label="Свернуть плеер">✕</button>
         </div>
-        <button class="mini-player-next" id="mini-player-next" type="button" aria-label="Следующий трек">⏭</button>
-        <button class="mini-player-close" id="mini-player-close" type="button" aria-label="Свернуть плеер">✕</button>
     </div>
-    <audio id="mini-player-audio" preload="metadata"></audio>
 </div>
 
 <script>
@@ -2691,35 +2689,19 @@ document.querySelectorAll('.case-text strong').forEach(el => {
 (function () {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // ── Общие SVG-шаблоны (свой рисунок, не иконки из библиотек) ──
-    const LEAF_SHAPES = {
-        maple: '<svg class="leaf-vector" viewBox="0 0 32 32" width="100%" height="100%"><path fill="currentColor" d="M16 1 L18.6 8.2 L25.4 5 L22.3 11.6 L30 13.2 L23.4 17.2 L28 24.2 L20.3 21.6 L20 29.3 L16 23.2 L12 29.3 L11.7 21.6 L4 24.2 L8.6 17.2 L2 13.2 L9.7 11.6 L6.6 5 L13.4 8.2 Z"/></svg>',
-        oak:   '<svg class="leaf-vector" viewBox="0 0 32 32" width="100%" height="100%"><path fill="currentColor" d="M16 2 C9.5 6 6 12.5 6 18.5 C6 24.5 10.5 28.8 16 30 C21.5 28.8 26 24.5 26 18.5 C26 12.5 22.5 6 16 2 Z"/><path fill="none" stroke="rgba(0,0,0,0.18)" stroke-width="1.4" d="M16 6 L16 27 M16 12 L11 16 M16 12 L21 16 M16 19 L11.5 23 M16 19 L20.5 23"/></svg>',
-        birch: '<svg class="leaf-vector" viewBox="0 0 32 32" width="100%" height="100%"><path fill="currentColor" d="M16 2 C22 6 27 12 24 20 C22 26 18 30 16 30 C14 30 10 26 8 20 C5 12 10 6 16 2 Z"/><path fill="none" stroke="rgba(0,0,0,0.16)" stroke-width="1.3" d="M16 5 L16 29 M16 11 L10.5 15.5 M16 11 L21.5 15.5 M16 18 L11 22.5 M16 18 L21 22.5"/></svg>'
-    };
-    const LEAF_COLORS = {
-        maple: ['#c8471f', '#d9691a', '#be1f24', '#e2823a'],
-        oak: ['#9c6b2f', '#b9863f', '#7a5230'],
-        birch: ['#d9a316', '#c8711f', '#e2b23a']
-    };
-    const LEAF_TYPES = Object.keys(LEAF_SHAPES);
-
     function randPick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
-    function makeLeafEl({ sway } = {}) {
-        const type = randPick(LEAF_TYPES);
-        const color = randPick(LEAF_COLORS[type]);
-        const outer = document.createElement('span');
-        outer.className = 'mf' + (sway ? '' : ' pile-leaf');
-        const inner = document.createElement('span');
-        inner.className = 'mf-inner' + (sway ? ' sway' : '');
-        inner.style.color = color;
-        inner.innerHTML = LEAF_SHAPES[type];
-        outer.appendChild(inner);
-        return outer;
-    }
-
-    // ── Куча — присланный ассет ──
+    // ── Отдельные листья (свои SVG-файлы) + куча (присланный PNG) ──
+    const LEAF_IMAGES = [
+        { src: 'assets/leaf1.svg', ratio: 451 / 1041 },
+        { src: 'assets/leaf2.svg', ratio: 1074 / 572 },
+        { src: 'assets/leaf3.svg', ratio: 1483 / 1188 },
+        { src: 'assets/leaf4.svg', ratio: 1015 / 455 },
+        { src: 'assets/leaf5.svg', ratio: 1080 / 762 },
+        { src: 'assets/leaf6.svg', ratio: 1232 / 1264 },
+        { src: 'assets/leaf7.svg', ratio: 1274 / 1299 },
+        { src: 'assets/leaf8.svg', ratio: 1259 / 1282 },
+    ];
     const PILE_IMAGE = { src: 'assets/leaves/leaf-pile.png', ratio: 415 / 740 };
 
     function makeImgLeafEl({ sway, img }) {
@@ -2761,14 +2743,15 @@ document.querySelectorAll('.case-text strong').forEach(el => {
 
         const scatterCount = 26;
         for (let i = 0; i < scatterCount; i++) {
-            const el = makeLeafEl({ sway: !reduceMotion });
+            const img = randPick(LEAF_IMAGES);
+            const el = makeImgLeafEl({ sway: !reduceMotion, img });
             const left = (i / scatterCount) * 100 + (Math.random() * 6 - 3);
             const bottom = 6 + Math.random() * 18;
-            const size = 16 + Math.random() * 14;
+            const width = 22 + Math.random() * 14;
             el.style.left = Math.max(0, Math.min(97, left)) + '%';
             el.style.bottom = bottom + 'px';
-            el.style.width = size + 'px';
-            el.style.height = size + 'px';
+            el.style.width = width + 'px';
+            el.style.height = (width * img.ratio) + 'px';
             const inner = el.querySelector('.mf-inner');
             inner.style.animationDelay = (Math.random() * 2) + 's';
             inner.style.transform = 'rotate(' + (Math.random() * 16 - 8).toFixed(1) + 'deg)';
@@ -2820,17 +2803,21 @@ document.querySelectorAll('.case-text strong').forEach(el => {
             container.appendChild(wrap);
 
             function spawnLeaf() {
-                const type = randPick(LEAF_TYPES);
-                const color = randPick(LEAF_COLORS[type]);
+                const img = randPick(LEAF_IMAGES);
                 const leaf = document.createElement('span');
                 leaf.className = 'hero-leaf';
-                leaf.style.color = color;
-                leaf.innerHTML = LEAF_SHAPES[type];
                 const duration = minDuration + Math.random() * (maxDuration - minDuration);
-                const size = 16 + Math.random() * 16;
+                const width = 14 + Math.random() * 16;
+                const el = document.createElement('img');
+                el.src = img.src;
+                el.alt = '';
+                el.style.display = 'block';
+                el.style.width = '100%';
+                el.style.height = '100%';
+                leaf.appendChild(el);
                 leaf.style.left = Math.random() * 100 + '%';
-                leaf.style.width = size + 'px';
-                leaf.style.height = size + 'px';
+                leaf.style.width = width + 'px';
+                leaf.style.height = (width * img.ratio) + 'px';
                 leaf.style.animationDuration = duration + 's';
                 leaf.style.setProperty('--drift', (Math.random() * 120 - 60) + 'px');
                 leaf.style.setProperty('--spin', (Math.random() * 360 + 180) + 'deg');
@@ -2859,62 +2846,58 @@ function drinksScroll(dir) {
 }
 </script>
 
-<!-- Мини-плеер выпуска -->
+<!-- Мини-видеоплеер выпуска -->
 <script>
 (function () {
-    // Плейлист выпуска
-    const tracks = [
-        { title: 'Markez La Nota — Autumn Haze', src: 'assets/LiFi Autumn Vibe/Autumn%20Haze%20Markez%20La%20Nota%20.mp3' },
-        { title: 'Lenny Loops Alto — Autumn Memory', src: 'assets/LiFi Autumn Vibe/Autumn%20Memory%20-%20Lenny%20Loops%20Alto.mp3' },
-        { title: 'Tom Doolie, Azayaka — Velvia', src: 'assets/LiFi Autumn Vibe/Velvia%20-%20Tom%20Doolie%20Azayaka.mp3' },
-    ];
+    const VIDEO_SRC = 'assets/leaves/mini-video.mp4';
 
-    const player  = document.getElementById('mini-player');
-    const toggle  = document.getElementById('mini-player-toggle');
+    const player   = document.getElementById('mini-player');
+    const toggle   = document.getElementById('mini-player-toggle');
     const closeBtn = document.getElementById('mini-player-close');
-    const playBtn = document.getElementById('mini-player-play');
-    const nextBtn = document.getElementById('mini-player-next');
-    const trackEl = document.getElementById('mini-player-track');
-    const fillEl  = document.getElementById('mini-player-progress-fill');
-    const audio   = document.getElementById('mini-player-audio');
-    if (!player || !audio || !tracks.length) return;
+    const playBtn  = document.getElementById('mini-player-play');
+    const muteBtn  = document.getElementById('mini-player-mute');
+    const volumeEl = document.getElementById('mini-player-volume');
+    const video    = document.getElementById('mini-player-video');
+    if (!player || !video) return;
 
-    let idx = 0;
     let revealed = false;
-
-    function loadTrack(i, autoplay) {
-        idx = ((i % tracks.length) + tracks.length) % tracks.length;
-        audio.src = tracks[idx].src;
-        trackEl.textContent = tracks[idx].title;
-        if (autoplay) audio.play().catch(() => {});
-    }
-
     function reveal() {
         if (revealed) return;
         revealed = true;
         player.style.display = 'block';
         player.setAttribute('aria-hidden', 'false');
     }
-    audio.addEventListener('loadedmetadata', reveal);
-    audio.addEventListener('canplay', reveal);
-    audio.addEventListener('error', () => {
+    video.addEventListener('loadedmetadata', reveal);
+    video.addEventListener('canplay', reveal);
+    video.addEventListener('error', () => {
         if (!revealed) player.style.display = 'none';
     });
-    audio.addEventListener('timeupdate', () => {
-        if (audio.duration) fillEl.style.width = (audio.currentTime / audio.duration * 100) + '%';
-    });
-    audio.addEventListener('ended', () => loadTrack(idx + 1, true));
-    audio.addEventListener('play',  () => { playBtn.textContent = '⏸'; });
-    audio.addEventListener('pause', () => { playBtn.textContent = '▶'; });
+    video.addEventListener('play',  () => { playBtn.textContent = '⏸'; });
+    video.addEventListener('pause', () => { playBtn.textContent = '▶'; });
 
+    video.volume = parseFloat(volumeEl.value);
     playBtn.addEventListener('click', () => {
-        if (audio.paused) audio.play().catch(() => {}); else audio.pause();
+        if (video.paused) video.play().catch(() => {}); else video.pause();
     });
-    nextBtn.addEventListener('click', () => loadTrack(idx + 1, !audio.paused));
-    toggle.addEventListener('click', () => { player.classList.add('expanded'); if (!audio.src) loadTrack(0, false); });
-    closeBtn.addEventListener('click', () => player.classList.remove('expanded'));
+    volumeEl.addEventListener('input', () => {
+        video.volume = parseFloat(volumeEl.value);
+        video.muted = video.volume === 0;
+        muteBtn.textContent = video.muted ? '🔇' : '🔊';
+    });
+    muteBtn.addEventListener('click', () => {
+        video.muted = !video.muted;
+        muteBtn.textContent = video.muted ? '🔇' : '🔊';
+    });
+    toggle.addEventListener('click', () => {
+        player.classList.add('expanded');
+        if (!video.src) video.src = VIDEO_SRC;
+    });
+    closeBtn.addEventListener('click', () => {
+        player.classList.remove('expanded');
+        video.pause();
+    });
 
-    loadTrack(0, false);
+    video.src = VIDEO_SRC;
 })();
 </script>
 
