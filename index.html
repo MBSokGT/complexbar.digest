@@ -1525,6 +1525,11 @@
                         <div class="toc-title">Логистика</div>
                         <div class="toc-desc"></div>
                     </div>
+                    <div class="spring-card toc-card" onclick="document.getElementById('section-production').scrollIntoView({behavior:'smooth'})">
+                        <div class="toc-emoji">🏭</div>
+                        <div class="toc-title">Производство</div>
+                        <div class="toc-desc"></div>
+                    </div>
                     <div class="spring-card toc-card" onclick="document.getElementById('section-training').scrollIntoView({behavior:'smooth'})">
                         <div class="toc-emoji">📚</div>
                         <div class="toc-title">Обучение и развитие</div>
@@ -2057,6 +2062,122 @@
                                         <li>Обеспечила документооборот по новой санкционной схеме, в результате чего санкционный товар (Risoli) доехал из Европы до таможни в 2 раза быстрее — 15 дней вместо более 30 расчётных (совместно с Ольгой Шекшаевой).</li>
                                     </ul>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Производство -->
+        <section class="spring-section" id="section-production" data-label="Производство">
+            <div class="container">
+                <h2>🏭 Производство</h2>
+                <p class="section-intro">Новая линия, аудиты качества и новые вкусы «Фактора Вкуса»</p>
+
+                <div class="dept-block">
+                    <div class="dept-name">Фактор Вкуса, Ногинск</div>
+
+                    <div class="case-card feature">
+                        <div class="case-photo">
+                            <div class="photo-carousel" id="carousel-prod-line">
+                                <img src="assets/production/line-launch-1.jpg" class="carousel-img active" alt="Первый продукт на новой производственной линии, 9 апреля 2026">
+                                <img src="assets/production/line-facility-1.jpg" class="carousel-img" loading="lazy" alt="Новая производственная линия «Фактора Вкуса»">
+                                <img src="assets/production/line-facility-2.jpg" class="carousel-img" loading="lazy" alt="Новая производственная линия «Фактора Вкуса»">
+                                <img src="assets/production/line-facility-3.jpg" class="carousel-img" loading="lazy" alt="Новая производственная линия «Фактора Вкуса»">
+                                <button class="carousel-btn prev" onclick="carouselStep('carousel-prod-line',-1)">&#8249;</button>
+                                <button class="carousel-btn next" onclick="carouselStep('carousel-prod-line',1)">&#8250;</button>
+                                <div class="carousel-dots" id="dots-carousel-prod-line"></div>
+                            </div>
+                        </div>
+                        <div class="case-body">
+                            <div class="case-title">Новая линия: от пуско-наладки до первого выпуска</div>
+                            <div class="case-text">
+                                <p>В 2026 году команда «Фактора Вкуса» в Ногинске завершила пуско-наладочные работы новой линии по производству лимонадных основ и топпингов.</p>
+                                <p>9 апреля 2026 года был выпущен первый продукт на новой линии — лимонадная основа «Манго-Маракуйя».</p>
+                                <p>Новые мощности дают производству запас для роста: они обеспечивают стабильность процесса и позволяют кратно увеличить ассортимент новых и уже полюбившихся клиентам продуктов.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card">
+                        <div class="case-photo">
+                            <div class="photo-carousel" id="carousel-prod-cooling">
+                                <img src="assets/production/cooling-system-1.jpg" class="carousel-img active" alt="Новая система охлаждения варочных ёмкостей">
+                                <button class="carousel-btn prev" onclick="carouselStep('carousel-prod-cooling',-1)">&#8249;</button>
+                                <button class="carousel-btn next" onclick="carouselStep('carousel-prod-cooling',1)">&#8250;</button>
+                                <div class="carousel-dots" id="dots-carousel-prod-cooling"></div>
+                            </div>
+                        </div>
+                        <div class="case-body">
+                            <div class="case-title">Модернизация: новая система охлаждения</div>
+                            <div class="case-text">
+                                <p>Следом за запуском линии команда «Фактора Вкуса» взялась за новый проект: установку системы охлаждения варочных ёмкостей.</p>
+                                <p><strong>Задача:</strong> раньше охлаждение продукта обеспечивалось за счёт проточной воды. Это увеличивало затраты на водоснабжение и ограничивало скорость приготовления.</p>
+                                <p><strong>Решение:</strong> новая система охлаждения позволила существенно снизить затраты на водоснабжение и одновременно увеличить технологическую скорость приготовления продукта. Проект был технически непростым: оборудование монтировали и на территории завода, и внутри цеховых помещений.</p>
+                                <p>В конце июля 2026 года подрядчики сдали проект, а пуско-наладку системы своими силами провела команда механиков завода. Сегодня система охлаждения используется в полном объёме.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card no-photo">
+                        <div class="case-body">
+                            <div class="case-title">Качество подтверждено: три инспекционных аудита</div>
+                            <div class="case-text">
+                                <p>В апреле 2026 года команда «Фактора Вкуса» успешно прошла три инспекционных аудита: по стандарту ИСО 22000, а также аудиты партнёров — сети «Вкусно и точка» и «Яндекс Лавка».</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card feature">
+                        <div class="case-photo">
+                            <div class="photo-carousel" id="carousel-prod-newlines">
+                                <img src="assets/production/irga-myata-laym-1.jpg" class="carousel-img active" alt="Сироп «Ирга-Мята-Лайм» для сети «Вкусно и точка»">
+                                <img src="assets/production/irga-myata-laym-2.jpg" class="carousel-img" loading="lazy" alt="Сироп «Ирга-Мята-Лайм» для сети «Вкусно и точка»">
+                                <img src="assets/production/cordial-kokos-1.jpg" class="carousel-img" loading="lazy" alt="Кордиал «Кокос-Корица-Ладан» для авиакомпании «Норд Стар»">
+                                <img src="assets/production/cordial-kokos-2.jpg" class="carousel-img" loading="lazy" alt="Кордиал «Кокос-Корица-Ладан» для авиакомпании «Норд Стар»">
+                                <button class="carousel-btn prev" onclick="carouselStep('carousel-prod-newlines',-1)">&#8249;</button>
+                                <button class="carousel-btn next" onclick="carouselStep('carousel-prod-newlines',1)">&#8250;</button>
+                                <div class="carousel-dots" id="dots-carousel-prod-newlines"></div>
+                            </div>
+                        </div>
+                        <div class="case-body">
+                            <div class="case-title">Новинки для сетей</div>
+                            <div class="case-text">
+                                <p>Параллельно команда технологов подготовила несколько продуктов под запросы ключевых сетей.</p>
+                                <p>Для сети «Вкусно и точка» разработан сироп «Ирга-Мята-Лайм»: уже произведено и отгружено 36 000 бутылок. Также согласован сироп «Попкорн-Карамель» — отгрузки стартовали с сентября, общий объём заказа составляет 119 000 бутылок.</p>
+                                <p>Для сети DUO разработаны два новых сиропа: «Тропическая Гуава» и «Фисташка».</p>
+                                <p>Выполнен спецзаказ для авиакомпании «Норд Стар» — кордиалы.</p>
+                                <p>В работе находились спецзаказы ещё для нескольких сетей: «Афанасий», «Яндекс-Лавка», «Васильчуки», «КофеЛайк». По итогам клиенты одобрили ввод в ассортимент сиропа «Яблочный Пирог со Специями», основ «Лайм-Мята», «Клубника-Личи», «Земляника-Фейхоа», «Манго-Маракуйя-Кокос», «Апельсин-Клубника», «Груша-Дюшес», а также сиропов «Гуава», «Фисташка», «Янтарная Карамель», «Ваниль», «Малина».</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card feature">
+                        <div class="case-photo">
+                            <div class="photo-carousel" id="carousel-prod-assortment">
+                                <img src="assets/production/guava-guarana-1.jpg" class="carousel-img active" alt="Лимонадная основа «Гуава-Гуарана»">
+                                <img src="assets/production/kaktus-myata-laym-1.jpg" class="carousel-img" loading="lazy" alt="Лимонадная основа «Кактус-Мята-Лайм»">
+                                <img src="assets/production/schavel-laym-1.jpg" class="carousel-img" loading="lazy" alt="Лимонадная основа «Щавель-Лайм»">
+                                <img src="assets/production/malina-aloe-1.jpg" class="carousel-img" loading="lazy" alt="Лимонадная основа «Малина-Алоэ»">
+                                <img src="assets/production/toppings-malina-1.jpg" class="carousel-img" loading="lazy" alt="Топпинг «Малина»">
+                                <img src="assets/production/toppings-mango-1.jpg" class="carousel-img" loading="lazy" alt="Топпинг «Манго»">
+                                <button class="carousel-btn prev" onclick="carouselStep('carousel-prod-assortment',-1)">&#8249;</button>
+                                <button class="carousel-btn next" onclick="carouselStep('carousel-prod-assortment',1)">&#8250;</button>
+                                <div class="carousel-dots" id="dots-carousel-prod-assortment"></div>
+                            </div>
+                        </div>
+                        <div class="case-body">
+                            <div class="case-title">Расширяем основной ассортимент Pinch&amp;Drop</div>
+                            <div class="case-text">
+                                <p>Команда «Фактора Вкуса» подготовила пополнение и для основной линейки Pinch&amp;Drop:</p>
+                                <ul>
+                                    <li>новые сиропы «Жареный Каштан» и основа «Мускат»;</li>
+                                    <li>новые топпинги «Малина», «Лесные Ягоды», «Клюква», «Персик»;</li>
+                                    <li>в линейку Pinch&amp;Drop выпущено 4 новые лимонадные основы: «Гуава-Гуарана», «Кактус-Мята-Лайм», «Щавель-Лайм», «Малина-Алоэ», а также «Земляника-Фейхоа», «Личи-Клубника», «Мята-Лайм».</li>
+                                </ul>
+                                <p>Новая линия, модернизированная система охлаждения и три успешных аудита стали результатом командной работы «Фактора Вкуса». Это фундамент, на который производство уже опирается, разрабатывая новые вкусы для крупнейших партнёров компании.</p>
                             </div>
                         </div>
                     </div>
