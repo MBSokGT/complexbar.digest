@@ -378,7 +378,7 @@
             opacity: 1; transform: none; color: #be1f24;
         }
 
-        /* ── Flower meadow ── */
+        /* ── Flower meadow → осенняя листовая полоса ── */
         .hero-meadow {
             position: absolute;
             bottom: 0; left: 0; right: 0;
@@ -395,14 +395,27 @@
             position: absolute;
             bottom: 0; left: 0; right: 0;
             height: 100%;
+            pointer-events: auto;
+            cursor: default;
         }
+        /* Внешняя обёртка — её двигает мышь, не трогая покачивание внутри */
         .mf {
             position: absolute;
+            display: block;
             line-height: 1;
-            animation: meadowSway 3s ease-in-out infinite alternate;
-            transform-origin: bottom center;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.12));
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.14));
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform;
         }
+        .mf-inner {
+            display: block;
+            transform-origin: bottom center;
+        }
+        .mf-inner.sway {
+            animation: meadowSway 3s ease-in-out infinite alternate;
+        }
+        .mf.pile-leaf { filter: drop-shadow(0 1px 2px rgba(0,0,0,0.16)); }
+        .leaf-vector { display: block; }
         @keyframes meadowSway {
             from { transform: rotate(-4deg) scale(1); }
             to   { transform: rotate(4deg) scale(1.06); }
@@ -1382,6 +1395,7 @@
         }
         .hero-leaf {
             position: absolute;
+            display: block;
             top: -40px;
             opacity: 0;
             animation: heroLeafFall linear forwards;
@@ -1471,26 +1485,7 @@
                 </defs>
                 <path d="M0,90 C240,40 480,110 720,70 C960,30 1200,100 1440,60 L1440,130 L0,130 Z" fill="url(#meadowGradient)"/>
             </svg>
-            <div class="meadow-flowers">
-                <span class="mf" style="left:0%;   bottom:16px; font-size:20px; animation-delay:0s;">🍁</span>
-                <span class="mf" style="left:4%;   bottom:28px; font-size:16px; animation-delay:0.4s;">🍄</span>
-                <span class="mf" style="left:9%;   bottom:18px; font-size:24px; animation-delay:0.8s;">🍁</span>
-                <span class="mf" style="left:15%;  bottom:12px; font-size:18px; animation-delay:0.2s;">🍂</span>
-                <span class="mf" style="left:21%;  bottom:26px; font-size:14px; animation-delay:1.1s;">🍁</span>
-                <span class="mf" style="left:27%;  bottom:14px; font-size:22px; animation-delay:0.6s;">🌰</span>
-                <span class="mf" style="left:33%;  bottom:22px; font-size:18px; animation-delay:1.4s;">🍁</span>
-                <span class="mf" style="left:39%;  bottom:10px; font-size:20px; animation-delay:0.3s;">🍄</span>
-                <span class="mf" style="left:45%;  bottom:28px; font-size:26px; animation-delay:0.9s;">🍁</span>
-                <span class="mf" style="left:51%;  bottom:14px; font-size:16px; animation-delay:1.6s;">🍂</span>
-                <span class="mf" style="left:57%;  bottom:24px; font-size:22px; animation-delay:0.5s;">🍁</span>
-                <span class="mf" style="left:63%;  bottom:12px; font-size:18px; animation-delay:1.2s;">🌰</span>
-                <span class="mf" style="left:69%;  bottom:20px; font-size:24px; animation-delay:0.7s;">🍁</span>
-                <span class="mf" style="left:75%;  bottom:16px; font-size:14px; animation-delay:1.8s;">🍄</span>
-                <span class="mf" style="left:81%;  bottom:26px; font-size:20px; animation-delay:0.1s;">🍁</span>
-                <span class="mf" style="left:87%;  bottom:14px; font-size:22px; animation-delay:1.0s;">🍂</span>
-                <span class="mf" style="left:92%;  bottom:20px; font-size:16px; animation-delay:0.5s;">🍁</span>
-                <span class="mf" style="left:97%;  bottom:24px; font-size:20px; animation-delay:1.3s;">🌰</span>
-            </div>
+            <div class="meadow-flowers" id="meadow-flowers"><!-- заполняется скриптом ниже: кучки и одиночные листья --></div>
         </div>
 
         <div class="scroll-hint" aria-hidden="true">
@@ -2686,39 +2681,150 @@ document.querySelectorAll('.case-text strong').forEach(el => {
 })();
 </script>
 
-<!-- Осенние листья: шапка + прощальный баннер -->
+<!-- Векторные осенние листья: полоса под шапкой + падающие + прощальный баннер -->
 <script>
 (function () {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const glyphs = ['🍁', '🍂', '🌰'];
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    function attachLeafStream(container, { burst, intervalMs, minDuration, maxDuration }) {
-        if (!container) return;
-        const wrap = document.createElement('div');
-        wrap.className = 'hero-leaves';
-        wrap.setAttribute('aria-hidden', 'true');
-        container.appendChild(wrap);
+    // ── Общие SVG-шаблоны (свой рисунок, не иконки из библиотек) ──
+    const LEAF_SHAPES = {
+        maple: '<svg class="leaf-vector" viewBox="0 0 32 32" width="100%" height="100%"><path fill="currentColor" d="M16 1 L18.6 8.2 L25.4 5 L22.3 11.6 L30 13.2 L23.4 17.2 L28 24.2 L20.3 21.6 L20 29.3 L16 23.2 L12 29.3 L11.7 21.6 L4 24.2 L8.6 17.2 L2 13.2 L9.7 11.6 L6.6 5 L13.4 8.2 Z"/></svg>',
+        oak:   '<svg class="leaf-vector" viewBox="0 0 32 32" width="100%" height="100%"><path fill="currentColor" d="M16 2 C9.5 6 6 12.5 6 18.5 C6 24.5 10.5 28.8 16 30 C21.5 28.8 26 24.5 26 18.5 C26 12.5 22.5 6 16 2 Z"/><path fill="none" stroke="rgba(0,0,0,0.18)" stroke-width="1.4" d="M16 6 L16 27 M16 12 L11 16 M16 12 L21 16 M16 19 L11.5 23 M16 19 L20.5 23"/></svg>',
+        chestnut: '<svg class="leaf-vector" viewBox="0 0 32 32" width="100%" height="100%"><ellipse cx="16" cy="18" rx="12" ry="11" fill="currentColor"/><path fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2.4" stroke-linecap="round" d="M6.5 13 Q16 4.5 25.5 13"/></svg>',
+        mushroom: '<svg class="leaf-vector" viewBox="0 0 32 32" width="100%" height="100%"><path fill="currentColor" d="M4 15.5 C4 6.5 12.5 2 16 2 C19.5 2 28 6.5 28 15.5 C28 17.6 25.7 17.3 23.5 16.5 C19.8 15.1 12.2 15.1 8.5 16.5 C6.3 17.3 4 17.6 4 15.5 Z"/><rect x="12" y="15" width="8" height="13" rx="4" fill="#fbeee0"/><circle cx="10.5" cy="9" r="1.6" fill="rgba(255,255,255,.55)"/><circle cx="20.5" cy="7.2" r="1.3" fill="rgba(255,255,255,.45)"/><circle cx="16" cy="10.8" r="1" fill="rgba(255,255,255,.4)"/></svg>'
+    };
+    const LEAF_COLORS = {
+        maple: ['#c8471f', '#d9691a', '#be1f24', '#e2823a'],
+        oak: ['#9c6b2f', '#b9863f', '#7a5230'],
+        chestnut: ['#5a3a24', '#3f2a1a'],
+        mushroom: ['#a83232', '#8a3a26', '#6b4a2f']
+    };
+    const LEAF_TYPES = Object.keys(LEAF_SHAPES);
 
-        function spawnLeaf() {
-            const leaf = document.createElement('span');
-            leaf.className = 'hero-leaf';
-            leaf.textContent = glyphs[Math.floor(Math.random() * glyphs.length)];
-            const duration = minDuration + Math.random() * (maxDuration - minDuration);
-            leaf.style.left = Math.random() * 100 + '%';
-            leaf.style.fontSize = (14 + Math.random() * 14) + 'px';
-            leaf.style.animationDuration = duration + 's';
-            leaf.style.setProperty('--drift', (Math.random() * 120 - 60) + 'px');
-            leaf.style.setProperty('--spin', (Math.random() * 360 + 180) + 'deg');
-            wrap.appendChild(leaf);
-            setTimeout(() => leaf.remove(), duration * 1000 + 200);
-        }
+    function randPick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
-        for (let i = 0; i < burst; i++) setTimeout(spawnLeaf, i * 700);
-        setInterval(spawnLeaf, intervalMs);
+    function makeLeafEl({ sway } = {}) {
+        const type = randPick(LEAF_TYPES);
+        const color = randPick(LEAF_COLORS[type]);
+        const outer = document.createElement('span');
+        outer.className = 'mf' + (sway ? '' : ' pile-leaf');
+        const inner = document.createElement('span');
+        inner.className = 'mf-inner' + (sway ? ' sway' : '');
+        inner.style.color = color;
+        inner.innerHTML = LEAF_SHAPES[type];
+        outer.appendChild(inner);
+        return outer;
     }
 
-    attachLeafStream(document.querySelector('.spring-hero'),          { burst: 8, intervalMs: 1100, minDuration: 9,  maxDuration: 15 });
-    attachLeafStream(document.querySelector('.spring-footer-banner'), { burst: 3, intervalMs: 2600, minDuration: 10, maxDuration: 16 });
+    // ── Полоса под шапкой: кучки листьев + одиночные ──
+    const meadow = document.getElementById('meadow-flowers');
+    const meadowLeaves = [];
+    if (meadow) {
+        const piles = [8, 46, 84];
+        piles.forEach(centerPct => {
+            const count = 4 + Math.floor(Math.random() * 2);
+            for (let i = 0; i < count; i++) {
+                const el = makeLeafEl({ sway: false });
+                const left = centerPct + (Math.random() * 10 - 5);
+                const bottom = 2 + Math.random() * 12;
+                const size = 20 + Math.random() * 16;
+                const rot = Math.random() * 50 - 25;
+                el.style.left = left + '%';
+                el.style.bottom = bottom + 'px';
+                el.style.width = size + 'px';
+                el.style.height = size + 'px';
+                el.style.zIndex = String(Math.round(size));
+                el.querySelector('.mf-inner').style.transform = 'rotate(' + rot.toFixed(1) + 'deg)';
+                meadow.appendChild(el);
+                meadowLeaves.push(el);
+            }
+        });
+
+        const scatterCount = 13;
+        for (let i = 0; i < scatterCount; i++) {
+            const el = makeLeafEl({ sway: !reduceMotion });
+            const left = (i / scatterCount) * 100 + (Math.random() * 6 - 3);
+            const bottom = 10 + Math.random() * 20;
+            const size = 14 + Math.random() * 12;
+            el.style.left = Math.max(0, Math.min(97, left)) + '%';
+            el.style.bottom = bottom + 'px';
+            el.style.width = size + 'px';
+            el.style.height = size + 'px';
+            const inner = el.querySelector('.mf-inner');
+            inner.style.animationDelay = (Math.random() * 2) + 's';
+            meadow.appendChild(el);
+            meadowLeaves.push(el);
+        }
+
+        // ── Листья «разбегаются» от курсора ──
+        if (!reduceMotion) {
+            let mouseX = null, mouseY = null;
+            meadow.addEventListener('mousemove', e => {
+                const rect = meadow.getBoundingClientRect();
+                mouseX = e.clientX - rect.left;
+                mouseY = e.clientY - rect.top;
+            });
+            meadow.addEventListener('mouseleave', () => { mouseX = null; mouseY = null; });
+
+            const RADIUS = 75, STRENGTH = 30;
+            function tick() {
+                if (mouseX !== null) {
+                    meadowLeaves.forEach(leaf => {
+                        const lx = leaf.offsetLeft + leaf.offsetWidth / 2;
+                        const ly = leaf.offsetTop + leaf.offsetHeight / 2;
+                        const dx = lx - mouseX, dy = ly - mouseY;
+                        const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+                        if (dist < RADIUS) {
+                            const force = (RADIUS - dist) / RADIUS;
+                            const px = (dx / dist) * force * STRENGTH;
+                            const py = (dy / dist) * force * STRENGTH;
+                            leaf.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px)';
+                        } else {
+                            leaf.style.transform = '';
+                        }
+                    });
+                }
+                requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        }
+    }
+
+    // ── Падающие листья: шапка + прощальный баннер ──
+    if (!reduceMotion) {
+        function attachLeafStream(container, { burst, intervalMs, minDuration, maxDuration }) {
+            if (!container) return;
+            const wrap = document.createElement('div');
+            wrap.className = 'hero-leaves';
+            wrap.setAttribute('aria-hidden', 'true');
+            container.appendChild(wrap);
+
+            function spawnLeaf() {
+                const type = randPick(LEAF_TYPES);
+                const color = randPick(LEAF_COLORS[type]);
+                const leaf = document.createElement('span');
+                leaf.className = 'hero-leaf';
+                leaf.style.color = color;
+                leaf.innerHTML = LEAF_SHAPES[type];
+                const duration = minDuration + Math.random() * (maxDuration - minDuration);
+                const size = 16 + Math.random() * 16;
+                leaf.style.left = Math.random() * 100 + '%';
+                leaf.style.width = size + 'px';
+                leaf.style.height = size + 'px';
+                leaf.style.animationDuration = duration + 's';
+                leaf.style.setProperty('--drift', (Math.random() * 120 - 60) + 'px');
+                leaf.style.setProperty('--spin', (Math.random() * 360 + 180) + 'deg');
+                wrap.appendChild(leaf);
+                setTimeout(() => leaf.remove(), duration * 1000 + 200);
+            }
+
+            for (let i = 0; i < burst; i++) setTimeout(spawnLeaf, i * 700);
+            setInterval(spawnLeaf, intervalMs);
+        }
+
+        attachLeafStream(document.querySelector('.spring-hero'),          { burst: 8, intervalMs: 1100, minDuration: 9,  maxDuration: 15 });
+        attachLeafStream(document.querySelector('.spring-footer-banner'), { burst: 3, intervalMs: 2600, minDuration: 10, maxDuration: 16 });
+    }
 })();
 </script>
 
@@ -2736,60 +2842,12 @@ function drinksScroll(dir) {
 <!-- Мини-плеер выпуска -->
 <script>
 (function () {
-    // Плейлист «LiFi Autumn Vibe»
+    // Плейлист выпуска
     const tracks = [
-        { title: 'Adam Space — Beam Me Up', src: 'assets/LiFi Autumn Vibe/Adam%20Space%20-%20Beam%20Me%20Up.mp3' },
-        { title: 'Akkoro — Our Feelings', src: 'assets/LiFi Autumn Vibe/Akkoro%20-%20Our%20Feelings.mp3' },
-        { title: 'Brø, Hilaria — Endless', src: 'assets/LiFi Autumn Vibe/Br%C3%B8%2C%C2%A0Hilaria%20-%20Endless.mp3' },
-        { title: 'Brø, Hilaria, Drxnk — At Night', src: 'assets/LiFi Autumn Vibe/Br%C3%B8%2C%C2%A0Hilaria%2C%C2%A0Drxnk%20-%20At%20Night.mp3' },
-        { title: 'Coltsfoot — Bottled Message', src: 'assets/LiFi Autumn Vibe/Coltsfoot%20-%20Bottled%20Message.mp3' },
-        { title: 'Cyber Bloom — The Tallest Mountain', src: 'assets/LiFi Autumn Vibe/Cyber%20Bloom%20-%20The%20Tallest%20Mountain.mp3' },
-        { title: 'Deauxnuts, Nokiaa — Empty Fields', src: 'assets/LiFi Autumn Vibe/Deauxnuts%2C%C2%A0Nokiaa%20-%20Empty%20Fields.mp3' },
-        { title: 'Drxnk, Myríad — Flyby', src: 'assets/LiFi Autumn Vibe/Drxnk%2C%C2%A0Myri%CC%81ad%20-%20Flyby.mp3' },
-        { title: 'Erwin Do, Toti Cisneros, Vibe Provide Collective — Fragments', src: 'assets/LiFi Autumn Vibe/Erwin%20Do%2C%C2%A0Toti%20Cisneros%2C%C2%A0Vibe%20Provide%20Collective%20-%20Fragments.mp3' },
-        { title: 'Flitz&Suppe, Leavv — lohmar', src: 'assets/LiFi Autumn Vibe/Flitz%26Suppe%2C%C2%A0Leavv%20-%20lohmar.mp3' },
-        { title: 'Fracta Aurea — Fizzdrop', src: 'assets/LiFi Autumn Vibe/Fracta%20Aurea%20-%20Fizzdrop.mp3' },
-        { title: 'French Connection — Sail Setter', src: 'assets/LiFi Autumn Vibe/French%20Connection%20-%20Sail%20Setter.mp3' },
-        { title: 'Fuzzy Donut — Cherry Orchards', src: 'assets/LiFi Autumn Vibe/Fuzzy%20Donut%20-%20Cherry%20Orchards.mp3' },
-        { title: 'Golden Mist — Mindset', src: 'assets/LiFi Autumn Vibe/Golden%20Mist%20-%20Mindset.mp3' },
-        { title: 'Hi Hat Henry — Island Bounce', src: 'assets/LiFi Autumn Vibe/Hi%20Hat%20Henry%20-%20Island%20Bounce.mp3' },
-        { title: 'JAKKARTA — Flower Lane', src: 'assets/LiFi Autumn Vibe/JAKKARTA%20-%20Flower%20Lane.mp3' },
-        { title: 'JAKKARTA — Glowing Tears', src: 'assets/LiFi Autumn Vibe/JAKKARTA%20-%20Glowing%20Tears.mp3' },
-        { title: 'Lenny Loops, refill — autumn morning', src: 'assets/LiFi Autumn Vibe/Lenny%20Loops%2C%C2%A0refill%20-%20autumn%20morning.mp3' },
-        { title: 'Lil Leaf — Morning Dew', src: 'assets/LiFi Autumn Vibe/Lil%20Leaf%20-%20Morning%20Dew.mp3' },
-        { title: 'Mondo Loops — Maple Sunsets', src: 'assets/LiFi Autumn Vibe/Mondo%20Loops%20-%20Maple%20Sunsets.mp3' },
-        { title: 'Nova Night — Long Road Home', src: 'assets/LiFi Autumn Vibe/Nova%20Night%20-%20Long%20Road%20Home.mp3' },
-        { title: 'ORANCHA — Hotaru', src: 'assets/LiFi Autumn Vibe/ORANCHA%20-%20Hotaru.mp3' },
-        { title: 'Oroshi — temporary approved', src: 'assets/LiFi Autumn Vibe/Oroshi%20-%20temporary%20approved.mp3' },
-        { title: 'Sihu — Hazy', src: 'assets/LiFi Autumn Vibe/Sihu%20-%20Hazy.mp3' },
-        { title: 'Sleepr Cell — slow turn', src: 'assets/LiFi Autumn Vibe/Sleepr%20Cell%20-%20slow%20turn.mp3' },
-        { title: 'Soibú — Solitude', src: 'assets/LiFi Autumn Vibe/Soibu%CC%81%20-%20Solitude.mp3' },
-        { title: 'SumPlusOne — Renaissance', src: 'assets/LiFi Autumn Vibe/SumPlusOne%20-%20Renaissance.mp3' },
-        { title: 'Vincent Rayn — Windmill', src: 'assets/LiFi Autumn Vibe/Vincent%20Rayn%20-%20Windmill.mp3' },
-        { title: 'aroramo — machine', src: 'assets/LiFi Autumn Vibe/aroramo%20-%20machine.mp3' },
-        { title: 'azayaka — when the leaves', src: 'assets/LiFi Autumn Vibe/azayaka%20-%20when%20the%20leaves.mp3' },
-        { title: 'butterfli — far away', src: 'assets/LiFi Autumn Vibe/butterfli%20-%20far%20away.mp3' },
-        { title: 'costa rossa — mellow out', src: 'assets/LiFi Autumn Vibe/costa%20rossa%20-%20mellow%20out.mp3' },
-        { title: 'eun — Short of Breath', src: 'assets/LiFi Autumn Vibe/eun%20-%20Short%20of%20Breath.mp3' },
-        { title: 'ffoorreesstt — clouded', src: 'assets/LiFi Autumn Vibe/ffoorreesstt%20-%20clouded.mp3' },
-        { title: 'joorla — Ends', src: 'assets/LiFi Autumn Vibe/joorla%20-%20Ends.mp3' },
-        { title: 'lilibu — broth', src: 'assets/LiFi Autumn Vibe/lilibu%20-%20broth.mp3' },
-        { title: 'lilibu — ghee', src: 'assets/LiFi Autumn Vibe/lilibu%20-%20ghee.mp3' },
-        { title: 'mellow fox — fika', src: 'assets/LiFi Autumn Vibe/mellow%20fox%20-%20fika.mp3' },
-        { title: 'morning green — Summer\'s End', src: 'assets/LiFi Autumn Vibe/morning%20green%20-%20Summer%27s%20End.mp3' },
-        { title: 'mxgnetic. — sunrise', src: 'assets/LiFi Autumn Vibe/mxgnetic.%20-%20sunrise.mp3' },
-        { title: 'new vibe — thyme moves slow', src: 'assets/LiFi Autumn Vibe/new%20vibe%20-%20thyme%20moves%20slow.mp3' },
-        { title: 'rollinsmpls — chuli', src: 'assets/LiFi Autumn Vibe/rollinsmpls%20-%20chuli.mp3' },
-        { title: 'sellar — midnight escape', src: 'assets/LiFi Autumn Vibe/sellar%20-%20midnight%20escape.mp3' },
-        { title: 'slowburn — still images', src: 'assets/LiFi Autumn Vibe/slowburn%20-%20still%20images.mp3' },
-        { title: 'softclouds — Amnesia', src: 'assets/LiFi Autumn Vibe/softclouds%20-%20Amnesia.mp3' },
-        { title: 'yellow sofa — slow down time', src: 'assets/LiFi Autumn Vibe/yellow%20sofa%20-%20slow%20down%20time.mp3' },
+        { title: 'Markez La Nota — Autumn Haze', src: 'assets/LiFi Autumn Vibe/Autumn%20Haze%20Markez%20La%20Nota%20.mp3' },
+        { title: 'Lenny Loops Alto — Autumn Memory', src: 'assets/LiFi Autumn Vibe/Autumn%20Memory%20-%20Lenny%20Loops%20Alto.mp3' },
+        { title: 'Tom Doolie, Azayaka — Velvia', src: 'assets/LiFi Autumn Vibe/Velvia%20-%20Tom%20Doolie%20Azayaka.mp3' },
     ];
-    // Перемешаем порядок один раз при загрузке страницы
-    for (let i = tracks.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [tracks[i], tracks[j]] = [tracks[j], tracks[i]];
-    }
 
     const player  = document.getElementById('mini-player');
     const toggle  = document.getElementById('mini-player-toggle');
