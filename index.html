@@ -409,6 +409,8 @@
         }
         .mf-inner {
             display: block;
+            width: 100%;
+            height: 100%;
             transform-origin: bottom center;
         }
         .mf-inner.sway {
@@ -2717,14 +2719,8 @@ document.querySelectorAll('.case-text strong').forEach(el => {
         return outer;
     }
 
-    // ── Настоящие листья из присланных ассетов (куча + рассыпанные кластеры) ──
+    // ── Куча — присланный ассет ──
     const PILE_IMAGE = { src: 'assets/leaves/leaf-pile.png', ratio: 415 / 740 };
-    const CLUSTER_IMAGES = [
-        { src: 'assets/leaves/leaf-cluster-1.png', ratio: 440 / 700 },
-        { src: 'assets/leaves/leaf-cluster-2.png', ratio: 700 / 506 },
-        { src: 'assets/leaves/leaf-cluster-3.png', ratio: 454 / 700 },
-        { src: 'assets/leaves/leaf-cluster-4.png', ratio: 700 / 577 },
-    ];
 
     function makeImgLeafEl({ sway, img }) {
         const outer = document.createElement('span');
@@ -2751,7 +2747,7 @@ document.querySelectorAll('.case-text strong').forEach(el => {
     if (meadow) {
         const piles = [14, 80];
         piles.forEach(centerPct => {
-            const width = 110 + Math.random() * 30;
+            const width = 220 + Math.random() * 50;
             const el = makeImgLeafEl({ sway: false, img: PILE_IMAGE });
             const left = centerPct + (Math.random() * 4 - 2);
             el.style.left = left + '%';
@@ -2765,15 +2761,14 @@ document.querySelectorAll('.case-text strong').forEach(el => {
 
         const scatterCount = 26;
         for (let i = 0; i < scatterCount; i++) {
-            const img = randPick(CLUSTER_IMAGES);
-            const el = makeImgLeafEl({ sway: !reduceMotion, img });
+            const el = makeLeafEl({ sway: !reduceMotion });
             const left = (i / scatterCount) * 100 + (Math.random() * 6 - 3);
             const bottom = 6 + Math.random() * 18;
-            const width = 44 + Math.random() * 30;
+            const size = 16 + Math.random() * 14;
             el.style.left = Math.max(0, Math.min(97, left)) + '%';
             el.style.bottom = bottom + 'px';
-            el.style.width = width + 'px';
-            el.style.height = (width * img.ratio) + 'px';
+            el.style.width = size + 'px';
+            el.style.height = size + 'px';
             const inner = el.querySelector('.mf-inner');
             inner.style.animationDelay = (Math.random() * 2) + 's';
             inner.style.transform = 'rotate(' + (Math.random() * 16 - 8).toFixed(1) + 'deg)';
