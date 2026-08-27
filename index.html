@@ -1280,139 +1280,52 @@
             .drink-card { flex-basis: 220px; }
         }
 
-        /* ── Барный IQ-тест ── */
-        .quiz-box {
-            margin-top: 32px;
-            max-width: 640px;
-            padding: 32px 36px;
-            border-radius: 20px;
-            background: #fff;
-            border: 1px solid var(--autumn-line, #ece1d3);
-            box-shadow: 0 4px 20px rgba(70,40,10,0.06);
-        }
-        .quiz-progress {
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--autumn-amber, #c8711f);
-            margin-bottom: 14px;
-        }
-        .quiz-question {
-            font-size: 1.08rem;
-            font-weight: 700;
-            color: var(--autumn-ink, #201914);
-            line-height: 1.5;
-            margin-bottom: 22px;
-        }
-        .quiz-options {
+        /* ── Гайд «Осеннее настроение» ── */
+        .guide-card {
+            padding: 30px 26px 26px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
         }
-        .quiz-option {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            width: 100%;
-            text-align: left;
-            padding: 14px 16px;
-            border-radius: 12px;
-            border: 1.5px solid var(--autumn-line, #ece1d3);
-            background: #fdf9f3;
-            color: var(--autumn-text);
-            font-family: inherit;
-            font-size: 0.92rem;
-            line-height: 1.5;
-            cursor: pointer;
-            transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
-        }
-        .quiz-option:hover:not(:disabled) {
-            border-color: rgba(190,31,36,0.35);
-            transform: translateX(2px);
-        }
-        .quiz-option .quiz-letter {
-            flex-shrink: 0;
-            font-weight: 800;
-            color: var(--autumn-red, #be1f24);
-        }
-        .quiz-option:disabled { cursor: default; }
-        .quiz-option.is-correct {
-            background: rgba(60,140,80,0.10);
-            border-color: #3c8c50;
-        }
-        .quiz-option.is-correct .quiz-letter { color: #3c8c50; }
-        .quiz-option.is-wrong {
-            background: rgba(190,31,36,0.08);
-            border-color: var(--autumn-red, #be1f24);
-        }
-        .quiz-explain {
-            display: none;
-            margin-top: 18px;
-            padding: 14px 16px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, rgba(190,31,36,0.05), rgba(200,113,31,0.08));
-            border-left: 3px solid var(--autumn-amber, #c8711f);
-            font-size: 0.86rem;
-            line-height: 1.6;
-            color: var(--autumn-text);
-        }
-        .quiz-explain.visible { display: block; }
-        .quiz-next-btn {
-            display: none;
-            margin-top: 22px;
-            padding: 12px 28px;
-            border: none;
-            border-radius: 30px;
-            background: linear-gradient(90deg, var(--autumn-red, #be1f24), var(--autumn-amber, #c8711f));
-            color: #fff;
-            font-family: inherit;
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 0.03em;
-            cursor: pointer;
-            transition: transform 0.15s ease, box-shadow 0.2s ease;
-        }
-        .quiz-next-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(190,31,36,0.25); }
-        .quiz-next-btn.visible { display: inline-block; }
-        .quiz-result {
-            text-align: center;
-        }
-        .quiz-result-score {
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--autumn-amber, #c8711f);
+        .guide-card-icon {
+            font-size: 1.8rem;
+            line-height: 1;
             margin-bottom: 10px;
         }
-        .quiz-result-title {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: var(--autumn-red, #be1f24);
-            margin-bottom: 14px;
-        }
-        .quiz-result-desc {
-            font-size: 0.92rem;
-            line-height: 1.7;
-            color: var(--autumn-text);
-            margin-bottom: 26px;
-        }
-        .quiz-retry-btn {
-            padding: 10px 24px;
-            border-radius: 30px;
-            border: 1.5px solid var(--autumn-red, #be1f24);
-            background: transparent;
-            color: var(--autumn-red, #be1f24);
-            font-family: inherit;
-            font-size: 0.82rem;
+        .guide-card-title {
+            font-size: 1.05rem;
             font-weight: 700;
-            cursor: pointer;
-            transition: background 0.2s ease, color 0.2s ease;
+            color: var(--autumn-ink, #201914);
+            margin-bottom: 16px;
         }
-        .quiz-retry-btn:hover { background: var(--autumn-red, #be1f24); color: #fff; }
-        @media (max-width: 640px) {
-            .quiz-box { padding: 24px 20px; }
+        .guide-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            counter-reset: guide-counter 0;
+        }
+        .guide-list li {
+            counter-increment: guide-counter;
+            position: relative;
+            padding-left: 36px;
+            margin-bottom: 16px;
+            font-size: 0.86rem;
+            line-height: 1.65;
+            color: var(--autumn-text);
+        }
+        .guide-list li:last-child { margin-bottom: 0; }
+        .guide-list li::before {
+            content: counter(guide-counter);
+            position: absolute;
+            left: 0; top: 0;
+            width: 24px; height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--autumn-red, #be1f24), var(--autumn-amber, #c8711f));
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         /* ── Плывущие по шапке листья (амбиентная анимация) ── */
@@ -1570,9 +1483,9 @@
                         <div class="toc-title">Что пьют осенью</div>
                         <div class="toc-desc"></div>
                     </div>
-                    <div class="spring-card toc-card" onclick="document.getElementById('section-quiz').scrollIntoView({behavior:'smooth'})">
-                        <div class="toc-emoji">🍸</div>
-                        <div class="toc-title">Барный IQ-тест</div>
+                    <div class="spring-card toc-card" onclick="document.getElementById('section-guide').scrollIntoView({behavior:'smooth'})">
+                        <div class="toc-emoji">🧣</div>
+                        <div class="toc-title">Гайд «Осеннее настроение»</div>
                         <div class="toc-desc"></div>
                     </div>
                 </div>
@@ -2290,18 +2203,40 @@
             </div>
         </section>
 
-        <!-- Барный IQ-тест -->
-        <section class="spring-section" id="section-quiz" data-label="IQ-тест">
+        <!-- Гайд «Осеннее настроение» -->
+        <section class="spring-section" id="section-guide" data-label="Гайд">
             <div class="container">
-                <h2>🍸 Барный IQ-тест</h2>
-                <p class="section-intro">Шесть вопросов — от лёгкого до трюка на внимательность. Проверьте свою барную эрудицию</p>
+                <h2>🧣 Гайд «Осеннее настроение»</h2>
+                <p class="section-intro">Девять простых способов поймать уют — на улице, дома и перед сном</p>
 
-                <div class="quiz-box" id="quiz-box">
-                    <div class="quiz-progress"><span id="quiz-progress-text">Вопрос 1 из 6</span></div>
-                    <div class="quiz-question" id="quiz-question"></div>
-                    <div class="quiz-options" id="quiz-options"></div>
-                    <div class="quiz-explain" id="quiz-explain"></div>
-                    <button class="quiz-next-btn" id="quiz-next-btn" type="button">Далее</button>
+                <div class="spring-cards guide-cards">
+                    <div class="spring-card guide-card">
+                        <div class="guide-card-icon">🌳</div>
+                        <div class="guide-card-title">На улице</div>
+                        <ul class="guide-list">
+                            <li>В солнечный день сходите в парк или лес — ловите последние тёплые дни, наслаждаясь шуршанием листьев под ногами.</li>
+                            <li>Прогуляйтесь под дождём с зонтом и в резиновых сапогах.</li>
+                            <li>Сходите на фермерский рынок за сезонными овощами — тыква, яблоки, груши.</li>
+                        </ul>
+                    </div>
+                    <div class="spring-card guide-card">
+                        <div class="guide-card-icon">🏠</div>
+                        <div class="guide-card-title">Дома</div>
+                        <ul class="guide-list" style="counter-reset: guide-counter 3;">
+                            <li>Сварите какао ODK с зефиром и подайте в уютной кружке — маленький ритуал работает лучше, чем сам напиток.</li>
+                            <li>Приготовьте согревающий чай с ягодным или цитрусовым сиропом Pinch&amp;Drop — альтернатива какао, если не любите шоколад.</li>
+                            <li>Испеките пирог с яблоками или тыквой — запах в квартире решает половину настроения.</li>
+                            <li>Устройте вечер с пледом и сериалом, который давно откладывали — заодно закройте пункт из списка «посмотреть на выходных».</li>
+                            <li>Соберите осенний плейлист.</li>
+                        </ul>
+                    </div>
+                    <div class="spring-card guide-card">
+                        <div class="guide-card-icon">🌙</div>
+                        <div class="guide-card-title">Перед сном</div>
+                        <ul class="guide-list" style="counter-reset: guide-counter 8;">
+                            <li>Заведите привычку писать три хороших момента дня — короткая практика, которая помогает не проваливаться в осеннюю хандру.</li>
+                        </ul>
+                    </div>
                 </div>
 
             </div>
@@ -2976,143 +2911,5 @@ function drinksScroll(dir) {
 })();
 </script>
 
-<!-- Барный IQ-тест -->
-<script>
-(function () {
-    const box = document.getElementById('quiz-box');
-    if (!box) return;
-
-    const letters = ['А', 'Б', 'В', 'Г'];
-
-    const questions = [
-        {
-            q: 'Один и тот же человек — венецианский ресторатор, владелец знаменитого бара Harry\'s Bar — изобрёл и блюдо карпаччо, и коктейль на основе игристого вина и персикового пюре. Как называется этот коктейль?',
-            options: ['Мимоза', 'Беллини', 'Апероль шпритц', 'Фраголино'],
-            correct: 1,
-            explain: 'Придумал венецианец Джузеппе Чиприани — он же изобрёл карпаччо.'
-        },
-        {
-            q: 'Почему в дорогих коктейль-барах лёд в бокале идеально прозрачный, без единого пузырька?',
-            options: ['Используют дистиллированную воду', 'Замораживают направленно, в одну сторону, а не со всех сторон сразу', 'Добавляют желатин для плотности', 'Специально кипятят лёд после заморозки'],
-            correct: 1,
-            explain: 'Пузырьки воздуха и примеси при этом уходят в одну сторону куска льда — получается прозрачный лёд.'
-        },
-        {
-            q: 'По легенде, широкий плоский бокал-купе для шампанского был отлит по слепку женской груди. Чьё имя обычно называют в этой легенде?',
-            options: ['Клеопатры', 'Марии-Антуанетты', 'Екатерины Медичи', 'Жозефины Бонапарт'],
-            correct: 1,
-            explain: 'Это самая распространённая версия легенды (встречается и вариант с мадам де Помпадур).'
-        },
-        {
-            q: 'Где находится крупнейший в мире винный погреб по количеству хранящихся бутылок — 1,5 миллиона штук в 55 км подземных галерей?',
-            options: ['Франция', 'Италия', 'Молдова', 'Грузия'],
-            correct: 2,
-            explain: 'Это завод «Милештий Мичь» — рекорд зафиксирован в 2005 году.'
-        },
-        {
-            q: 'У коктейля «Маргарита» существует минимум три конкурирующие легенды происхождения — про мексиканскую актрису, про светскую львицу Марго Самес и про бармена, влюблённого в клиентку. Какая из версий признана исторически достоверной?',
-            options: ['Версия с актрисой', 'Версия с Марго Самес', 'Версия с влюблённым барменом', 'Ни одна не доказана — все версии остаются легендами'],
-            correct: 3,
-            explain: 'У «Маргариты» нет единого канонического происхождения, несмотря на то что чаще всего рассказывают версию с актрисой.'
-        },
-        {
-            q: 'Древнегреческий кубок «Пифагорова чаша» («кубок жадности») наливали вином до определённой метки. Что случится, если налить выше метки — как в обычном стакане, который просто переполнится через край?',
-            options: ['Да, просто перельётся через край, как в обычном стакане', 'Ничего — чаша устроена так, что лишнее просто не помещается', 'Через скрытый канал внутри ножки сработает эффект сифона, и вся жидкость до последней капли вытечет через отверстие в дне', 'Чаша треснет от давления'],
-            correct: 2,
-            explain: 'Сифонный эффект утекает содержимое полностью через дно, а не переливает через край — ловушка в том, что интуитивно кажется наоборот.'
-        }
-    ];
-
-    const tiers = [
-        { max: 2, title: '«Джин-тоник»', desc: 'Классика на каждый день — простой, освежающий и всегда к месту. Барные легенды и байки пока не ваш конёк, но это только повод узнать больше интересного.' },
-        { max: 4, title: '«Апероль шпритц»', desc: 'Лёгкий, яркий и с характером — ровно как ваш результат. Половина фактов зашла отлично, и барный кругозор явно шире среднего.' },
-        { max: 6, title: '«Негрони»', desc: 'Классика, которая не подводит. Вы явно давно и с удовольствием в теме барной культуры.' }
-    ];
-
-    const progressText = document.getElementById('quiz-progress-text');
-    const questionEl   = document.getElementById('quiz-question');
-    const optionsEl    = document.getElementById('quiz-options');
-    const explainEl    = document.getElementById('quiz-explain');
-    const nextBtn      = document.getElementById('quiz-next-btn');
-
-    let idx = 0;
-    let score = 0;
-    let answered = false;
-
-    function renderQuestion() {
-        answered = false;
-        const item = questions[idx];
-        progressText.textContent = `Вопрос ${idx + 1} из ${questions.length}`;
-        questionEl.textContent = item.q;
-        explainEl.classList.remove('visible');
-        explainEl.textContent = '';
-        nextBtn.classList.remove('visible');
-        nextBtn.textContent = idx === questions.length - 1 ? 'Показать результат' : 'Далее';
-
-        optionsEl.innerHTML = '';
-        item.options.forEach((opt, i) => {
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'quiz-option';
-            btn.innerHTML = `<span class="quiz-letter">${letters[i]})</span><span>${opt}</span>`;
-            btn.addEventListener('click', () => selectAnswer(i, btn));
-            optionsEl.appendChild(btn);
-        });
-    }
-
-    function selectAnswer(i, btn) {
-        if (answered) return;
-        answered = true;
-        const item = questions[idx];
-        const allBtns = optionsEl.querySelectorAll('.quiz-option');
-        allBtns.forEach(b => { b.disabled = true; });
-
-        if (i === item.correct) {
-            score++;
-            btn.classList.add('is-correct');
-        } else {
-            btn.classList.add('is-wrong');
-            allBtns[item.correct].classList.add('is-correct');
-        }
-
-        explainEl.textContent = `${letters[item.correct]}) ${item.options[item.correct]} — ${item.explain}`;
-        explainEl.classList.add('visible');
-        nextBtn.classList.add('visible');
-    }
-
-    function renderResult() {
-        const tier = tiers.find(t => score <= t.max);
-        progressText.textContent = 'Результат';
-        questionEl.textContent = '';
-        explainEl.classList.remove('visible');
-        nextBtn.classList.remove('visible');
-
-        optionsEl.innerHTML = `
-            <div class="quiz-result">
-                <div class="quiz-result-score">${score} из ${questions.length} правильных</div>
-                <div class="quiz-result-title">${tier.title}</div>
-                <div class="quiz-result-desc">${tier.desc}</div>
-                <button type="button" class="quiz-retry-btn" id="quiz-retry-btn">Пройти ещё раз</button>
-            </div>
-        `;
-        document.getElementById('quiz-retry-btn').addEventListener('click', () => {
-            idx = 0;
-            score = 0;
-            renderQuestion();
-        });
-    }
-
-    nextBtn.addEventListener('click', () => {
-        idx++;
-        if (idx < questions.length) {
-            renderQuestion();
-        } else {
-            renderResult();
-        }
-    });
-
-    renderQuestion();
-})();
-</script>
 </body>
 </html>
