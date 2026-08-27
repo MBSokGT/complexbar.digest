@@ -546,6 +546,22 @@
             height: 4px;
             cursor: pointer;
         }
+        .mini-player-size {
+            flex-shrink: 0;
+            width: 24px; height: 24px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255,255,255,0.08);
+            color: #d8cfc6;
+            font-size: 0.8rem;
+            line-height: 1;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s, color 0.2s;
+        }
+        .mini-player-size:hover { background: rgba(190,31,36,0.7); color: #fff; }
+        .mini-player-size:disabled { opacity: 0.35; cursor: default; }
+        .mini-player-size:disabled:hover { background: rgba(255,255,255,0.08); color: #d8cfc6; }
         .mini-player-close {
             position: absolute;
             top: 8px; right: 8px;
@@ -2336,6 +2352,8 @@
             <button class="mini-player-play" id="mini-player-play" type="button" aria-label="Играть">▶</button>
             <button class="mini-player-volume-btn" id="mini-player-mute" type="button" aria-label="Выключить звук">🔊</button>
             <input class="mini-player-volume" id="mini-player-volume" type="range" min="0" max="1" step="0.01" value="0.6" aria-label="Громкость">
+            <button class="mini-player-size" id="mini-player-smaller" type="button" aria-label="Уменьшить окно">－</button>
+            <button class="mini-player-size" id="mini-player-bigger" type="button" aria-label="Увеличить окно">＋</button>
         </div>
     </div>
 </div>
@@ -2859,14 +2877,30 @@ function drinksScroll(dir) {
 (function () {
     const VIDEO_SRC = 'assets/leaves/mini-video.mp4';
 
-    const player   = document.getElementById('mini-player');
-    const toggle   = document.getElementById('mini-player-toggle');
-    const closeBtn = document.getElementById('mini-player-close');
-    const playBtn  = document.getElementById('mini-player-play');
-    const muteBtn  = document.getElementById('mini-player-mute');
-    const volumeEl = document.getElementById('mini-player-volume');
-    const video    = document.getElementById('mini-player-video');
+    const player     = document.getElementById('mini-player');
+    const panel      = player.querySelector('.mini-player-panel');
+    const toggle     = document.getElementById('mini-player-toggle');
+    const closeBtn   = document.getElementById('mini-player-close');
+    const playBtn    = document.getElementById('mini-player-play');
+    const muteBtn    = document.getElementById('mini-player-mute');
+    const volumeEl   = document.getElementById('mini-player-volume');
+    const smallerBtn = document.getElementById('mini-player-smaller');
+    const biggerBtn  = document.getElementById('mini-player-bigger');
+    const video      = document.getElementById('mini-player-video');
     if (!player || !video) return;
+
+    const SIZES = [200, 260, 340, 420, 520];
+    let sizeIdx = 1;
+    function applySize() {
+        const w = Math.min(SIZES[sizeIdx], window.innerWidth - 40);
+        panel.style.width = w + 'px';
+        smallerBtn.disabled = sizeIdx === 0;
+        biggerBtn.disabled = sizeIdx === SIZES.length - 1;
+    }
+    window.addEventListener('resize', applySize);
+    smallerBtn.addEventListener('click', () => { sizeIdx = Math.max(0, sizeIdx - 1); applySize(); });
+    biggerBtn.addEventListener('click', () => { sizeIdx = Math.min(SIZES.length - 1, sizeIdx + 1); applySize(); });
+    applySize();
 
     let revealed = false;
     function reveal() {
