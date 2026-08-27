@@ -546,22 +546,26 @@
             height: 4px;
             cursor: pointer;
         }
-        .mini-player-size {
-            flex-shrink: 0;
+        .mini-player-resize {
+            position: absolute;
+            top: 8px; right: 36px;
+            z-index: 4;
             width: 24px; height: 24px;
             border-radius: 50%;
-            border: none;
-            background: rgba(255,255,255,0.08);
-            color: #d8cfc6;
-            font-size: 0.8rem;
-            line-height: 1;
-            cursor: pointer;
+            background: rgba(0,0,0,0.45);
+            cursor: ns-resize;
             display: flex; align-items: center; justify-content: center;
-            transition: background 0.2s, color 0.2s;
+            opacity: 0;
+            transition: opacity 0.2s, background 0.2s;
         }
-        .mini-player-size:hover { background: rgba(190,31,36,0.7); color: #fff; }
-        .mini-player-size:disabled { opacity: 0.35; cursor: default; }
-        .mini-player-size:disabled:hover { background: rgba(255,255,255,0.08); color: #d8cfc6; }
+        .mini-player-video-wrap:hover .mini-player-resize,
+        .mini-player-resize.dragging {
+            opacity: 1;
+        }
+        .mini-player-resize:hover,
+        .mini-player-resize.dragging {
+            background: rgba(190,31,36,0.75);
+        }
         .mini-player-close {
             position: absolute;
             top: 8px; right: 8px;
@@ -1123,7 +1127,7 @@
         /* TOC-карточки — иконка-бейдж вместо цветной полоски слева */
         body.autumn-page .toc-card { border-left: none; }
         body.autumn-page .toc-card {
-            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 32 32'%3E%3Cpath fill='%23be1f24' stroke='white' stroke-width='1.5' d='M16 1 L18.6 8.2 L25.4 5 L22.3 11.6 L30 13.2 L23.4 17.2 L28 24.2 L20.3 21.6 L20 29.3 L16 23.2 L12 29.3 L11.7 21.6 L4 24.2 L8.6 17.2 L2 13.2 L9.7 11.6 L6.6 5 L13.4 8.2 Z'/%3E%3C/svg%3E") 14 14, pointer;
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 32 32'%3E%3Cpath fill='%23be1f24' stroke='white' stroke-width='1.4' d='M16 3 C24 5 29 12 27 20 C25.5 26.5 20 30 15 29.5 C8 28.8 3 22 4.5 15 C6 8 11 2 16 3 Z'/%3E%3Cpath fill='none' stroke='white' stroke-width='1.1' stroke-linecap='round' d='M16 6 C13 13 11 20 14.5 27 M12 13 L16.5 15 M10.5 18 L15 19.5'/%3E%3C/svg%3E") 6 6, pointer;
         }
         body.autumn-page .toc-card:hover {
             background: #fff;
@@ -2347,13 +2351,14 @@
         <div class="mini-player-video-wrap">
             <video class="mini-player-video" id="mini-player-video" loop playsinline preload="metadata"></video>
             <button class="mini-player-close" id="mini-player-close" type="button" aria-label="Свернуть плеер">✕</button>
+            <div class="mini-player-resize" id="mini-player-resize" title="Потяните, чтобы изменить размер" aria-hidden="true">
+                <svg viewBox="0 0 16 16" width="13" height="13"><path d="M1.5 14.5 L14.5 1.5 M6.5 14.5 L14.5 6.5 M11.5 14.5 L14.5 11.5" stroke="white" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>
+            </div>
         </div>
         <div class="mini-player-controls">
             <button class="mini-player-play" id="mini-player-play" type="button" aria-label="Играть">▶</button>
             <button class="mini-player-volume-btn" id="mini-player-mute" type="button" aria-label="Выключить звук">🔊</button>
             <input class="mini-player-volume" id="mini-player-volume" type="range" min="0" max="1" step="0.01" value="0.6" aria-label="Громкость">
-            <button class="mini-player-size" id="mini-player-smaller" type="button" aria-label="Уменьшить окно">－</button>
-            <button class="mini-player-size" id="mini-player-bigger" type="button" aria-label="Увеличить окно">＋</button>
         </div>
     </div>
 </div>
@@ -2884,23 +2889,51 @@ function drinksScroll(dir) {
     const playBtn    = document.getElementById('mini-player-play');
     const muteBtn    = document.getElementById('mini-player-mute');
     const volumeEl   = document.getElementById('mini-player-volume');
-    const smallerBtn = document.getElementById('mini-player-smaller');
-    const biggerBtn  = document.getElementById('mini-player-bigger');
+    const resizeHandle = document.getElementById('mini-player-resize');
     const video      = document.getElementById('mini-player-video');
     if (!player || !video) return;
 
-    const SIZES = [200, 260, 340, 420, 520];
-    let sizeIdx = 1;
-    function applySize() {
-        const w = Math.min(SIZES[sizeIdx], window.innerWidth - 40);
-        panel.style.width = w + 'px';
-        smallerBtn.disabled = sizeIdx === 0;
-        biggerBtn.disabled = sizeIdx === SIZES.length - 1;
+    const MIN_W = 180, MAX_W = 560;
+    function clampWidth(w) {
+        return Math.max(MIN_W, Math.min(MAX_W, Math.min(w, window.innerWidth - 40)));
     }
-    window.addEventListener('resize', applySize);
-    smallerBtn.addEventListener('click', () => { sizeIdx = Math.max(0, sizeIdx - 1); applySize(); });
-    biggerBtn.addEventListener('click', () => { sizeIdx = Math.min(SIZES.length - 1, sizeIdx + 1); applySize(); });
-    applySize();
+    panel.style.width = clampWidth(260) + 'px';
+    window.addEventListener('resize', () => {
+        panel.style.width = clampWidth(panel.getBoundingClientRect().width) + 'px';
+    });
+
+    let dragging = false, dragStartY = 0, dragStartWidth = 0;
+    function startDrag(clientY) {
+        dragging = true;
+        dragStartY = clientY;
+        dragStartWidth = panel.getBoundingClientRect().width;
+        resizeHandle.classList.add('dragging');
+    }
+    function moveDrag(clientY) {
+        if (!dragging) return;
+        const deltaY = clientY - dragStartY;
+        panel.style.width = clampWidth(dragStartWidth + deltaY * 2) + 'px';
+    }
+    function endDrag() {
+        if (!dragging) return;
+        dragging = false;
+        resizeHandle.classList.remove('dragging');
+        document.body.style.userSelect = '';
+    }
+    resizeHandle.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        document.body.style.userSelect = 'none';
+        startDrag(e.clientY);
+    });
+    window.addEventListener('mousemove', (e) => moveDrag(e.clientY));
+    window.addEventListener('mouseup', endDrag);
+    resizeHandle.addEventListener('touchstart', (e) => {
+        startDrag(e.touches[0].clientY);
+    }, { passive: true });
+    window.addEventListener('touchmove', (e) => {
+        if (dragging) moveDrag(e.touches[0].clientY);
+    }, { passive: true });
+    window.addEventListener('touchend', endDrag);
 
     let revealed = false;
     function reveal() {
