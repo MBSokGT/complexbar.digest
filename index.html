@@ -1255,6 +1255,12 @@
             justify-content: center;
         }
         .drink-card-icon { font-size: 2.6rem; opacity: 0.55; }
+        .drink-card-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 18px;
+        }
         .drink-card-body { padding: 18px 20px 22px; display: flex; flex-direction: column; gap: 8px; }
         .drink-card-title { font-size: 0.98rem; font-weight: 700; color: var(--autumn-ink, #201914); margin: 0; }
         .drink-card-text { font-size: 0.82rem; line-height: 1.65; color: var(--autumn-text); margin: 0; }
@@ -2155,21 +2161,21 @@
                     <button type="button" class="drinks-nav prev" onclick="drinksScroll(-1)" aria-label="Предыдущий напиток">&#8249;</button>
                     <div class="drinks-carousel" id="drinks-carousel">
                         <div class="drink-card">
-                            <div class="drink-card-photo" data-drink="glintwein"><span class="drink-card-icon">🍷</span></div>
+                            <div class="drink-card-photo" data-drink="glintwein"><img src="assets/drinks/glintwein.png" alt="Глинтвейн" loading="lazy"></div>
                             <div class="drink-card-body">
                                 <h4 class="drink-card-title">Глинтвейн</h4>
                                 <p class="drink-card-text">Первую строчку уверенно держит глинтвейн — сомелье называют его безусловным осенним фаворитом, создающим ощущение уюта. Продажи вырастают вдвое по сравнению с тёплым периодом года. В московских заведениях помимо классики уже подают вариации с облепихой, а в некоторых барах — чешский вариант с бехеровкой и мёдом.</p>
                             </div>
                         </div>
                         <div class="drink-card">
-                            <div class="drink-card-photo" data-drink="hot-toddy"><span class="drink-card-icon">🥃</span></div>
+                            <div class="drink-card-photo" data-drink="hot-toddy"><img src="assets/drinks/hot-toddy.png" alt="Хот-тодди" loading="lazy"></div>
                             <div class="drink-card-body">
                                 <h4 class="drink-card-title">Хот-тодди</h4>
                                 <p class="drink-card-text">Дальше по популярности идёт хот-тодди — виски, лимон и мёд в горячей подаче, пришедший из шотландской традиции. Баланс между мягкостью и крепостью — то, что выбирают, когда хочется согреться, но не терять контроль над вечером.</p>
                             </div>
                         </div>
                         <div class="drink-card">
-                            <div class="drink-card-photo" data-drink="irish-coffee"><span class="drink-card-icon">☕</span></div>
+                            <div class="drink-card-photo" data-drink="irish-coffee"><img src="assets/drinks/irish-coffee.png" alt="Айриш-кофе" loading="lazy"></div>
                             <div class="drink-card-body">
                                 <h4 class="drink-card-title">Айриш-кофе</h4>
                                 <p class="drink-card-text">Кофе, ирландский виски и сливки. Особенно хорошо заходит именно в межсезонье — когда ещё не готовы к плотному глинтвейну, но уже не хочется просто американо.</p>
@@ -2183,7 +2189,7 @@
                             </div>
                         </div>
                         <div class="drink-card">
-                            <div class="drink-card-photo" data-drink="apple-cocktails"><span class="drink-card-icon">🍎</span></div>
+                            <div class="drink-card-photo" data-drink="apple-cocktails"><img src="assets/drinks/apple-cocktails.png" alt="Яблочные коктейли на кальвадосе и бренди" loading="lazy"></div>
                             <div class="drink-card-body">
                                 <h4 class="drink-card-title">Яблочные коктейли на кальвадосе и бренди</h4>
                                 <p class="drink-card-text">Отдельно набирают обороты — терпкий, насыщенный, максимально «осенний по вкусу» вариант для тех, кто ищет что-то отличное от вина со специями.</p>
