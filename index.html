@@ -179,6 +179,7 @@
             transform: translateY(14px);
             transition: opacity 0.55s ease, transform 0.55s ease;
             counter-increment: section-counter;
+            scroll-margin-top: 60px;
         }
         .spring-section.visible { opacity: 1; transform: none; }
         .spring-section + .spring-section { border-top: 1px solid #f2f2f2; }
@@ -210,6 +211,53 @@
             color: #000;
             margin: 0;
             letter-spacing: -0.025em;
+        }
+        .section-share-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px; height: 22px;
+            margin-left: 10px;
+            border: none;
+            background: rgba(190,31,36,0.08);
+            border-radius: 50%;
+            font-size: 0.7rem;
+            line-height: 1;
+            cursor: pointer;
+            vertical-align: middle;
+            opacity: 0;
+            transition: opacity 0.2s ease, background 0.2s ease;
+            position: relative;
+        }
+        .spring-section h2:hover .section-share-btn,
+        .section-share-btn:focus-visible,
+        .section-share-btn.copied {
+            opacity: 0.6;
+        }
+        .section-share-btn:hover { opacity: 1 !important; background: rgba(190,31,36,0.16); }
+        .section-share-btn::after {
+            content: 'Скопировано!';
+            position: absolute;
+            left: 50%; bottom: 130%;
+            transform: translateX(-50%) translateY(4px);
+            background: #201914;
+            color: #fff;
+            font-size: 0.62rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            padding: 4px 9px;
+            border-radius: 6px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .section-share-btn.copied::after {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        @media (max-width: 640px) {
+            .section-share-btn { opacity: 0.55; }
         }
         .spring-section h2::after {
             content: '';
@@ -296,6 +344,43 @@
             gap: 2px;
             padding: 6px 0;
         }
+        /* ── Мини-прогресс выпуска рядом с сайдбаром ── */
+        .side-nav-progress {
+            position: fixed;
+            left: 2px; top: 50%;
+            transform: translateY(-50%);
+            z-index: 599;
+            width: 2px;
+            background: rgba(190,31,36,0.12);
+            border-radius: 2px;
+        }
+        .side-nav-progress-fill {
+            position: absolute;
+            top: 0; left: 0; width: 100%;
+            height: 0%;
+            background: linear-gradient(180deg, var(--autumn-red, #be1f24), var(--autumn-amber, #c8711f));
+            border-radius: 2px;
+            transition: height 0.15s ease-out;
+        }
+        .side-nav-progress-label {
+            position: absolute;
+            left: 10px; top: 0;
+            transform: translateY(-50%);
+            font-size: 0.62rem; font-weight: 700;
+            letter-spacing: 0.04em;
+            color: #bbb;
+            background: rgba(255,255,255,0.97);
+            padding: 3px 8px;
+            border-radius: 0 6px 6px 0;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.08);
+        }
+        .side-nav-progress:hover .side-nav-progress-label { opacity: 1; }
+        body:not(.loaded) .side-nav-progress { visibility: hidden !important; }
+        @media (max-width: 900px) { .side-nav-progress { display: none; } }
         .side-nav-item {
             display: flex; align-items: center; gap: 0;
             cursor: pointer; border: none; background: none; padding: 0;
@@ -658,6 +743,8 @@
             overflow: hidden;
         }
         .carousel-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.5s ease; pointer-events: none; display: block; }
+        .carousel-img.img-loading,
+        .drink-card-photo img.img-loading { opacity: 0 !important; }
         .carousel-img.active { opacity: 1; }
         .carousel-btn {
             position: absolute; top: 50%; transform: translateY(-50%);
@@ -1260,6 +1347,8 @@
             height: 100%;
             object-fit: contain;
             padding: 18px;
+            opacity: 1;
+            transition: opacity 0.5s ease;
         }
         .drink-card-body { padding: 18px 20px 22px; display: flex; flex-direction: column; gap: 8px; }
         .drink-card-title { font-size: 0.98rem; font-weight: 700; color: var(--autumn-ink, #201914); margin: 0; }
@@ -1387,6 +1476,10 @@
 <nav class="spring-dots" id="spring-dots" aria-hidden="true"></nav>
 
 <!-- Боковая навигация -->
+<div class="side-nav-progress" id="side-nav-progress" aria-hidden="true">
+    <div class="side-nav-progress-fill" id="side-nav-progress-fill"></div>
+    <span class="side-nav-progress-label" id="side-nav-progress-label">0%</span>
+</div>
 <nav class="side-nav" id="side-nav" aria-label="Разделы"></nav>
 
 <!-- Лейбл текущего раздела над кнопками -->
@@ -2455,6 +2548,17 @@ const sideItems = allSecs.map((sec, i) => {
     return btn;
 });
 
+// ── Мини-прогресс выпуска рядом с сайдбаром ──
+const sideNavProgress     = document.getElementById('side-nav-progress');
+const sideNavProgressFill = document.getElementById('side-nav-progress-fill');
+const sideNavProgressLbl  = document.getElementById('side-nav-progress-label');
+function syncSideNavProgressTrack() {
+    if (!sideNavProgress) return;
+    sideNavProgress.style.height = sideNav.getBoundingClientRect().height + 'px';
+}
+syncSideNavProgressTrack();
+window.addEventListener('resize', syncSideNavProgressTrack);
+
 // ── Back / Forward / Top buttons ──
 const btnBack = document.getElementById('btn-back');
 const btnFwd  = document.getElementById('btn-forward');
@@ -2508,7 +2612,15 @@ const progressBar = document.getElementById('scroll-progress');
 function onScroll() {
     const scrolled = getScrollY();
     const total    = document.documentElement.scrollHeight - window.innerHeight;
-    if (progressBar) progressBar.style.width = (total > 0 ? (scrolled / total) * 100 : 0) + '%';
+    const pct      = total > 0 ? (scrolled / total) * 100 : 0;
+    if (progressBar) progressBar.style.width = pct + '%';
+    if (sideNavProgressFill) {
+        sideNavProgressFill.style.height = pct + '%';
+    }
+    if (sideNavProgressLbl) {
+        sideNavProgressLbl.textContent = 'Прочитано ' + Math.round(pct) + '%';
+        sideNavProgressLbl.style.top = pct + '%';
+    }
     btnTop.classList.toggle('visible', scrolled > 400);
     updateNav(getCurrentIdx());
 }
@@ -2585,6 +2697,50 @@ searchInput.addEventListener('input', () => {
     });
 });
 
+// ── Шаринг раздела: копировать прямую ссылку ──
+document.querySelectorAll('.spring-section[id]').forEach(sec => {
+    const h2 = sec.querySelector('.container > h2');
+    if (!h2) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'section-share-btn';
+    btn.textContent = '🔗';
+    btn.setAttribute('aria-label', 'Скопировать ссылку на раздел «' + (sec.dataset.label || '') + '»');
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const url = location.origin + location.pathname + '#' + sec.id;
+        const done = () => {
+            btn.classList.add('copied');
+            clearTimeout(btn._copiedTimer);
+            btn._copiedTimer = setTimeout(() => btn.classList.remove('copied'), 1600);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(done).catch(done);
+        } else {
+            const ta = document.createElement('textarea');
+            ta.value = url;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            try { document.execCommand('copy'); } catch (err) {}
+            document.body.removeChild(ta);
+            done();
+        }
+    });
+    h2.appendChild(btn);
+});
+
+// ── Переход к разделу по хэшу в ссылке (для расшаренных ссылок) ──
+if (location.hash) {
+    const hashTarget = document.querySelector(location.hash);
+    if (hashTarget) {
+        window.addEventListener('load', () => {
+            setTimeout(() => hashTarget.scrollIntoView({ behavior: 'auto' }), 60);
+        });
+    }
+}
+
 // ── Photo Carousels ──
 const carouselState = {};
 
@@ -2598,6 +2754,13 @@ function initCarousel(el) {
         el.querySelectorAll('.carousel-btn').forEach(btn => { btn.style.display = 'none'; });
         dotsEl.style.display = 'none';
     }
+
+    imgs.forEach(img => {
+        if (img.tagName !== 'IMG') return;
+        if (img.complete && img.naturalWidth > 0) return;
+        img.classList.add('img-loading');
+        img.addEventListener('load', () => img.classList.remove('img-loading'), { once: true });
+    });
 
     let cur = 0;
     imgs.forEach((_, i) => {
@@ -2784,13 +2947,16 @@ document.querySelectorAll('.case-text strong').forEach(el => {
         const inner = document.createElement('span');
         inner.className = 'mf-inner' + (sway ? ' sway' : '');
         const el = document.createElement('img');
-        el.src = img.src;
         el.alt = '';
         el.loading = 'lazy';
         el.style.width = '100%';
         el.style.height = '100%';
         el.style.display = 'block';
         el.style.objectFit = 'contain';
+        el.style.opacity = '0';
+        el.style.transition = 'opacity 0.5s ease';
+        el.addEventListener('load', () => { el.style.opacity = '1'; }, { once: true });
+        el.src = img.src;
         if (Math.random() < 0.5) el.style.transform = 'scaleX(-1)';
         inner.appendChild(el);
         outer.appendChild(inner);
@@ -2919,6 +3085,11 @@ function drinksScroll(dir) {
     const step = card ? card.getBoundingClientRect().width + 20 : 280;
     el.scrollBy({ left: dir * step, behavior: 'smooth' });
 }
+document.querySelectorAll('.drink-card-photo img').forEach(img => {
+    if (img.complete && img.naturalWidth > 0) return;
+    img.classList.add('img-loading');
+    img.addEventListener('load', () => img.classList.remove('img-loading'), { once: true });
+});
 </script>
 
 <!-- Мини-видеоплеер выпуска -->
