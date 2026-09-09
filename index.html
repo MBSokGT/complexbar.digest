@@ -1597,7 +1597,7 @@
                     <div class="spring-card toc-card" onclick="document.getElementById('section-horeca').scrollIntoView({behavior:'smooth'})">
                         <div class="toc-emoji">🍽</div>
                         <div class="toc-title">Ресторанные хроники</div>
-                        <div class="toc-desc">Новые открытия: «Про Хинкали», «Рубель» и Loro 3</div>
+                        <div class="toc-desc">Новые открытия: «Про Хинкали», «Рубель», Loro 3, Legenda и другие точки по регионам</div>
                     </div>
                     <div class="spring-card toc-card" onclick="document.getElementById('section-autumn-drinks').scrollIntoView({behavior:'smooth'})">
                         <div class="toc-emoji">🍂</div>
@@ -2354,23 +2354,31 @@
                                 </div>
                             </div>
                             <div class="case-body">
-                                <div class="case-title">«Про Хинкали»</div>
+                                <div class="case-title">«Про Хинкали» (Московская область, г. Мытищи, ул. Мира, стр. 32/1)</div>
                                 <div class="case-text">
                                     <p>Ресторан грузинской кухни «PRO.Хинкали» by Novikov открылся в Мытищах. Это место, где традиции грузинской кухни, южное гостеприимство и современный комфорт создают атмосферу для встреч с друзьями, семейных ужинов и особых моментов.</p>
                                     <p>Ресторан рассчитан на 238 гостей, из них 50 мест расположены на просторной летней веранде.</p>
-                                    <p>141008, Московская область, г. Мытищи, ул. Мира, стр. 32/1.</p>
                                     <p>Открытие на сумму 6,5 млн рублей.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="dept-block">
-                        <div class="case-card no-photo">
+                        <div class="case-card">
+                            <div class="case-photo">
+                                <div class="photo-carousel" id="carousel-rubel">
+                                    <img src="assets/rubel2/rubel-1.jpg" class="carousel-img active" alt="Блюдо ресторана «Рубель»">
+                                    <img src="assets/rubel2/rubel-2.jpg" class="carousel-img" loading="lazy" alt="Коктейль в ресторане «Рубель»">
+                                    <img src="assets/rubel2/rubel-3.jpg" class="carousel-img" loading="lazy" alt="Зал ресторана «Рубель»">
+                                    <button class="carousel-btn prev" onclick="carouselStep('carousel-rubel',-1)">&#8249;</button>
+                                    <button class="carousel-btn next" onclick="carouselStep('carousel-rubel',1)">&#8250;</button>
+                                    <div class="carousel-dots" id="dots-carousel-rubel"></div>
+                                </div>
+                            </div>
                             <div class="case-body">
-                                <div class="case-title">«Рубель»</div>
+                                <div class="case-title">«Рубель» (г. Москва, пл. Красная, д. 3)</div>
                                 <div class="case-text">
                                     <p>«Рубель» — это место, где русская кухня звучит по-новому: без пафоса, но с душой, историей и безупречным вкусом.</p>
-                                    <p>109012, г. Москва, пл. Красная, д. 3.</p>
                                 </div>
                             </div>
                         </div>
@@ -2389,11 +2397,50 @@
                                 </div>
                             </div>
                             <div class="case-body">
-                                <div class="case-title">Loro 3</div>
+                                <div class="case-title">Loro 3 (г. Москва, пер. Колокольников, д. 2)</div>
                                 <div class="case-text">
                                     <p>21 августа в районе Цветного бульвара открылся новый ресторан Loro — продолжение истории, начавшейся семь лет назад на Большой Никитской.</p>
                                     <p>Ресторан разместился в историческом здании 1914 года. Его особенности и планировка вдохновили команду на создание интерьера, в котором классические архитектурные мотивы получают новое прочтение.</p>
-                                    <p>107045, г. Москва, пер. Колокольников, д. 2.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dept-block">
+                        <div class="case-card no-photo">
+                            <div class="case-body">
+                                <div class="case-title">Legenda, быв. «Имеретинский» (Краснодарский край, пгт Сириус, ул. Голубая, д. 1Б)</div>
+                                <div class="case-text">
+                                    <p>Морской курорт на первой береговой линии в Сириусе, где после ребрендинга «Имеретинский» превратился в Legenda. Семейное гастробистро «Радость Есть», несколько бассейнов и полностью обновлённая сервировка сразу для ресторана, бара и банкетного зала.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dept-block">
+                        <div class="case-card no-photo">
+                            <div class="case-body">
+                                <div class="case-title">Boston Seafood &amp; Bar (Рязанская обл., г. Рязань, г-к Торговый, д. 1)</div>
+                                <div class="case-text">
+                                    <p>Рязанский филиал федеральной сети рыбных ресторанов от совладельцев Torro Grill — Кирилла Мартыненко и Антона Лялина. Девяносто процентов меню — рыба и морепродукты, фирменный крем-суп чаудер и винная карта почти на сорок позиций по бокалам.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dept-block">
+                        <div class="case-card no-photo">
+                            <div class="case-body">
+                                <div class="case-title">Томато (Брянская обл., г. Брянск, ул. Брянского Фронта, д. 2)</div>
+                                <div class="case-text">
+                                    <p>Вторая точка брянского филиала сети семейных итальянских пиццерий «Томато», которая работает с 2011 года в 15 городах Центральной России. Пицца из дровяной печи, паста и гриль в уютной атмосфере.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dept-block">
+                        <div class="case-card no-photo">
+                            <div class="case-body">
+                                <div class="case-title">Апарт Отель / Кошурникова (Новосибирская обл., г. Новосибирск, ул. Кошурникова, зд. 22/5)</div>
+                                <div class="case-text">
+                                    <p>Apartville на Кошурникова — новый 12-этажный апарт-отель бизнес-класса 4* от застройщика «Баутехник» в Октябрьском районе Новосибирска, 219 апартаментов с концепцией «всё включено». Открытие попало в подборки заметных событий города.</p>
                                 </div>
                             </div>
                         </div>
