@@ -1094,6 +1094,7 @@
             --autumn-line-soft: rgba(var(--autumn-ink-rgb), 0.05);
             --autumn-red: #be1f24;
             --autumn-amber: #c8711f;
+            --autumn-pastel: #d8a397;
 
             /* Модульная типографическая шкала */
             --text-3xs: 0.68rem;
@@ -1277,6 +1278,13 @@
             border-left: 3px solid var(--autumn-red);
         }
         body.autumn-page .case-card:not(:last-child) { margin-bottom: 22px; }
+
+        /* Ресторанные хроники, закупка и логистика — одна пастельная полоса вместо чередования */
+        body.autumn-page #section-horeca .case-card,
+        body.autumn-page #section-procurement .case-card,
+        body.autumn-page #section-logistics .case-card {
+            border-left-color: var(--autumn-pastel);
+        }
         body.autumn-page .case-photo,
         body.autumn-page .photo-carousel { background: #efe6da; }
 
@@ -2416,7 +2424,17 @@
                         </div>
                     </div>
                     <div class="dept-block">
-                        <div class="case-card no-photo">
+                        <div class="case-card">
+                            <div class="case-photo">
+                                <div class="photo-carousel" id="carousel-boston">
+                                    <img src="assets/boston2/boston-1.jpg" class="carousel-img active" alt="Интерьер Boston Seafood & Bar">
+                                    <img src="assets/boston2/boston-2.jpg" class="carousel-img" loading="lazy" alt="Интерьер Boston Seafood & Bar">
+                                    <img src="assets/boston2/boston-3.jpg" class="carousel-img" loading="lazy" alt="Блюда Boston Seafood & Bar">
+                                    <button class="carousel-btn prev" onclick="carouselStep('carousel-boston',-1)">&#8249;</button>
+                                    <button class="carousel-btn next" onclick="carouselStep('carousel-boston',1)">&#8250;</button>
+                                    <div class="carousel-dots" id="dots-carousel-boston"></div>
+                                </div>
+                            </div>
                             <div class="case-body">
                                 <div class="case-title">Boston Seafood &amp; Bar (Рязанская обл., г. Рязань, г-к Торговый, д. 1)</div>
                                 <div class="case-text">
@@ -2426,21 +2444,20 @@
                         </div>
                     </div>
                     <div class="dept-block">
-                        <div class="case-card no-photo">
+                        <div class="case-card">
+                            <div class="case-photo">
+                                <div class="photo-carousel" id="carousel-tomato">
+                                    <img src="assets/tomato2/tomato-1.jpg" class="carousel-img active" alt="Интерьер «Томато»">
+                                    <img src="assets/tomato2/tomato-2.jpg" class="carousel-img" loading="lazy" alt="Блюда «Томато»">
+                                    <button class="carousel-btn prev" onclick="carouselStep('carousel-tomato',-1)">&#8249;</button>
+                                    <button class="carousel-btn next" onclick="carouselStep('carousel-tomato',1)">&#8250;</button>
+                                    <div class="carousel-dots" id="dots-carousel-tomato"></div>
+                                </div>
+                            </div>
                             <div class="case-body">
                                 <div class="case-title">Томато (Брянская обл., г. Брянск, ул. Брянского Фронта, д. 2)</div>
                                 <div class="case-text">
                                     <p>Вторая точка брянского филиала сети семейных итальянских пиццерий «Томато», которая работает с 2011 года в 15 городах Центральной России. Пицца из дровяной печи, паста и гриль в уютной атмосфере.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dept-block">
-                        <div class="case-card no-photo">
-                            <div class="case-body">
-                                <div class="case-title">Апарт Отель / Кошурникова (Новосибирская обл., г. Новосибирск, ул. Кошурникова, зд. 22/5)</div>
-                                <div class="case-text">
-                                    <p>Apartville на Кошурникова — новый 12-этажный апарт-отель бизнес-класса 4* от застройщика «Баутехник» в Октябрьском районе Новосибирска, 219 апартаментов с концепцией «всё включено». Открытие попало в подборки заметных событий города.</p>
                                 </div>
                             </div>
                         </div>
