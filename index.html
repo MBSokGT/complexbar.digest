@@ -1144,8 +1144,7 @@
             margin: 24px 0;
             padding: 30px 30px 26px 62px;
             background: linear-gradient(135deg, rgba(190,31,36,0.055), rgba(200,113,31,0.08));
-            border-left: 3px solid var(--autumn-red);
-            border-radius: 4px 18px 18px 4px;
+            border-radius: 18px;
         }
         body.autumn-page .exec-quote::before {
             content: '“';
@@ -1273,6 +1272,9 @@
         body.autumn-page .case-card:not(:last-child) { margin-bottom: 22px; }
         body.autumn-page .case-photo,
         body.autumn-page .photo-carousel { background: #efe6da; }
+
+        /* Чередование: у каждого второго отдела полоса бежевая вместо красной */
+        body.autumn-page .dept-block.accent-beige .case-card { border-left-color: var(--autumn-amber); }
 
         /* Название отдела — пилюля вместо подчёркивания */
         body.autumn-page .dept-name {
@@ -2620,7 +2622,12 @@ function getCurrentIdx() {
     return best;
 }
 
-// ── Intersection observer — only for fade-in animation ──
+// ── Чередование цвета полос кейсов по отделам ──
+document.querySelectorAll('.dept-block').forEach((block, i) => {
+    if (i % 2 === 1) block.classList.add('accent-beige');
+});
+
+// ── Intersection observer — только для fade-in анимации ──
 const fadeObserver = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
