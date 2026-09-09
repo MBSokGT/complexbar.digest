@@ -795,6 +795,13 @@
             .dept-grid .dept-block.full-width { grid-column: auto; }
         }
 
+        /* Ресторанные хроники — 3 карточки в ряд, фото сверху, текст снизу */
+        #section-horeca .dept-grid { grid-template-columns: repeat(3, 1fr); }
+        #section-horeca .case-card { grid-template-columns: 1fr; }
+        @media (max-width: 1024px) {
+            #section-horeca .dept-grid { grid-template-columns: 1fr; }
+        }
+
         /* ── College section: grid of carousels ── */
         .college-grid {
             display: grid;
@@ -2333,8 +2340,8 @@
                 <p class="section-intro">Открытия, партнёрства и новости точек</p>
 
                 <div class="dept-grid">
-                    <div class="dept-block full-width">
-                        <div class="case-card photo-vcenter">
+                    <div class="dept-block">
+                        <div class="case-card">
                             <div class="case-photo">
                                 <div class="photo-carousel" id="carousel-pro-hinkali">
                                     <img src="assets/pro-hinkali/pro-hinkali-1.jpg" class="carousel-img active" alt="Блюдо ресторана «PRO.Хинкали»">
@@ -2357,7 +2364,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="dept-block full-width">
+                    <div class="dept-block">
                         <div class="case-card no-photo">
                             <div class="case-body">
                                 <div class="case-title">«Рубель»</div>
@@ -2368,8 +2375,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="dept-block full-width">
-                        <div class="case-card photo-vcenter">
+                    <div class="dept-block">
+                        <div class="case-card">
                             <div class="case-photo">
                                 <div class="photo-carousel" id="carousel-loro3">
                                     <img src="assets/loro/loro-1.jpg" class="carousel-img active" alt="Интерьер ресторана Loro">
