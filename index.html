@@ -300,6 +300,19 @@
         @media (max-width: 1024px) { .spring-cards { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 640px)  { .spring-cards { grid-template-columns: 1fr; } }
 
+        /* TOC — если последняя строка неполная, последние 2 карточки растягиваются на всю ширину */
+        #section-contents .spring-cards { grid-template-columns: repeat(6, 1fr); }
+        #section-contents .toc-card { grid-column: span 2; }
+        #section-contents .toc-card:nth-last-child(-n+2) { grid-column: span 3; }
+        @media (max-width: 1024px) {
+            #section-contents .spring-cards { grid-template-columns: 1fr 1fr; }
+            #section-contents .toc-card { grid-column: span 1; }
+        }
+        @media (max-width: 640px) {
+            #section-contents .spring-cards { grid-template-columns: 1fr; }
+            #section-contents .toc-card { grid-column: span 1; }
+        }
+
         .spring-card {
             background: #fff;
             padding: 36px 32px;
@@ -1253,9 +1266,26 @@
         body.autumn-page .case-card {
             border-color: var(--autumn-line);
             box-shadow: 0 2px 10px rgba(70,40,10,0.04);
+            border-left: 3px solid rgba(200,113,31,0.35);
         }
+        body.autumn-page .case-card.feature {
+            border-left: 3px solid var(--autumn-red);
+        }
+        body.autumn-page .case-card:not(:last-child) { margin-bottom: 22px; }
         body.autumn-page .case-photo,
         body.autumn-page .photo-carousel { background: #efe6da; }
+
+        /* Блок отдела — общая «панель», чтобы кейсы одной команды визуально группировались */
+        body.autumn-page .dept-block {
+            background: rgba(var(--autumn-ink-rgb), 0.025);
+            border: 1px solid var(--autumn-line);
+            border-radius: 20px;
+            padding: 26px 26px 4px;
+        }
+        body.autumn-page .dept-block .case-card:last-child { margin-bottom: 0; }
+        @media (max-width: 640px) {
+            body.autumn-page .dept-block { padding: 20px 16px 4px; border-radius: 16px; }
+        }
 
         /* Название отдела — пилюля вместо подчёркивания */
         body.autumn-page .dept-name {
@@ -1642,6 +1672,7 @@
                         <div class="case-photo">
                             <div class="photo-carousel" id="carousel-decal-wushu">
                                 <img src="assets/5_opt/decal-wushu-1.jpg" class="carousel-img active" alt="Брендированная посуда с гравировкой для ресторана WU SHU">
+                                <img src="assets/5_opt/decal-lali-1.jpg" class="carousel-img" loading="lazy" alt="Брендированная посуда с гравировкой для ресторана WU SHU">
                                 <button class="carousel-btn prev" onclick="carouselStep('carousel-decal-wushu',-1)">&#8249;</button>
                                 <button class="carousel-btn next" onclick="carouselStep('carousel-decal-wushu',1)">&#8250;</button>
                                 <div class="carousel-dots" id="dots-carousel-decal-wushu"></div>
@@ -1661,8 +1692,7 @@
                     <div class="case-card photo-vcenter">
                         <div class="case-photo">
                             <div class="photo-carousel" id="carousel-decal-lali">
-                                <img src="assets/5_opt/decal-lali-1.jpg" class="carousel-img active" alt="Декорированная посуда для проектов Аркадия Новикова">
-                                <img src="assets/5_opt/decal-lali-2.jpg" class="carousel-img" loading="lazy" alt="Декорированная посуда для Lali и Чайхона №1">
+                                <img src="assets/5_opt/decal-lali-2.jpg" class="carousel-img active" alt="Декорированная посуда для Lali и Чайхона №1">
                                 <button class="carousel-btn prev" onclick="carouselStep('carousel-decal-lali',-1)">&#8249;</button>
                                 <button class="carousel-btn next" onclick="carouselStep('carousel-decal-lali',1)">&#8250;</button>
                                 <div class="carousel-dots" id="dots-carousel-decal-lali"></div>
@@ -1720,55 +1750,6 @@
                         <div class="case-body">
                             <div class="case-text">
                                 <p>Сегодня деколь постепенно превращается из дополнительной услуги в полноценное направление, которое позволяет работать с крупными клиентами, получать повторные заказы и увеличивать объёмы сотрудничества.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Комплекс-Бар Невский -->
-                <div class="dept-block">
-                    <div class="dept-name">Комплекс-Бар Невский</div>
-                    <div class="case-card no-photo feature">
-                        <div class="case-body">
-                            <div class="case-title">Переезд шоурума и склада — общими силами</div>
-                            <div class="case-text">
-                                <p>Команда «Комплекс-Бар Невский» в лице всех без исключения своих сотрудников участвовала в переезде шоурума и склада.</p>
-                                <p>Бережно упаковывали товар с витрин и складских полок, грузили, носили, переносили, перевозили, мыли. Разбирали и собирали витрины и мебель. Практически жили на работе, чтобы успеть в сроки, обозначенные руководителем. И мы всё сделали вовремя!</p>
-                                <blockquote class="exec-quote">
-                                    <p>От себя лично хочу выразить благодарность всему нашему коллективу!</p>
-                                    <p>Всем сотрудникам склада, логистики, менеджерам, которые помогали собирать заказы на складе, выставлять и собирать товар, дизайнеру и завхозу! Менеджерам, которые в этой «боевой обстановке» оставались на передовой продаж под грохот посуды, мебели и звуки скотча, которым мы заклеивали коробки) Сотрудникам бухгалтерии, которые также участвовали во всех процессах упаковки и сборки.</p>
-                                    <p>Отдельно никого выделять не хочу, молодцы все. Это очень тяжёлый период, как морально, так и физически, мы его прошли все вместе. <strong>Спасибо каждому!!!</strong></p>
-                                    <cite>— Анна Кундозерова, заместитель генерального директора по оперативному управлению</cite>
-                                </blockquote>
-                                <p>Упаковав больше 100 витрин, мы разбили всего 1 бокал и 1 блюдо)</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Комплекс Бар Ярославль -->
-                <div class="dept-block">
-                    <div class="dept-name">Комплекс Бар Ярославль</div>
-                    <div class="case-card feature photo-vcenter">
-                        <div class="case-photo">
-                            <div class="photo-carousel" id="carousel-yaroslavl5">
-                                <img src="assets/five_yaroslavl/yaroslavl-visit-1.jpg" class="carousel-img active" alt="Встреча с барменами Ярославской и Костромской областей">
-                                <img src="assets/five_yaroslavl/yaroslavl-visit-2.jpg" class="carousel-img" loading="lazy" alt="Встреча с барменами Ярославской и Костромской областей">
-                                <img src="assets/five_yaroslavl/yaroslavl-visit-3.jpg" class="carousel-img" loading="lazy" alt="Встреча с барменами Ярославской и Костромской областей">
-                                <img src="assets/five_yaroslavl/yaroslavl-visit-4.jpg" class="carousel-img" loading="lazy" alt="Встреча с барменами Ярославской и Костромской областей">
-                                <img src="assets/five_yaroslavl/yaroslavl-visit-5.jpg" class="carousel-img" loading="lazy" alt="Встреча с барменами Ярославской и Костромской областей">
-                                <img src="assets/five_yaroslavl/yaroslavl-visit-6.jpg" class="carousel-img" loading="lazy" alt="Встреча с барменами Ярославской и Костромской областей">
-                                <button class="carousel-btn prev" onclick="carouselStep('carousel-yaroslavl5',-1)">&#8249;</button>
-                                <button class="carousel-btn next" onclick="carouselStep('carousel-yaroslavl5',1)">&#8250;</button>
-                                <div class="carousel-dots" id="dots-carousel-yaroslavl5"></div>
-                            </div>
-                        </div>
-                        <div class="case-body">
-                            <div class="case-title">Приезд Романа Торощина: встреча с барменами Ярославской и Костромской областей</div>
-                            <div class="case-text">
-                                <p>25 июня в Ярославле мы провели встречу с барменами и бар-менеджерами Ярославской и Костромской областей. На встрече присутствовали более 54 человека, и все были в восторге от мероприятия.</p>
-                                <p>Команда провела переговоры в городах Рыбинск, Кострома и Переславль-Залесский — после них удалось подключить крупные сети.</p>
-                                <p>За счёт такого мероприятия, где собралась большая часть заведений Ярославской и Костромской области, нам удалось провести дегустацию наших новинок, пообщаться с клиентами, услышать их запросы и договориться о дальнейшей работе. Июль показал прирост Pinch&amp;Drop на 25%.</p>
                             </div>
                         </div>
                     </div>
@@ -1878,6 +1859,55 @@
                                     <li>«Манго-Маракуйя»</li>
                                 </ul>
                                 <p>Все три напитка хорошо зарекомендовали себя во всей сети, благодаря чему мы продолжаем успешное сотрудничество! Общее количество проданных бутылок с апреля по август — 6 573 шт. Это большой успех для нас!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Комплекс-Бар Невский -->
+                <div class="dept-block">
+                    <div class="dept-name">Комплекс-Бар Невский</div>
+                    <div class="case-card no-photo feature">
+                        <div class="case-body">
+                            <div class="case-title">Переезд шоурума и склада — общими силами</div>
+                            <div class="case-text">
+                                <p>Команда «Комплекс-Бар Невский» в лице всех без исключения своих сотрудников участвовала в переезде шоурума и склада.</p>
+                                <p>Бережно упаковывали товар с витрин и складских полок, грузили, носили, переносили, перевозили, мыли. Разбирали и собирали витрины и мебель. Практически жили на работе, чтобы успеть в сроки, обозначенные руководителем. И мы всё сделали вовремя!</p>
+                                <blockquote class="exec-quote">
+                                    <p>От себя лично хочу выразить благодарность всему нашему коллективу!</p>
+                                    <p>Всем сотрудникам склада, логистики, менеджерам, которые помогали собирать заказы на складе, выставлять и собирать товар, дизайнеру и завхозу! Менеджерам, которые в этой «боевой обстановке» оставались на передовой продаж под грохот посуды, мебели и звуки скотча, которым мы заклеивали коробки) Сотрудникам бухгалтерии, которые также участвовали во всех процессах упаковки и сборки.</p>
+                                    <p>Отдельно никого выделять не хочу, молодцы все. Это очень тяжёлый период, как морально, так и физически, мы его прошли все вместе. <strong>Спасибо каждому!!!</strong></p>
+                                    <cite>— Анна Кундозерова, заместитель генерального директора по оперативному управлению</cite>
+                                </blockquote>
+                                <p>Упаковав больше 100 витрин, мы разбили всего 1 бокал и 1 блюдо)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Комплекс Бар Ярославль -->
+                <div class="dept-block">
+                    <div class="dept-name">Комплекс Бар Ярославль</div>
+                    <div class="case-card feature photo-vcenter">
+                        <div class="case-photo">
+                            <div class="photo-carousel" id="carousel-yaroslavl5">
+                                <img src="assets/five_yaroslavl/yaroslavl-visit-1.jpg" class="carousel-img active" alt="Встреча с барменами Ярославской и Костромской областей">
+                                <img src="assets/five_yaroslavl/yaroslavl-visit-2.jpg" class="carousel-img" loading="lazy" alt="Встреча с барменами Ярославской и Костромской областей">
+                                <img src="assets/five_yaroslavl/yaroslavl-visit-3.jpg" class="carousel-img" loading="lazy" alt="Встреча с барменами Ярославской и Костромской областей">
+                                <img src="assets/five_yaroslavl/yaroslavl-visit-4.jpg" class="carousel-img" loading="lazy" alt="Встреча с барменами Ярославской и Костромской областей">
+                                <img src="assets/five_yaroslavl/yaroslavl-visit-5.jpg" class="carousel-img" loading="lazy" alt="Встреча с барменами Ярославской и Костромской областей">
+                                <img src="assets/five_yaroslavl/yaroslavl-visit-6.jpg" class="carousel-img" loading="lazy" alt="Встреча с барменами Ярославской и Костромской областей">
+                                <button class="carousel-btn prev" onclick="carouselStep('carousel-yaroslavl5',-1)">&#8249;</button>
+                                <button class="carousel-btn next" onclick="carouselStep('carousel-yaroslavl5',1)">&#8250;</button>
+                                <div class="carousel-dots" id="dots-carousel-yaroslavl5"></div>
+                            </div>
+                        </div>
+                        <div class="case-body">
+                            <div class="case-title">Приезд Романа Торощина: встреча с барменами Ярославской и Костромской областей</div>
+                            <div class="case-text">
+                                <p>25 июня в Ярославле мы провели встречу с барменами и бар-менеджерами Ярославской и Костромской областей. На встрече присутствовали более 54 человека, и все были в восторге от мероприятия.</p>
+                                <p>Команда провела переговоры в городах Рыбинск, Кострома и Переславль-Залесский — после них удалось подключить крупные сети.</p>
+                                <p>За счёт такого мероприятия, где собралась большая часть заведений Ярославской и Костромской области, нам удалось провести дегустацию наших новинок, пообщаться с клиентами, услышать их запросы и договориться о дальнейшей работе. Июль показал прирост Pinch&amp;Drop на 25%.</p>
                             </div>
                         </div>
                     </div>
