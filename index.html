@@ -184,35 +184,6 @@
         .spring-section.visible { opacity: 1; transform: none; }
         .spring-section + .spring-section { border-top: 1px solid #f2f2f2; }
 
-        /* ── Мини-навигация внутри длинных разделов ── */
-        .dept-block, .case-card { scroll-margin-top: 90px; }
-        .section-subnav {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin: 4px 0 32px;
-        }
-        .section-subnav-chip {
-            font-family: inherit;
-            font-size: 0.74rem;
-            font-weight: 700;
-            padding: 6px 14px;
-            border-radius: 999px;
-            border: 1px solid var(--autumn-line, #e8e3de);
-            background: #fff;
-            color: var(--autumn-muted, #888);
-            cursor: pointer;
-            white-space: nowrap;
-            max-width: 220px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-        }
-        .section-subnav-chip:hover {
-            background: rgba(190,31,36,0.07);
-            border-color: rgba(190,31,36,0.3);
-            color: var(--autumn-ink, #201914);
-        }
 
         /* Большой призрачный номер секции */
         .spring-section::before {
@@ -2731,50 +2702,6 @@ function getCurrentIdx() {
 // ── Чередование цвета полос кейсов по отделам ──
 document.querySelectorAll('.dept-block').forEach((block, i) => {
     if (i % 2 === 1) block.classList.add('accent-beige');
-});
-
-// ── Мини-навигация внутри длинных разделов ──
-function truncateLabel(text, max) {
-    text = text.trim();
-    return text.length > max ? text.slice(0, max - 1).trim() + '…' : text;
-}
-secNodes.forEach(section => {
-    const container = section.querySelector(':scope > .container');
-    if (!container) return;
-    const deptBlocks = Array.from(container.querySelectorAll('.dept-block'));
-    let anchors = [];
-    if (deptBlocks.length >= 3) {
-        anchors = deptBlocks.map(block => {
-            const nameEl = block.querySelector('.dept-name');
-            const titleEl = block.querySelector('.case-title');
-            const label = nameEl ? nameEl.textContent : (titleEl ? titleEl.textContent : null);
-            return label ? { label, el: block } : null;
-        }).filter(Boolean);
-    } else {
-        const cards = Array.from(container.querySelectorAll('.case-card'));
-        if (cards.length >= 4) {
-            anchors = cards.map(card => {
-                const titleEl = card.querySelector('.case-title');
-                return titleEl ? { label: titleEl.textContent, el: card } : null;
-            }).filter(Boolean);
-        }
-    }
-    if (anchors.length < 3) return;
-
-    const nav = document.createElement('div');
-    nav.className = 'section-subnav';
-    anchors.forEach(a => {
-        const shortLabel = a.label.replace(/\s*\([^)]*\)\s*$/, '');
-        const chip = document.createElement('button');
-        chip.type = 'button';
-        chip.className = 'section-subnav-chip';
-        chip.textContent = truncateLabel(shortLabel, 28);
-        chip.title = a.label;
-        chip.addEventListener('click', () => a.el.scrollIntoView({ behavior: 'smooth', block: 'start' }));
-        nav.appendChild(chip);
-    });
-    const intro = container.querySelector(':scope > .section-intro');
-    (intro || container.querySelector('h2')).insertAdjacentElement('afterend', nav);
 });
 
 // ── Intersection observer — только для fade-in анимации ──
