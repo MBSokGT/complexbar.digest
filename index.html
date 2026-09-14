@@ -1260,47 +1260,18 @@
             min-height: 1.2em;
             margin: 0 0 6px;
         }
-        /* ── Стакан-хайбол, в котором «собираются» слова ── */
-        .word-cloud-glass-wrap {
-            width: 220px;
-            max-width: 100%;
-            margin: 18px auto 0;
-        }
-        .word-cloud-glass-rim {
-            width: 100%;
-            height: 16px;
-            border: 2px solid rgba(200,113,31,0.4);
-            border-radius: 50%;
-            background: rgba(255,255,255,0.5);
-            position: relative;
-            z-index: 2;
-            margin-bottom: -9px;
-        }
         .word-cloud-cloud {
-            position: relative;
             display: flex;
-            flex-wrap: wrap-reverse;
-            align-content: flex-end;
+            flex-wrap: wrap;
             justify-content: center;
-            align-items: flex-end;
-            gap: 4px 10px;
-            width: 100%;
-            height: 300px;
-            padding: 14px 16px 16px;
-            overflow-y: auto;
-            overflow-x: hidden;
-            border-left: 2px solid rgba(200,113,31,0.4);
-            border-right: 2px solid rgba(200,113,31,0.4);
-            border-bottom: 2px solid rgba(200,113,31,0.4);
-            border-radius: 0 0 34px 34px;
-            background: linear-gradient(180deg, rgba(200,113,31,0.03), rgba(190,31,36,0.06));
+            align-items: center;
+            gap: 2px 16px;
+            padding: 16px 8px 4px;
         }
         .word-cloud-tag {
             display: inline-block;
-            max-width: 90%;
             font-weight: 700;
             line-height: 1.15;
-            overflow-wrap: break-word;
             transform: rotate(var(--tilt, 0deg));
             transition: transform 0.25s ease;
             cursor: default;
@@ -1310,8 +1281,6 @@
             font-size: 0.85rem;
             color: var(--autumn-muted);
             font-style: italic;
-            align-self: center;
-            margin: auto;
         }
         @media (max-width: 640px) {
             .word-cloud-widget { padding: 20px 18px; }
@@ -2510,10 +2479,7 @@
                         <button type="submit" class="word-cloud-submit">Добавить</button>
                     </form>
                     <p class="word-cloud-status" id="word-cloud-status"></p>
-                    <div class="word-cloud-glass-wrap" aria-hidden="false">
-                        <div class="word-cloud-glass-rim"></div>
-                        <div class="word-cloud-cloud" id="word-cloud-cloud" aria-live="polite"></div>
-                    </div>
+                    <div class="word-cloud-cloud" id="word-cloud-cloud" aria-live="polite"></div>
                 </div>
 
             </div>
@@ -3236,7 +3202,11 @@ document.querySelectorAll('.drink-card-photo img').forEach(img => {
         }
         const counts = words.map(w => w.count);
         const min = Math.min(...counts), max = Math.max(...counts);
-        const minSize = 0.72, maxSize = 1.7;
+        const minSize = 0.85, maxSize = 2.8;
+        const palette = [
+            'var(--autumn-red)', 'var(--autumn-amber)', '#7a4a2b',
+            '#9c2b1f', '#b8860b', '#5c3a21', '#c8711f', '#8a1e1e'
+        ];
         words.forEach((w, i) => {
             const t = max === min ? 1 : (w.count - min) / (max - min);
             const size = minSize + t * (maxSize - minSize);
@@ -3244,8 +3214,8 @@ document.querySelectorAll('.drink-card-photo img').forEach(img => {
             span.className = 'word-cloud-tag';
             span.textContent = w.word;
             span.style.fontSize = size.toFixed(2) + 'rem';
-            span.style.setProperty('--tilt', (Math.sin(i * 12.9898) * 6).toFixed(1) + 'deg');
-            span.style.color = i % 2 === 0 ? 'var(--autumn-red)' : 'var(--autumn-amber)';
+            span.style.setProperty('--tilt', (Math.sin(i * 12.9898) * 8).toFixed(1) + 'deg');
+            span.style.color = palette[i % palette.length];
             span.title = w.count + ' ' + (w.count === 1 ? 'голос' : 'голосов');
             cloud.appendChild(span);
         });
