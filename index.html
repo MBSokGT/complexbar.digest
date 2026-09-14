@@ -1208,6 +1208,85 @@
             color: var(--autumn-text);
             margin: 20px 0;
         }
+
+        /* ── Облако слов «Любимый осенний напиток» ── */
+        .word-cloud-widget {
+            margin: 32px 0 8px;
+            padding: 28px 30px;
+            background: var(--autumn-bg, #fdf9f3);
+            border: 1px solid var(--autumn-line);
+            border-radius: 20px;
+        }
+        .word-cloud-title {
+            font-size: 1.02rem;
+            font-weight: 800;
+            color: var(--autumn-ink);
+            margin: 0 0 16px;
+        }
+        .word-cloud-form {
+            display: flex;
+            gap: 10px;
+            max-width: 460px;
+            margin-bottom: 10px;
+        }
+        .word-cloud-input {
+            flex: 1;
+            font-family: inherit;
+            font-size: 0.88rem;
+            padding: 10px 14px;
+            border: 1px solid var(--autumn-line);
+            border-radius: 10px;
+            background: #fff;
+            color: var(--autumn-ink);
+        }
+        .word-cloud-input:focus { outline: 2px solid rgba(190,31,36,0.25); outline-offset: 1px; }
+        .word-cloud-submit {
+            font-family: inherit;
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--autumn-red), var(--autumn-amber));
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .word-cloud-submit:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(190,31,36,0.25); }
+        .word-cloud-submit:disabled { opacity: 0.6; cursor: default; transform: none; box-shadow: none; }
+        .word-cloud-status {
+            font-size: 0.78rem;
+            color: var(--autumn-muted);
+            min-height: 1.2em;
+            margin: 0 0 6px;
+        }
+        .word-cloud-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 6px 16px;
+            padding-top: 6px;
+            min-height: 40px;
+        }
+        .word-cloud-tag {
+            display: inline-block;
+            font-weight: 700;
+            line-height: 1.2;
+            transform: rotate(var(--tilt, 0deg));
+            transition: transform 0.25s ease;
+            cursor: default;
+        }
+        .word-cloud-tag:hover { transform: rotate(0deg) scale(1.08); }
+        .word-cloud-empty {
+            font-size: 0.85rem;
+            color: var(--autumn-muted);
+            font-style: italic;
+        }
+        @media (max-width: 640px) {
+            .word-cloud-widget { padding: 20px 18px; }
+            .word-cloud-form { flex-direction: column; max-width: none; }
+        }
+
         .drinks-carousel-wrap {
             display: flex;
             align-items: center;
@@ -2393,6 +2472,16 @@
 
                 <p class="drinks-lead">И дело не только во вкусах. Погода влияет на продажи примерно 30% товаров и услуг в ресторанах и гостиничном бизнесе, а дождь и похолодание — прямой драйвер спроса. Чем хуже погода за окном, тем выше спрос на горячее и на места в зале вместо веранды. Так что если меню вокруг вас вдруг стало теплее и уютнее — можете смело благодарить погоду за окном.</p>
 
+                <div class="word-cloud-widget" id="word-cloud-widget">
+                    <h3 class="word-cloud-title">Напишите ваш любимый осенний напиток</h3>
+                    <form class="word-cloud-form" id="word-cloud-form">
+                        <input type="text" id="word-cloud-input" class="word-cloud-input" placeholder="Например, глинтвейн" maxlength="40" autocomplete="off">
+                        <button type="submit" class="word-cloud-submit">Добавить</button>
+                    </form>
+                    <p class="word-cloud-status" id="word-cloud-status"></p>
+                    <div class="word-cloud-cloud" id="word-cloud-cloud" aria-live="polite"></div>
+                </div>
+
             </div>
         </section>
 
@@ -3093,6 +3182,75 @@ document.querySelectorAll('.drink-card-photo img').forEach(img => {
     img.classList.add('img-loading');
     img.addEventListener('load', () => img.classList.remove('img-loading'), { once: true });
 });
+</script>
+
+<!-- Облако слов «Любимый осенний напиток» -->
+<script>
+(function () {
+    const WORD_CLOUD_API = 'https://cbdigest.duckdns.org/api/mors-cloud';
+    const form   = document.getElementById('word-cloud-form');
+    const input  = document.getElementById('word-cloud-input');
+    const status = document.getElementById('word-cloud-status');
+    const cloud  = document.getElementById('word-cloud-cloud');
+    if (!form || !cloud) return;
+
+    function renderCloud(words) {
+        cloud.innerHTML = '';
+        if (!Array.isArray(words) || words.length === 0) {
+            cloud.innerHTML = '<span class="word-cloud-empty">Пока пусто — добавьте первый напиток!</span>';
+            return;
+        }
+        const counts = words.map(w => w.count);
+        const min = Math.min(...counts), max = Math.max(...counts);
+        const minSize = 0.85, maxSize = 2.3;
+        words.forEach((w, i) => {
+            const t = max === min ? 1 : (w.count - min) / (max - min);
+            const size = minSize + t * (maxSize - minSize);
+            const span = document.createElement('span');
+            span.className = 'word-cloud-tag';
+            span.textContent = w.word;
+            span.style.fontSize = size.toFixed(2) + 'rem';
+            span.style.setProperty('--tilt', (Math.sin(i * 12.9898) * 6).toFixed(1) + 'deg');
+            span.style.color = i % 2 === 0 ? 'var(--autumn-red)' : 'var(--autumn-amber)';
+            span.title = w.count + ' ' + (w.count === 1 ? 'голос' : 'голосов');
+            cloud.appendChild(span);
+        });
+    }
+
+    function loadCloud() {
+        fetch(WORD_CLOUD_API + '/words')
+            .then(r => r.json())
+            .then(renderCloud)
+            .catch(() => {
+                cloud.innerHTML = '<span class="word-cloud-empty">Не удалось загрузить облако</span>';
+            });
+    }
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const word = input.value.trim();
+        if (!word) return;
+        const btn = form.querySelector('button');
+        btn.disabled = true;
+        status.textContent = '';
+        fetch(WORD_CLOUD_API + '/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ word })
+        })
+            .then(r => r.json())
+            .then(() => {
+                input.value = '';
+                loadCloud();
+            })
+            .catch(() => {
+                status.textContent = 'Не получилось отправить, попробуйте ещё раз.';
+            })
+            .finally(() => { btn.disabled = false; });
+    });
+
+    loadCloud();
+})();
 </script>
 
 </body>
