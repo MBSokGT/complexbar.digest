@@ -2710,6 +2710,13 @@ const fadeObserver = new IntersectionObserver(entries => {
 }, { threshold: 0.1 });
 secNodes.forEach(sec => fadeObserver.observe(sec));
 
+// ── Страховка: если observer по какой-то причине не сработал (например, при
+// мгновенном прыжке по хэшу расшаренной ссылки), раздел не должен навсегда
+// остаться невидимым — через паузу принудительно показываем всё, что осталось скрытым ──
+setTimeout(() => {
+    secNodes.forEach(sec => sec.classList.add('visible'));
+}, 2000);
+
 // ── Scroll handler (document covers body scroll on iOS/Safari) ──
 const progressBar = document.getElementById('scroll-progress');
 function onScroll() {
@@ -2838,6 +2845,13 @@ document.querySelectorAll('.spring-section[id]').forEach(sec => {
 if (location.hash) {
     const hashTarget = document.querySelector(location.hash);
     if (hashTarget) {
+        // Мгновенный прыжок может произойти раньше, чем observer заметит пересечение —
+        // показываем раздел сразу, чтобы не было пустого экрана
+        secNodes.forEach(sec => {
+            if (sec === hashTarget || sec.compareDocumentPosition(hashTarget) & Node.DOCUMENT_POSITION_FOLLOWING) {
+                sec.classList.add('visible');
+            }
+        });
         window.addEventListener('load', () => {
             setTimeout(() => hashTarget.scrollIntoView({ behavior: 'auto' }), 60);
         });
