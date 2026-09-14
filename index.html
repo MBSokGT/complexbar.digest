@@ -347,17 +347,14 @@
             border-top: 1px solid #f2f2f2;
         }
 
-        /* ── Sidebar section nav ── */
+        /* ── Sidebar section nav — «колесо»: заголовки разделов на дуге, крутится по разделу ── */
         .side-nav {
             position: fixed;
-            left: 0; top: 50%;
-            transform: translateY(-50%);
+            left: 12px; top: 50%;
+            width: 0; height: 0;
             z-index: 600;
-            display: flex; flex-direction: column;
-            gap: 2px;
-            padding: 6px 0;
         }
-        /* ── Мини-прогресс выпуска рядом с сайдбаром ── */
+        /* ── Мини-прогресс выпуска — «спица» колеса ── */
         .side-nav-progress {
             position: fixed;
             left: 2px; top: 50%;
@@ -395,44 +392,43 @@
         body:not(.loaded) .side-nav-progress { visibility: hidden !important; }
         @media (max-width: 900px) { .side-nav-progress { display: none; } }
         .side-nav-item {
+            position: absolute;
+            left: 0; top: 0;
+            margin-top: -13px;
             display: flex; align-items: center; gap: 0;
             cursor: pointer; border: none; background: none; padding: 0;
             text-align: left;
-            overflow: hidden;
+            white-space: nowrap;
+            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+            will-change: transform, opacity;
         }
         .side-nav-pip {
             width: 3px;
-            align-self: stretch;
-            min-height: 32px;
-            background: rgba(190,31,36,0.15);
+            height: 20px;
+            border-radius: 2px;
+            background: rgba(190,31,36,0.18);
             flex-shrink: 0;
-            transition: background 0.2s, width 0.2s;
+            transition: background 0.25s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
         }
-        .side-nav-item.active .side-nav-pip,
-        .side-nav-item:hover .side-nav-pip {
+        .side-nav-item.active .side-nav-pip {
             background: #be1f24;
-            width: 4px;
+            transform: scaleY(1.35);
         }
         .side-nav-label {
-            font-size: 0.62rem; font-weight: 700;
-            letter-spacing: 0.09em; text-transform: uppercase;
-            color: #bbb;
+            font-size: 0.64rem; font-weight: 700;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            color: #b7ada2;
             white-space: nowrap;
-            padding: 8px 12px 8px 10px;
+            padding: 6px 11px 6px 9px;
+            border-radius: 0 8px 8px 0;
             background: rgba(255,255,255,0);
-            border-radius: 0 6px 6px 0;
-            max-width: 0; opacity: 0;
-            overflow: hidden;
-            transition: max-width 0.25s ease, opacity 0.2s ease, color 0.2s, background 0.2s;
-        }
-        .side-nav-item:hover .side-nav-label {
-            max-width: 200px; opacity: 1;
-            color: #333;
-            background: rgba(255,255,255,0.97);
-            box-shadow: 2px 2px 8px rgba(0,0,0,0.08);
+            transition: color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
         }
         .side-nav-item.active .side-nav-label {
-            max-width: 0; opacity: 0;
+            color: #1a1410;
+            font-weight: 800;
+            background: rgba(255,255,255,0.96);
+            box-shadow: 2px 3px 12px rgba(70,40,10,0.12);
         }
         @media (max-width: 900px) { .side-nav { display: none; } }
 
@@ -558,130 +554,6 @@
             border-color: #be1f24 !important;
             transform: scale(1.08);
             box-shadow: 0 4px 16px rgba(190,31,36,0.28) !important;
-        }
-
-        /* ── Мини-плеер выпуска ── */
-        .mini-player {
-            position: fixed;
-            left: 20px; bottom: 20px;
-            z-index: 9998;
-            display: none;
-        }
-        .mini-player-toggle {
-            width: 52px; height: 52px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #be1f24, #c8711f);
-            color: #fff;
-            border: none;
-            font-size: 1.3rem;
-            cursor: pointer;
-            box-shadow: 0 8px 22px rgba(70,40,10,0.25);
-            display: flex; align-items: center; justify-content: center;
-            transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
-            animation: miniPlayerPulse 2.4s ease-in-out infinite;
-        }
-        .mini-player-toggle:hover { transform: scale(1.08); }
-        @keyframes miniPlayerPulse {
-            0%, 100% { box-shadow: 0 8px 22px rgba(70,40,10,0.25); }
-            50%      { box-shadow: 0 8px 22px rgba(190,31,36,0.4); }
-        }
-        .mini-player-panel {
-            display: none;
-            flex-direction: column;
-            position: absolute;
-            left: 0; bottom: 0;
-            width: 260px;
-            background: #111;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 12px 30px rgba(70,40,10,0.22);
-            border: 1px solid rgba(190,31,36,0.15);
-        }
-        .mini-player.expanded .mini-player-panel { display: flex; }
-        .mini-player.expanded .mini-player-toggle { display: none; }
-        .mini-player-video-wrap {
-            position: relative;
-        }
-        .mini-player-video {
-            width: 100%;
-            display: block;
-            aspect-ratio: 16 / 9;
-            background: #000;
-            object-fit: cover;
-        }
-        .mini-player-controls {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 10px;
-            background: #fff;
-        }
-        .mini-player-play {
-            flex-shrink: 0;
-            width: 32px; height: 32px;
-            border-radius: 50%;
-            border: none;
-            background: linear-gradient(135deg, #be1f24, #c8711f);
-            color: #fff;
-            font-size: 0.8rem;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .mini-player-volume-btn {
-            flex-shrink: 0;
-            width: 24px; height: 24px;
-            border: none;
-            background: transparent;
-            color: #8a7c6f;
-            font-size: 0.9rem;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            padding: 0;
-        }
-        .mini-player-volume {
-            flex: 1;
-            accent-color: #be1f24;
-            height: 4px;
-            cursor: pointer;
-        }
-        .mini-player-resize {
-            position: absolute;
-            top: 8px; right: 36px;
-            z-index: 4;
-            width: 24px; height: 24px;
-            border-radius: 50%;
-            background: rgba(0,0,0,0.45);
-            cursor: ns-resize;
-            display: flex; align-items: center; justify-content: center;
-            opacity: 0;
-            transition: opacity 0.2s, background 0.2s;
-        }
-        .mini-player-video-wrap:hover .mini-player-resize,
-        .mini-player-resize.dragging {
-            opacity: 1;
-        }
-        .mini-player-resize:hover,
-        .mini-player-resize.dragging {
-            background: rgba(190,31,36,0.75);
-        }
-        .mini-player-close {
-            position: absolute;
-            top: 8px; right: 8px;
-            z-index: 5;
-            width: 24px; height: 24px;
-            border-radius: 50%;
-            border: none;
-            background: rgba(0,0,0,0.45);
-            color: #fff;
-            font-size: 0.7rem;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            transition: background 0.2s;
-        }
-        .mini-player-close:hover { background: rgba(190,31,36,0.85); }
-        @media (max-width: 640px) {
-            .mini-player { left: 12px; bottom: 12px; }
-            .mini-player-panel { width: calc(100vw - 60px); max-width: 300px; }
         }
 
         /* ── Back / Forward / Top — modern brand style ── */
@@ -2600,24 +2472,6 @@
     <div class="search-results" id="search-results"></div>
 </div>
 
-<!-- Мини-видеоплеер выпуска -->
-<div class="mini-player" id="mini-player" aria-hidden="true">
-    <button class="mini-player-toggle" id="mini-player-toggle" type="button" aria-label="Развернуть плеер">🎬</button>
-    <div class="mini-player-panel">
-        <div class="mini-player-video-wrap">
-            <video class="mini-player-video" id="mini-player-video" loop playsinline preload="metadata"></video>
-            <button class="mini-player-close" id="mini-player-close" type="button" aria-label="Свернуть плеер">✕</button>
-            <div class="mini-player-resize" id="mini-player-resize" title="Потяните, чтобы изменить размер" aria-hidden="true">
-                <svg viewBox="0 0 16 16" width="13" height="13"><path d="M1.5 14.5 L14.5 1.5 M6.5 14.5 L14.5 6.5 M11.5 14.5 L14.5 11.5" stroke="white" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>
-            </div>
-        </div>
-        <div class="mini-player-controls">
-            <button class="mini-player-play" id="mini-player-play" type="button" aria-label="Играть">▶</button>
-            <button class="mini-player-volume-btn" id="mini-player-mute" type="button" aria-label="Выключить звук">🔊</button>
-            <input class="mini-player-volume" id="mini-player-volume" type="range" min="0" max="1" step="0.01" value="0.6" aria-label="Громкость">
-        </div>
-    </div>
-</div>
 
 <script>
 // ── Page loader ──
@@ -2636,6 +2490,11 @@ const allSecs  = [hero, ...Array.from(secNodes)];
 const dotsNav  = document.getElementById('spring-dots');
 const sideNav  = document.getElementById('side-nav');
 const navLabel = document.getElementById('nav-label');
+
+// ── Боковая навигация «колесом»: заголовки на дуге вокруг активного раздела ──
+const SIDE_NAV_GAP  = 30;  // вертикальный шаг между пунктами, px
+const SIDE_NAV_BULGE = 34; // максимальный выступ вправо для активного пункта, px
+const SIDE_NAV_MAX_DIST = 4; // дальше — полностью скрываем
 
 // Build old dots (hidden, kept for JS compat)
 allSecs.forEach((sec, i) => {
@@ -2673,7 +2532,8 @@ const sideNavProgressFill = document.getElementById('side-nav-progress-fill');
 const sideNavProgressLbl  = document.getElementById('side-nav-progress-label');
 function syncSideNavProgressTrack() {
     if (!sideNavProgress) return;
-    sideNavProgress.style.height = sideNav.getBoundingClientRect().height + 'px';
+    const span = Math.min((allSecs.length - 1) * SIDE_NAV_GAP, window.innerHeight - 80);
+    sideNavProgress.style.height = Math.max(span, 120) + 'px';
 }
 syncSideNavProgressTrack();
 window.addEventListener('resize', syncSideNavProgressTrack);
@@ -2686,10 +2546,25 @@ const btnTop  = document.getElementById('btn-top');
 // ── Current section tracking (scroll-based, reliable) ──
 let currentIdx = 0;
 
+function layoutSideNav(activeIdx) {
+    sideItems.forEach((item, i) => {
+        const offset = i - activeIdx;
+        const dist   = Math.abs(offset);
+        const factor = Math.exp(-(offset * offset) / 6); // гауссово затухание — эффект дуги
+        const x = 4 + SIDE_NAV_BULGE * factor;
+        const y = offset * SIDE_NAV_GAP;
+        const opacity = dist > SIDE_NAV_MAX_DIST ? 0 : Math.max(0.15, factor);
+        item.style.transform = `translate(${x}px, ${y}px)`;
+        item.style.opacity = opacity;
+        item.style.pointerEvents = dist > SIDE_NAV_MAX_DIST ? 'none' : 'auto';
+    });
+}
+
 function updateNav(idx) {
     currentIdx = Math.max(0, Math.min(idx, allSecs.length - 1));
     dots.forEach((d, i) => d.classList.toggle('active', i === currentIdx));
     sideItems.forEach((d, i) => d.classList.toggle('active', i === currentIdx));
+    layoutSideNav(currentIdx);
     btnBack.classList.toggle('visible', currentIdx > 0);
     btnFwd.classList.toggle('hidden', currentIdx >= allSecs.length - 1);
     // Section label + counter above nav buttons
@@ -3214,105 +3089,6 @@ document.querySelectorAll('.drink-card-photo img').forEach(img => {
     img.classList.add('img-loading');
     img.addEventListener('load', () => img.classList.remove('img-loading'), { once: true });
 });
-</script>
-
-<!-- Мини-видеоплеер выпуска -->
-<script>
-(function () {
-    const VIDEO_SRC = 'assets/leaves/mini-video.mp4';
-
-    const player     = document.getElementById('mini-player');
-    const panel      = player.querySelector('.mini-player-panel');
-    const toggle     = document.getElementById('mini-player-toggle');
-    const closeBtn   = document.getElementById('mini-player-close');
-    const playBtn    = document.getElementById('mini-player-play');
-    const muteBtn    = document.getElementById('mini-player-mute');
-    const volumeEl   = document.getElementById('mini-player-volume');
-    const resizeHandle = document.getElementById('mini-player-resize');
-    const video      = document.getElementById('mini-player-video');
-    if (!player || !video) return;
-
-    const MIN_W = 180, MAX_W = 560;
-    function clampWidth(w) {
-        return Math.max(MIN_W, Math.min(MAX_W, Math.min(w, window.innerWidth - 40)));
-    }
-    panel.style.width = clampWidth(260) + 'px';
-    window.addEventListener('resize', () => {
-        panel.style.width = clampWidth(panel.getBoundingClientRect().width) + 'px';
-    });
-
-    let dragging = false, dragStartY = 0, dragStartWidth = 0;
-    function startDrag(clientY) {
-        dragging = true;
-        dragStartY = clientY;
-        dragStartWidth = panel.getBoundingClientRect().width;
-        resizeHandle.classList.add('dragging');
-    }
-    function moveDrag(clientY) {
-        if (!dragging) return;
-        const deltaY = clientY - dragStartY;
-        panel.style.width = clampWidth(dragStartWidth + deltaY * 2) + 'px';
-    }
-    function endDrag() {
-        if (!dragging) return;
-        dragging = false;
-        resizeHandle.classList.remove('dragging');
-        document.body.style.userSelect = '';
-    }
-    resizeHandle.addEventListener('mousedown', (e) => {
-        e.preventDefault();
-        document.body.style.userSelect = 'none';
-        startDrag(e.clientY);
-    });
-    window.addEventListener('mousemove', (e) => moveDrag(e.clientY));
-    window.addEventListener('mouseup', endDrag);
-    resizeHandle.addEventListener('touchstart', (e) => {
-        startDrag(e.touches[0].clientY);
-    }, { passive: true });
-    window.addEventListener('touchmove', (e) => {
-        if (dragging) moveDrag(e.touches[0].clientY);
-    }, { passive: true });
-    window.addEventListener('touchend', endDrag);
-
-    let revealed = false;
-    function reveal() {
-        if (revealed) return;
-        revealed = true;
-        player.style.display = 'block';
-        player.setAttribute('aria-hidden', 'false');
-    }
-    video.addEventListener('loadedmetadata', reveal);
-    video.addEventListener('canplay', reveal);
-    video.addEventListener('error', () => {
-        if (!revealed) player.style.display = 'none';
-    });
-    video.addEventListener('play',  () => { playBtn.textContent = '⏸'; });
-    video.addEventListener('pause', () => { playBtn.textContent = '▶'; });
-
-    video.volume = parseFloat(volumeEl.value);
-    playBtn.addEventListener('click', () => {
-        if (video.paused) video.play().catch(() => {}); else video.pause();
-    });
-    volumeEl.addEventListener('input', () => {
-        video.volume = parseFloat(volumeEl.value);
-        video.muted = video.volume === 0;
-        muteBtn.textContent = video.muted ? '🔇' : '🔊';
-    });
-    muteBtn.addEventListener('click', () => {
-        video.muted = !video.muted;
-        muteBtn.textContent = video.muted ? '🔇' : '🔊';
-    });
-    toggle.addEventListener('click', () => {
-        player.classList.add('expanded');
-        if (!video.src) video.src = VIDEO_SRC;
-    });
-    closeBtn.addEventListener('click', () => {
-        player.classList.remove('expanded');
-        video.pause();
-    });
-
-    video.src = VIDEO_SRC;
-})();
 </script>
 
 </body>
