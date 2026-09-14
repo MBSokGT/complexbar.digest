@@ -431,6 +431,8 @@
             box-shadow: 2px 3px 12px rgba(70,40,10,0.12);
         }
         @media (max-width: 900px) { .side-nav { display: none; } }
+        .side-nav, .side-nav-progress { transition: opacity 0.35s ease; }
+        .side-nav.is-hidden, .side-nav-progress.is-hidden { opacity: 0; pointer-events: none; }
 
         /* ── Section dots — labeled ── */
         .spring-dots {
@@ -2132,7 +2134,7 @@
         <section class="spring-section" id="section-training" data-label="Обучение">
             <div class="container">
                 <h2>📚 Обучение и развитие</h2>
-                <p class="section-intro">Тренинги, обучения, и успехи команды</p>
+                <p class="section-intro">Тренинги, обучения и успехи команды</p>
 
                 <div class="dept-block">
                     <div class="dept-name">Департамент обучения и развития персонала</div>
@@ -2343,9 +2345,9 @@
         <section class="spring-section" id="section-autumn-drinks" data-label="Напитки">
             <div class="container">
                 <h2>🍂 Что пьют осенью</h2>
-                <p class="section-intro">Сезонные хиты меню — от глинтвейна до яблочных коктейлей</p>
+                <p class="section-intro">Сезонные хиты меню: глинтвейн, хот-тодди и яблочные коктейли</p>
 
-                <p class="drinks-lead">За окном дождь, температура ползёт вниз, а меню общепита незаметно меняется целиком. Собрали, какие напитки сейчас на пике сезона — от классики до неожиданных вариаций, которые уже пробуют в столичных заведениях.</p>
+                <p class="drinks-lead">За окном дождь, температура падает, и меню общепита незаметно меняется целиком. Мы собрали напитки, которые сейчас на пике сезона в столичных заведениях.</p>
 
                 <div class="drinks-carousel-wrap">
                     <button type="button" class="drinks-nav prev" onclick="drinksScroll(-1)" aria-label="Предыдущий напиток">&#8249;</button>
@@ -2354,14 +2356,14 @@
                             <div class="drink-card-photo" data-drink="glintwein"><img src="assets/drinks/glintwein.png" alt="Глинтвейн" loading="lazy"></div>
                             <div class="drink-card-body">
                                 <h4 class="drink-card-title">Глинтвейн</h4>
-                                <p class="drink-card-text">Первую строчку уверенно держит глинтвейн — сомелье называют его безусловным осенним фаворитом, создающим ощущение уюта. Продажи вырастают вдвое по сравнению с тёплым периодом года. В московских заведениях помимо классики уже подают вариации с облепихой, а в некоторых барах — чешский вариант с бехеровкой и мёдом.</p>
+                                <p class="drink-card-text">Глинтвейн уверенно держит первую строчку: сомелье называют его главным осенним фаворитом. Продажи вырастают вдвое по сравнению с тёплым периодом года. В московских заведениях помимо классики подают вариации с облепихой, а в некоторых барах — чешский вариант с бехеровкой и мёдом.</p>
                             </div>
                         </div>
                         <div class="drink-card">
                             <div class="drink-card-photo" data-drink="hot-toddy"><img src="assets/drinks/hot-toddy.png" alt="Хот-тодди" loading="lazy"></div>
                             <div class="drink-card-body">
                                 <h4 class="drink-card-title">Хот-тодди</h4>
-                                <p class="drink-card-text">Дальше по популярности идёт хот-тодди — виски, лимон и мёд в горячей подаче, пришедший из шотландской традиции. Баланс между мягкостью и крепостью — то, что выбирают, когда хочется согреться, но не терять контроль над вечером.</p>
+                                <p class="drink-card-text">Дальше по популярности идёт хот-тодди: виски, лимон и мёд в горячей подаче родом из шотландской традиции. Это выбор тех, кто хочет согреться, но не терять контроль над вечером.</p>
                             </div>
                         </div>
                         <div class="drink-card">
@@ -2375,23 +2377,23 @@
                             <div class="drink-card-photo" data-drink="morsy"><span class="drink-card-icon">🍓</span></div>
                             <div class="drink-card-body">
                                 <h4 class="drink-card-title">Ягодные морсы и наливки</h4>
-                                <p class="drink-card-text">Согревающие морсы на клюкве и бруснике, а также наливки и настойки на клюкве, бруснике, черноплодной рябине. Не всегда алкогольные — часто именно безалкогольная версия становится сезонным хитом меню.</p>
+                                <p class="drink-card-text">Согревающие морсы на клюкве и бруснике, а также наливки и настойки на черноплодной рябине. Не всегда алкогольные: часто именно безалкогольная версия становится сезонным хитом меню.</p>
                             </div>
                         </div>
                         <div class="drink-card">
                             <div class="drink-card-photo" data-drink="apple-cocktails"><img src="assets/drinks/apple-cocktails.png" alt="Яблочные коктейли на кальвадосе и бренди" loading="lazy"></div>
                             <div class="drink-card-body">
                                 <h4 class="drink-card-title">Яблочные коктейли на кальвадосе и бренди</h4>
-                                <p class="drink-card-text">Отдельно набирают обороты — терпкий, насыщенный, максимально «осенний по вкусу» вариант для тех, кто ищет что-то отличное от вина со специями.</p>
+                                <p class="drink-card-text">Тоже набирают обороты: терпкий осенний вкус для тех, кто ищет что-то отличное от вина со специями.</p>
                             </div>
                         </div>
                     </div>
                     <button type="button" class="drinks-nav next" onclick="drinksScroll(1)" aria-label="Следующий напиток">&#8250;</button>
                 </div>
 
-                <p class="drinks-lead">И дело не только во вкусах. Дождь и похолодание — это не просто фон, а прямой драйвер спроса: погода влияет на продажи примерно 30% товаров и услуг в ресторанах и гостиничном бизнесе. Осенью эта зависимость работает предельно наглядно — чем хуже погода за окном, тем выше спрос на горячее и посадку в зале вместо веранды. Так что если меню вокруг вас вдруг стало теплее и уютнее — это не совпадение, а реакция индустрии на календарь.</p>
+                <p class="drinks-lead">И дело не только во вкусах. Погода влияет на продажи примерно 30% товаров и услуг в ресторанах и гостиничном бизнесе, а дождь и похолодание — прямой драйвер спроса. Чем хуже погода за окном, тем выше спрос на горячее и на места в зале вместо веранды. Если меню вокруг вас стало теплее и уютнее, это реакция индустрии на календарь, а не совпадение.</p>
 
-                <p class="drinks-lead"><em>В комментариях в Битрикс можете поделиться любимыми осенними напитками — заведениями, где готовят ваш любимый осенний напиток.</em></p>
+                <p class="drinks-lead"><em>В комментариях в Битрикс поделитесь, где готовят ваш любимый осенний напиток.</em></p>
 
             </div>
         </section>
@@ -2565,6 +2567,10 @@ function updateNav(idx) {
     dots.forEach((d, i) => d.classList.toggle('active', i === currentIdx));
     sideItems.forEach((d, i) => d.classList.toggle('active', i === currentIdx));
     layoutSideNav(currentIdx);
+    // Колесо не нужно на главной и на «Читайте в этом выпуске» — только начиная с первого раздела
+    const wheelVisible = currentIdx >= 2;
+    sideNav.classList.toggle('is-hidden', !wheelVisible);
+    if (sideNavProgress) sideNavProgress.classList.toggle('is-hidden', !wheelVisible);
     btnBack.classList.toggle('visible', currentIdx > 0);
     btnFwd.classList.toggle('hidden', currentIdx >= allSecs.length - 1);
     // Section label + counter above nav buttons
