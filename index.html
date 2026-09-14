@@ -1260,18 +1260,47 @@
             min-height: 1.2em;
             margin: 0 0 6px;
         }
+        /* ── Стакан-хайбол, в котором «собираются» слова ── */
+        .word-cloud-glass-wrap {
+            width: 220px;
+            max-width: 100%;
+            margin: 18px auto 0;
+        }
+        .word-cloud-glass-rim {
+            width: 100%;
+            height: 16px;
+            border: 2px solid rgba(200,113,31,0.4);
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            position: relative;
+            z-index: 2;
+            margin-bottom: -9px;
+        }
         .word-cloud-cloud {
+            position: relative;
             display: flex;
-            flex-wrap: wrap;
-            align-items: baseline;
-            gap: 6px 16px;
-            padding-top: 6px;
-            min-height: 40px;
+            flex-wrap: wrap-reverse;
+            align-content: flex-end;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 4px 10px;
+            width: 100%;
+            height: 300px;
+            padding: 14px 16px 16px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            border-left: 2px solid rgba(200,113,31,0.4);
+            border-right: 2px solid rgba(200,113,31,0.4);
+            border-bottom: 2px solid rgba(200,113,31,0.4);
+            border-radius: 0 0 34px 34px;
+            background: linear-gradient(180deg, rgba(200,113,31,0.03), rgba(190,31,36,0.06));
         }
         .word-cloud-tag {
             display: inline-block;
+            max-width: 90%;
             font-weight: 700;
-            line-height: 1.2;
+            line-height: 1.15;
+            overflow-wrap: break-word;
             transform: rotate(var(--tilt, 0deg));
             transition: transform 0.25s ease;
             cursor: default;
@@ -1281,6 +1310,8 @@
             font-size: 0.85rem;
             color: var(--autumn-muted);
             font-style: italic;
+            align-self: center;
+            margin: auto;
         }
         @media (max-width: 640px) {
             .word-cloud-widget { padding: 20px 18px; }
@@ -2473,13 +2504,16 @@
                 <p class="drinks-lead">И дело не только во вкусах. Погода влияет на продажи примерно 30% товаров и услуг в ресторанах и гостиничном бизнесе, а дождь и похолодание — прямой драйвер спроса. Чем хуже погода за окном, тем выше спрос на горячее и на места в зале вместо веранды. Так что если меню вокруг вас вдруг стало теплее и уютнее — можете смело благодарить погоду за окном.</p>
 
                 <div class="word-cloud-widget" id="word-cloud-widget">
-                    <h3 class="word-cloud-title">Напишите ваш любимый осенний напиток</h3>
+                    <h3 class="word-cloud-title">Поделитесь вашим любимым осенним напитком</h3>
                     <form class="word-cloud-form" id="word-cloud-form">
                         <input type="text" id="word-cloud-input" class="word-cloud-input" placeholder="Например, глинтвейн" maxlength="40" autocomplete="off">
                         <button type="submit" class="word-cloud-submit">Добавить</button>
                     </form>
                     <p class="word-cloud-status" id="word-cloud-status"></p>
-                    <div class="word-cloud-cloud" id="word-cloud-cloud" aria-live="polite"></div>
+                    <div class="word-cloud-glass-wrap" aria-hidden="false">
+                        <div class="word-cloud-glass-rim"></div>
+                        <div class="word-cloud-cloud" id="word-cloud-cloud" aria-live="polite"></div>
+                    </div>
                 </div>
 
             </div>
@@ -3202,7 +3236,7 @@ document.querySelectorAll('.drink-card-photo img').forEach(img => {
         }
         const counts = words.map(w => w.count);
         const min = Math.min(...counts), max = Math.max(...counts);
-        const minSize = 0.85, maxSize = 2.3;
+        const minSize = 0.72, maxSize = 1.7;
         words.forEach((w, i) => {
             const t = max === min ? 1 : (w.count - min) / (max - min);
             const size = minSize + t * (maxSize - minSize);
@@ -3238,8 +3272,18 @@ document.querySelectorAll('.drink-card-photo img').forEach(img => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ word })
         })
-            .then(r => r.json())
-            .then(() => {
+            .then(async (r) => {
+                const data = await r.json().catch(() => ({}));
+                if (!r.ok) {
+                    if (data.error === 'profanity') {
+                        status.textContent = 'Пожалуйста, без оскорблений — напишите название напитка.';
+                    } else if (data.error === 'limit') {
+                        status.textContent = 'Слишком много разных напитков — попробуйте другое слово.';
+                    } else {
+                        status.textContent = 'Введите название напитка.';
+                    }
+                    return;
+                }
                 input.value = '';
                 loadCloud();
             })
